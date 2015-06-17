@@ -1,0 +1,14 @@
+nbproject
+._*
+.~lock.*
+.buildpath
+.DS_Store
+.project
+.settings
+composer.lock
+node_modules
+.tmp
+.sass-cache
+bower_components/
+.idea
+composer.phar

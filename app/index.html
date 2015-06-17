@@ -1,0 +1,1095 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!<html class="no-js"> <![endif]-->
+<html lang="en" data-placeholder-focus="false" >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+<!--    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="android-touch-icon" href="android-icon.png" />-->
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <link href="styles/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/css/smartbanner.css" type="text/css" media="screen">
+    <link href="styles/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="styles/css/owl.carousel.css" rel="stylesheet">
+    <link href="styles/css/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+    <link href="styles/css/jquery.datepick.css" rel="stylesheet">
+    <link href="styles/css/swiper.min.css" rel="stylesheet">
+    <link rel='stylesheet' href="bower_components/angular-socialshare/angular-socialshare.min.css">
+    <!-- endbuild -->
+
+    <!-- build:css({.tmp,app}) styles/main.css -->
+    <link rel="stylesheet" href="styles/base/app.css">
+    <!-- endbuild -->
+
+    <!--[if gte IE 9]>
+      <style type="text/css">
+        .gradient{
+           filter: none;
+        }
+      </style>
+    <![endif]-->
+  </head>
+<style type="text/css"></style>
+<body ng-app="directTvApp" ng-cloak class="ng-cloak" id="main-body-content">
+
+   <div class="pageLoading" id="initLoader">
+    <div class="loadText">
+      <h5>Please wait while loading..</h5>
+      <div class="spinner1">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
+  </div>
+  <slidenav>
+    <slidenav-menu style="overflow:hidden">
+      <div ng-controller="adminNavCtrl" >
+        <div class="row">
+          <div class="col-md-12 adminSidebarTop">
+            <a ng-click="close()">
+              <span class="icon-custom-admin"></span>
+            </a>
+          </div>
+        </div>
+        <nav>
+          <div class="st-vertical-menu-container">
+            <div class="st-vertical-menu-section" ng-class="{ 'selected-index': $index == selectedIndex}" ng-repeat="item in asideMenu" ng-click="itemClicked($index,item.actionID)">
+             <a ng-bind="item.title[CurrentLang]"></a>
+            </div>
+          </div>
+          <!-- adding admin content here -->
+          <div class="st-vertical-content-section" ng-style="subContentStyle" ng-include src="templateName" >
+          </div>
+        </nav>
+      </div>
+    </slidenav-menu>
+   <slidenav-content>
+
+  <!-- Header Navigation Container -->
+
+   <div class="container header navbar-fixed-top hide-container" id="navigation" role="navigation" ng-controller="mainController" data-ng-init="initLanguage()">
+      <iframe id="tempIframe" src="" style="display: none;"></iframe>
+      <iframe id="embedTokenUrl"  style="display: none;"></iframe>
+      <iframe id="cookieUrl" style="display: none;"></iframe>
+
+
+
+    <div id="mobButtonContainer" class="col-md-12 col-sm-12 col-xs-12 nav navbar-nav pull-left topBtn" ng-class="(CurrentLang == 'es_ES') ? 'topBtn_es' : ''">
+      <div class="col-sm-6 col-xs-6">
+        <button class="btn navbar-btn login" ng-click="loginModal(1)" ng-show="!isLoggedIn" translate="BTN_ADMIN_LOGIN_WATCHLIST" ng-class="(CurrentLang == 'es_ES') ? 'login_es' : ''"></button>
+      </div>
+      <div class="col-sm-6 col-xs-6">
+        <button  ng-click="signupModal(1)" ng-show="!isLoggedIn" class="btn btnOrange btn-default navbar-btn signup"  id="signupERT" translate="TXT_TOP_TOOLBAR_LIVE_SIGNUP_EXISTING_ACCOUNT"></button>
+      </div>
+    </div>
+
+    <div id="menu" class="navbar navbar-inverse clearfix navbar-custom main_header" ng-style="navmenuStyle">
+      <div id="logo" class="navbar-header navbar-left">
+        <!-- LOGO IMAGE -->
+
+        <a ng-click="onLogoClick()" style="cursor:pointer;"><img ng-src="{{logoweb}}" ng-show="showlogo" > <!--<img src="images/logo.png">--></a>
+      </div>
+      <button id="mobileCollapsingMenu" class="btn menu-toggle-btn btn-primary navbar-toggle navbar-left" ng-click="collapsingMenu()" >
+        <span translate="MENU"></span>
+      </button>
+      <!--navbarheader -->
+      <!--navmenu desktop-->
+      <div id="menuDesktop" class="navbar-collapse navbar-left navbarMenu desk_menu_drop">
+        <ul class="nav navbar-nav ">
+          <li ng-repeat="menu in menus track by $index" ng-class="{'dropdown': menu.children !=null}"   ng-cloak>
+            <a ng-if="menu.actionID!='home' && menu.mpath!='null' && menu.mpath!='undefined' && menu.action!='link'" ng-href="{{menu.mpath}}" class="nav" show-sub-menu ng-cloak active-link="menu-font-color" ng-click="collapsingMenu()" ng-bind="menu.title[CurrentLang]|uppercase"></a>
+            <a ng-if="menu.actionID!='home' && menu.mpath!='null' && menu.mpath!='undefined' && menu.action=='link'" target="_blank" ng-href="{{menu.mpath}}" class="nav" show-sub-menu ng-cloak active-link="menu-font-color" ng-click="collapsingMenu()" ng-bind="menu.title[CurrentLang]|uppercase"></a>
+            <a ng-if="menu.mpath=='null'"  class="nav" show-sub-menu ng-cloak ng-click="collapsingMenu()" active-link="menu-font-color" ng-bind="menu.title[CurrentLang]|uppercase"></a>
+            <ul ng-if="(menu.children !=null && menu.has_children == true)"  class="dropdown-menu" mousable >
+                <li ng-repeat="submenu in menu.children" class="dropCont fullWidth">
+                  <h6 ng-if="(submenu.children.length > 0 && submenu.has_children == true)" collapse-sub-menu ng-cloak ng-bind="submenu.title[CurrentLang]|uppercase"></h6>
+                  <a ng-if="submenu.mpath!='null' && menu.action!='link' && submenu.children == null && submenu.special_link != true" ng-href="{{submenu.mpath}}" collapse-sub-menu ng-cloak ng-bind="submenu.title[CurrentLang]|uppercase"></a>
+                  <a class="dropViewMore" style="" ng-if="submenu.mpath!='null' && menu.action!='link' && submenu.children == null && submenu.special_link == true && submenu.action == 'link'" ng-href="{{submenu.mpath}}" collapse-sub-menu ng-cloak>
+                    <span class="alignLeft" ng-bind="submenu.title[CurrentLang]|uppercase"></span>
+                    <span class="alignRight arrowIcon"></span>
+                  </a>
+                  <a ng-if="submenu.mpath!='null' && menu.action=='link' && submenu.children == null" target="_blank"  ng-href="{{submenu.mpath}}" collapse-sub-menu ng-cloak  ng-bind="submenu.title[CurrentLang]|uppercase"></a>
+                  <a ng-if="submenu.mpath=='null' && submenu.children == null"   collapse-sub-menu ng-cloak ng-bind="submenu.title[CurrentLang]|uppercase"></a>
+                  <ul ng-if="submenu.children.length > 0">
+                      <li ng-repeat="childSubmenu in submenu.children" class="nav fullWidth" style="">
+                        <a ng-if="childSubmenu.mpath!='null' && submenu.action!='link'" ng-href="{{childSubmenu.mpath}}" collapse-sub-menu ng-cloak ng-bind="childSubmenu.title[CurrentLang]|uppercase"></a>
+                        <a ng-if="childSubmenu.mpath!='null' && submenu.action=='link'" target="_blank"  ng-href="{{childSubmenu.mpath}}" collapse-sub-menu ng-cloak  ng-bind="childSubmenu.title[CurrentLang]|uppercase"></a>
+                        <a ng-if="childSubmenu.mpath=='null'"   collapse-sub-menu ng-cloak ng-bind="childSubmenu.title[CurrentLang]|uppercase"></a>
+                      </li>
+                  </ul>
+                </li>
+                <div class="season_select_list_top"></div>
+            </ul>
+          </li>
+          <li class="search-icon"><a ng-click="searchModal()"><span class="icon-custom-search"></span></a></li>
+        </ul>
+      </div>
+
+      <!-- navmenu mobile -->
+      <div class="navbar-collapse navbar-left navbarMenu mob_menu_drop" id="collapsibleMob" collapse="isCollapsed">
+        <ul class="nav navbar-nav">
+          <li ng-repeat="menu in menus track by $index" ng-class="{'dropdown': menu.children !=null}"   ng-cloak>
+            <a ng-if="menu.actionID!='home' && menu.mpath!='null' && menu.action!='link'" ng-href="{{menu.mpath}}" class="nav" ng-cloak ng-click="collapsingMenu()" active-link="menu-font-color" ng-bind="menu.title[CurrentLang]|uppercase"></a>
+            <a ng-if="menu.actionID!='home' && menu.mpath!='null' && menu.action=='link'" target="_blank" ng-href="{{menu.mpath}}" class="nav" ng-cloak  ng-click="collapsingMenu()" active-link="menu-font-color" ng-bind="menu.title[CurrentLang]|uppercase"></a>
+            <a ng-if="menu.mpath=='null'"  class="nav" ng-cloak ng-click="collapsingMenu()" active-link="menu-font-color" ng-bind="menu.title[CurrentLang]|uppercase"></a>
+
+            <span class="menuDropArrow" show-sub-menu-mob ng-click="openSubMenu()" ng-if="menu.children !=null"></span>
+            <ul ng-if="menu.children !=null"  class="dropdown-menu" mousable >
+                <li ng-repeat="submenu in menu.children">
+                 <a ng-if="submenu.mpath!='null' && menu.action!='link'" ng-href="{{submenu.mpath}}" collapse-sub-menu ng-cloak  ng-click="collapsingMenu()" ng-bind="submenu.title[CurrentLang]|uppercase"></a>
+                 <a ng-if="submenu.mpath!='null' && menu.action=='link'" target="_blank"  ng-href="{{submenu.mpath}}" collapse-sub-menu ng-cloak  ng-click="collapsingMenu()" ng-bind="submenu.title[CurrentLang]|uppercase"></a>
+                 <a ng-if="submenu.mpath=='null'"   collapse-sub-menu ng-cloak  ng-click="collapsingMenu()" ng-bind="submenu.title[CurrentLang]|uppercase"></a>
+                </li>
+            </ul>
+          </li>
+          <div class="invite"></div>
+        </ul>
+      </div>
+
+      <!-- search html goes here-->
+      <div class="SearchField"  ng-include src="'views/search/topBarSearch.html'"  ng-show="isLoggedIn && subscriptionStatus"></div>
+
+
+      <div class="navbar-header pull-right parent">
+        <span ng-show="ajaxLogoutSpinner" us-spinner="{radius:4, width:4, length: 8}" class="yelloworangeloader"></span>
+        <div class="language-onoffswitch pull-left col-md-margin-top-7" id="languageSwitchContainer" ng-show="!isLoggedIn || !subscriptionStatus">
+          <input type="checkbox" name="isCheckboxCheckedForCurrentLang" class="language-onoffswitch-checkbox" id="isCheckboxCheckedForCurrentLang" ng-checked="isCheckboxCheckedForCurrentLang" ng-model="isCheckboxCheckedForCurrentLang">
+          <label id="language-onoffswitch-label" class="language-onoffswitch-label" for="isCheckboxCheckedForCurrentLang">
+              <div class="language-onoffswitch-inner">
+                <span class="left-text" ng-click="change_lang()" translate="APP_LANGUAGE_ESP"></span>
+                <span class="right-text" ng-click="change_lang()" translate="APP_LANGUAGE_ENG"></span>
+              </div>
+              <div id="language-onoffswitch-switch" class="language-onoffswitch-switch" ng-click="change_lang()"></div>
+          </label>
+        </div>
+        <ul id="helpSear" class="nav navbar-nav pull-left navBarIcons help-lang-icons">
+          <!--  <li class="search-icon searchMobile"><a ng-click="searchModal()"><span class="icon-custom-search"></span></a></li> -->
+           <li class="help-icon"><a ng-href="{{help[0].mpath[CurrentLang]}}"><span class="icon-custom-help"></span></a></li>
+        </ul>
+        <ul id="logDrop" class="nav navbar-nav pull-left navBarIcons user_ac_opt" ng-show="isLoggedIn && subscriptionStatus">
+          <li id="selectable" class="dropdown">
+            <a class="dropdown-toggle parent" data-toggle="dropdown">
+              <label class="leftPadding" ng-bind="firstName + ' ' + lastName | cut:true:25:' ...'"></label>
+            </a>
+            <ul class="dropdown-menu dropdown-menu_right" id="logoutmenu">
+              <li><a ng-click="routeToAccountPage()" translate="TXT_MAIN_TITLE_ACCOUNT"></a></li>
+              <li class="languageToggle">
+                <span translate="TXT_MAIN_TITLE_LANGUAGE"></span>
+                <div class="language-onoffswitch languageSwitchSmall">
+                  <input type="checkbox" name="isCheckboxCheckedForCurrentLang" class="language-onoffswitch-checkbox" id="isCheckboxCheckedForCurrentLang" ng-checked="isCheckboxCheckedForCurrentLang" ng-model="isCheckboxCheckedForCurrentLang">
+                  <label id="language-onoffswitch-label" class="language-onoffswitch-label" for="isCheckboxCheckedForCurrentLang">
+                      <div class="language-onoffswitch-inner">
+                        <span class="left-text" ng-click="change_lang()" translate="APP_LANGUAGE_ESP" style="line-height: 20px;"></span>
+                        <span class="right-text" ng-click="change_lang()" translate="APP_LANGUAGE_ENG" style="line-height: 20px;"></span>
+                      </div>
+                      <div id="language-onoffswitch-switch" class="language-onoffswitch-switch" ng-click="change_lang()"></div>
+                  </label>
+                </div>
+              </li>
+              <li><a ng-href="{{help[0].mpath[CurrentLang]}}" translate="TXT_MAIN_TITLE_HELP"></a></li>
+              <li><a ng-click="logOut()" translate="BTN_SIGN_OUT_TXT"></a></li>
+              <div class="season_select_list_top"></div>
+            </ul>
+          </li>
+        </ul>
+        <ul id="adminBtn" class="nav navbar-nav pull-left navBarIcons hidden-xs">
+            <li style=" display: inline;">
+              <a class="sidebar_pull" ng-click="openNav(0, 'continue_watching')" ng-show="isLoggedIn">
+                <span class="icon-custom-admin"></span>
+              </a>
+            </li>
+        </ul>
+        <div id="logSin" class="nav navbar-nav pull-left" >
+            <button ng-disabled="isAppgridLoaded" ng-click="loginModal(1)" ng-show="!isLoggedIn && !loginModalDisplay" class="navbar-btn login " ng-class="(CurrentLang == 'es_ES') ? 'login_es' : ''" id="login" translate="BTN_SIGN_IN_TXT"></button>
+            <button  ng-click="signupModal(1)" ng-class="(CurrentLang == 'es_ES') ? 'signup_es' : ''" ng-show="loginModalDisplay" class="btn btn-default navbar-btn signup" id="signupERT" translate="TXT_TOP_TOOLBAR_LIVE_SIGNUP_EXISTING_ACCOUNT"></button>
+            <button ng-click="logOut()" ng-if="ShowLogoutForNonSubscribedLoginUser" class="navbar-btn login " ng-class="(CurrentLang == 'es_ES') ? 'login_es' : ''"  id="logout" translate="TXT_LOGOUT"></button>
+            <button ng-click="logOut()" ng-show="isMobileScreen() && subscriptionStatus" class="navbar-btn login " ng-class="(CurrentLang == 'es_ES') ? 'login_es' : ''"  id="mobilelogout" translate="TXT_LOGOUT"></button>
+        </div>
+      </div>
+    </div><!-- Full navigation -->
+  </div><!-- Header Navigation Container -->
+
+  <!-- partial container -->
+  <div ng-view class="partialContainer hide-container" id="partialContainerIDD" ng-style="partialContainerStyle"></div>
+
+   <!-- Footer -->
+  <div class="container" ng-controller="FooterCtrl">
+      <div id="google_plus" style="display: none;">
+      </div>
+    <span ng-show="ajaxFooterSpinner" us-spinner class="yelloworangeloader"></span>
+    <div class="row footer" id="webFooter">
+      <div class="col-md-12 col-lg-12">
+        <ul class="list-inline">
+          <li class="copyright">
+            <span class="footerCopy" ng-bind="copyRight[CurrentLang]"></span>
+          </li>
+          <li ng-repeat="navLink in footerNavListNewArray | orderObjectBy:'priority'">
+           <a ng-if="navLink.type=='iframe_link'" ng-href="{{navLink.mpath}}"   class="footerText" translate="{{navLink.title[CurrentLang]}}"></a>
+           <a ng-if="navLink.type==='link'" ng-href="{{navLink.mpath[CurrentLang]}}"   class="footerText" translate="{{navLink.title[CurrentLang]}}"></a>
+           <a ng-if="navLink.type!=='iframe_link'  && navLink.type!=='link'" ng-href="{{navLink.mpath}}"   class="footerText" translate="{{navLink.title[CurrentLang]}}"></a>
+
+          </li>
+        </ul>
+        <div class="build">
+          <span class="footerCopy" ng-bind="buildNumber"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row footer" id="mobFooter">
+      <div class="col-xs-12 footerCopy text-center" ng-bind="copyRight[CurrentLang]"></div>
+      <div ng-repeat="navLink in footerNavListNewArray" class="col-xs-12 text-center" >
+        <a ng-if="navLink.type=='iframe_link'" ng-href="{{navLink.mpath}}"   class="footerText" translate="{{navLink.title[CurrentLang]}}"></a>
+        <a ng-if="navLink.type!=='iframe_link'" ng-href="{{navLink.mpath}}"   class="footerText" translate="{{navLink.title[CurrentLang]}}"></a>
+      </div>
+      <div class="col-xs-12 footerCopy text-center" ng-bind="buildNumber"></div>
+    </div>
+  </div><!-- Footer -->
+
+   </slidenav-content>
+</slidenav>
+  <script type="text/javascript">
+    // Avoid crash on IE
+    window.console = window.console || {};
+    if (!window.console.hasOwnProperty('log')) {
+        window.console.log = function(){};
+    }
+  </script>
+
+   <!--
+   <script src='//player.ooyala.com/v3/b84aabbe74d041c9971bfb4feecddbaa?platform=html5-fallback&namespace=MPLAYER_1'></script>
+   <script src='//player.ooyala.com/v3/a04ed287a9b84009814daf25d13aad29?platform=html5-fallback&namespace=MPLAYER_2'></script>
+   -->
+   <script src='https://player.ooyala.com/v3/c2137a1d0b4c4552a372a9d8c635626e?platform=html5-priority&namespace=SIZZLE'></script>
+   <script src='https://player.ooyala.com/v3/f8f706c9dd5840559f5462a5fb0d84c6?platform=html5-fallback&namespace=MPLAYER_3'></script>
+   <script src='https://player.ooyala.com/v3/c2137a1d0b4c4552a372a9d8c635626e?platform=html5-fallback&namespace=MPLAYER_4'></script>
+   <script src='https://player.ooyala.com/v3/91831e5cfab46249c327a097817ef52?platform=html5-fallback&namespace=FREEWHEELPLAYER'></script>
+   <script src='player/js/player_3_module.min.js'></script>
+   <script src='player/js/player_4_module.min.js'></script>
+<!--   <script type="text/javascript" src="//appgrid-api.cloud.accedo.tv/asset/5544960e3d5cd0f2ee44bb009e3bd80249d848ae3af67a7f"></script>
+   <script type="text/javascript" src="//appgrid-api.cloud.accedo.tv/asset/5544960e3d5ce052ee44bb009e3bd80249d848ae3af67aaf"></script>-->
+   <!--
+   <script src='//player.ooyala.com/v3/91831e5cfab46249c327a097817ef52?platform=html5-fallback&namespace=FREEWHEELPLAYER'></script> -->
+
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/affix.js"></script>
+    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/alert.js"></script>
+    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/button.js"></script>
+    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/carousel.js"></script>
+    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/collapse.js"></script>
+    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/dropdown.js"></script>
+    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tab.js"></script>
+    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/transition.js"></script>
+    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/scrollspy.js"></script>
+    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/modal.js"></script>
+    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tooltip.js"></script>
+    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/popover.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+    <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="bower_components/spin.js/spin.js"></script>
+    <script src="bower_components/angular-spinner/angular-spinner.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-ui-utils/ui-utils.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/angular-debounce/dist/angular-debounce.js"></script>
+    <script src="bower_components/angular-socialshare/angular-socialshare.js"></script>
+    <!-- endbower -->
+
+
+    <script src="scripts/libs/youbora.js"></script>
+    <script src="scripts/libs/angular-payments/lib/angular-payments.js"></script>
+    <script src="scripts/libs/moment.min.js"></script>
+    <script src="scripts/libs/slidenav.js"></script>
+    <script src="scripts/services/config.js"></script>
+    <script src="scripts/libs/owl.carousel.js"></script>
+    <script src="scripts/libs/jquery.plugin.js"></script>
+    <script src="scripts/libs/jquery.datepick.js"></script>
+    <script src="scripts/libs/i18n/datepicker-es.js"></script>
+    <script src="scripts/libs/i18n/datepicker-en.js"></script>
+    <script src="scripts/libs/perfect-scrollbar.js"></script>
+    <script src="scripts/libs/custom.js"> </script>
+    <script src="scripts/libs/jquery.mousewheel.js"></script>
+    <script src="scripts/libs/smartbanner.js"></script>
+<!--    <script src="scripts/libs/player_3_module.min.js"></script> -->
+<!--    <script src="scripts/libs/cookiejs.js"></script> -->
+    <script src="scripts/libs/jquery-ui-1.9.2.custom.min.js"></script>
+
+    <script src="scripts/libs/Ooyala_Omniture.js"></script>
+
+    <script type='text/javascript' src='scripts/libs/ng-infinite-scroll.min.js'></script>
+    <script type='text/javascript' src='scripts/libs/placeholders.min.js'></script>
+    <script type='text/javascript' src="scripts/libs/angular-touch.min.js"></script>
+    <script type='text/javascript' src="scripts/libs/swiper.min.js"></script>
+    <script type='text/javascript' src="scripts/libs/twitter-widgets.js"></script>
+
+    <!-- endbuild -->
+
+    <script type="text/javascript">
+      //moved to menu.js -> LoadSocializeScript function
+
+    </script>
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/filters.js"></script>
+  <!-- Add custom scripts -->
+
+  <!-- Add directives -->
+
+  <script src="scripts/directives/Directives.js"></script>
+  <script src="scripts/directives/FormValidation.js"></script>
+  <!-- Add controllers -->
+  <script src="scripts/controllers/Main.js"></script>
+  <script src="scripts/controllers/Common.js"></script>
+  <script src="scripts/controllers/signup/SelectPackage.js"></script>
+  <script src="scripts/controllers/signup/CreateAccount.js"></script>
+  <script src="scripts/controllers/signup/FinalCheckout.js"></script>
+  <script src="scripts/controllers/signup/Welcome.js"></script>
+  <script src="scripts/controllers/signup/ConfirmSignup.js"></script>
+  <script src="scripts/controllers/signup/ConfirmUpdatePayment.js"></script>
+  <script src="scripts/controllers/signup/signupPaymentError.js"></script>
+  <script src="scripts/controllers/signup/updatePaymentError.js"></script>
+  <script src="scripts/controllers/signup/M.Welcome.js"></script>
+  <script src="scripts/controllers/account/ManageAccount.js"></script>
+  <script src="scripts/controllers/account/BillingInformation.js"></script>
+  <script src="scripts/controllers/account/PersonalInformation.js"></script>
+  <script src="scripts/controllers/account/ProfileSettings.js"></script>
+  <script src="scripts/controllers/account/SubscriptionDetails.js"></script>
+  <script src="scripts/controllers/account/billing/BillingHistory.js"></script>
+  <script src="scripts/controllers/account/mobile/ManageAccount.js"></script>
+  <script src="scripts/controllers/Signup.js"></script>
+  <script src="scripts/controllers/signin/signin.js"></script>
+  <script src="scripts/controllers/signin/forgotPassword.js"></script>
+  <script src="scripts/controllers/signin/forgotMail.js"></script>
+  <script src="scripts/controllers/signin/resetPassword.js"></script>
+  <script src="scripts/controllers/search/search.js"></script>
+  <script src="scripts/controllers/search/NoSearchResult.js"></script>
+  <script src="scripts/controllers/search/TopBarSearch.js"></script>
+  <script src="scripts/controllers/loggedinSubscriber/loggedinSubscriber.js"></script>
+  <script src="scripts/controllers/error/Error.js"></script>
+<!--  <script src="scripts/controllers/Tv.js"></script>-->
+<!--  <script src="scripts/controllers/Movie.js"></script>-->
+  <script src="scripts/controllers/More.js"></script>
+  <script src="scripts/controllers/Promotions.js"></script>
+  <script src="scripts/controllers/Live.js"></script>
+  <script src="scripts/controllers/live_new.js"></script>
+  <script src="scripts/controllers/Search.js"></script>
+  <script src="scripts/controllers/Admin.js"></script>
+  <script src="scripts/controllers/Help.js"></script>
+  <script src="scripts/controllers/Cancel.js"></script>
+  <script src="scripts/controllers/Footer.js"></script>
+  <script src="scripts/controllers/Sitemap.js"></script>
+  <script src="scripts/controllers/RightNow.js"></script>
+  <script src="scripts/controllers/Genre.js"></script>
+  <script src="scripts/controllers/Group.js"></script>
+  <script src="scripts/controllers/Customainpage.js"></script>
+  <script src="scripts/controllers/CustomIframe.js"></script>
+  <script src="scripts/controllers/FilterPage.js"></script>
+  <script src="scripts/controllers/MovieAsset.js"></script>
+  <script src="scripts/controllers/TvAsset.js"></script>
+  <script src="scripts/controllers/emailVerification.js"></script>
+  <script src="scripts/controllers/cancelSubscription/cancelSubscription.js"></script>
+  <script src="scripts/controllers/cancelSubscription/cancelledSubscriptionConfirmation.js"></script>
+  <!-- Add services -->
+  <script src="scripts/services/sessions-service.js"></script>
+  <script src="scripts/services/authentication-service.js"></script>
+  <script src="scripts/services/content-service.js"></script>
+  <script src="scripts/services/services.js"></script>
+<!--  <script src="scripts/services/tvservices.js"></script> -->
+  <script src="scripts/services/search-service.js"></script>
+  <script src="scripts/services/account-service.js"></script>
+  <script src="scripts/services/social-service.js"></script>
+  <script src="scripts/services/watchlist-service.js"></script>
+  <script src="scripts/services/xdr-service.js"></script>
+  <script src="scripts/services/appgrid-service.js"></script>
+  <script src="scripts/services/filter-service.js"></script>
+  <script src="scripts/services/cookie-service.js"></script>
+  <script src="scripts/services/vindicia.js"></script>
+  <script src="scripts/services/gigya.js"></script>
+  <script src="scripts/services/analytics-service.js"></script>
+  <script src="scripts/services/singleasset-service.js"></script>
+  <script src="scripts/services/player-analytics-service.js"></script>
+  <script src="scripts/services/player-services.js"></script>
+
+  <script src="scripts/services/new-search-data-service.js"></script>
+
+  <script src="scripts/services/google-tag-manager-service.js"></script>
+
+
+    <script type="text/javascript">
+      new SmartBanner({
+          title: 'DirecTV HOTT',
+          author: 'DirecTV',
+          button: 'VIEW',
+          store: {
+              ios: 'On the App Store',
+              android: 'In Google Play'
+          },
+          price: {
+              ios: 'FREE',
+              android: 'FREE'
+          }
+          // , force: 'ios' // Uncomment for platform emulation
+      });
+    </script>
+    <!-- endbuild -->
+<!-- <script type="text/javascript" src="https://dl.dropboxusercontent.com/u/85098448/player_3_module.min.js"></script> -->
+
+<!-- seperate rail and popover templates. -->
+       <!-- underscore template -->
+    <script type="text/html" id='BasicRailsItemHtml'>
+        <div class="item">
+          <% if(typeOfRail == 'xdr') { %>
+            <a onclick="setResumePlayheadPosition('<%= base_url  %>', '<%= itemObj.titleId  %>', '<%= playhead_seconds  %>')"  class="titleIDclass_<%= itemObj.titleId %>" >
+
+              <img class="lazyOwl" data-src="<%= itemObj.imagePath %>" alt="<%= itemObj.title %>" data-failover="failoverimage" />
+              <img class="lazyOwl placeholder" src="<%= placeholderImg_url %>"/>
+              <span class="glyphicon playIco <% if(typeof itemObj.show_type != 'undefined' && itemObj.show_type=='series') { %>playIcoSeries<%}%>"
+                    style="display:none;"></span>
+                <!-- <div class="gradientOverlay"></div> -->
+                <% if(totalMins != '') { %>
+                  <div class="listProgressbarContainer">
+                    <div class="listProgressbar" style=" width:<%= totalMins %>;"></div>
+                  </div>
+                <% } %>
+                  <div class="piccaption">
+                    <h5 class="customthumbnail_imageheader"><%= itemObj.title_showname %></h5>
+                    <p class="customthumbnail_imagepara">
+                       <% if(typeof itemObj.show_type != 'undefined' && itemObj.show_type=='series') { %>
+                            Series
+                       <% } else if(typeof itemObj.show_type != 'undefined' && itemObj.show_type!='movie') { %>
+                             <% if(typeof itemObj.title_season_episode != 'undefined') { %>
+                                   <%=  itemObj.title_season_episode %>
+                             <% } %>
+                       <% } %>
+<!--                    <% if(typeof itemObj.season_id != 'undefined') { %>
+                         Season <%= itemObj.season_id %>
+                    <% } %>
+                    <% if(typeof itemObj.episode_id != 'undefined') { %>
+                          <% if(typeof itemObj.season_id != 'undefined') { %>
+                           -
+                          <% } %>
+                         Episode <%= itemObj.episode_id %>
+                    <% } %> -->
+                    </p>
+                  </div>
+            </a>
+          <% } else { %>
+            <a <% if(typeof playOnPopup!='undefined' && playOnPopup==true){ %>
+                 onclick="triggerPopupPlayBack('<%= itemObj.TitleTypeId %>','<%=itemObj.contentID %>','<%= itemObj.imagePath %>','<%= itemObj.title %>')"
+               <% } else { %>
+                 href="<%= single_asset_url %>"
+               <% }  %>
+                class="titleIDclass_<%= itemObj.titleId %>" >
+              <img class="lazyOwl" data-src="<%= itemObj.imagePath %>" alt="<%= itemObj.title %>" data-failover="failoverimage" />
+              <img class="lazyOwl placeholder" src="<%= placeholderImg_url %>"/>
+                <span class="glyphicon playIco <% if(typeof itemObj.show_type != 'undefined' && itemObj.show_type=='series') { %>playIcoSeries<%}%>"
+                      style="display:none;"></span>
+                <!-- <div class="gradientOverlay"></div> -->
+                  <div class="piccaption">
+                    <h5 class="customthumbnail_imageheader"><%= itemObj.title_showname %></h5>
+                    <p class="customthumbnail_imagepara">
+<!--                    <% if(typeof itemObj.season_id != 'undefined') { %>
+                         Season <%= itemObj.season_id %>
+                    <% } %>
+                    <% if(typeof itemObj.episode_id != 'undefined') { %>
+                          <% if(typeof itemObj.season_id != 'undefined') { %>
+                           -
+                          <% } %>
+                         Episode <%= itemObj.episode_id %>
+                    <% } %> -->
+                      <% if(typeof itemObj.show_type != 'undefined' && itemObj.show_type=='series') { %>
+                           Series
+
+                       <% } else if(typeof itemObj.show_type != 'undefined' && itemObj.show_type!='movie') { %>
+                             <% if(typeof itemObj.title_season_episode != 'undefined') { %>
+                                    <%= itemObj.title_season_episode %>
+                             <% } %>
+                       <% } %>
+                    </p>
+                  </div>
+            </a>
+          <% } %>
+        </div>
+        </div>
+    </script>
+<!-- end of underscore template -->
+
+       <!-- underscore template -->
+    <script type="text/html" id='BasicRailsItemPOPoverHtml'>
+              <div class="fullWidth thumb-popover-top-section" style="">
+                <div class="thumbHolder">
+                  <img class="lazyOwl fullWidth" alt="<%=itemObj.title_brief%>"
+                       data-failover="failoverimage" src="<%=itemObj.imgPath%>" />
+                </div>
+                <div class="thumb-popover-top-buttons">
+                <% if(
+                  ( getCookie('loggedin')=='true' ||getCookie('loggedin')==true )
+                  && (typeof itemObj.show_type != 'undefined' && itemObj.show_type=='Series')
+                ){  %>
+                    <a  href="<%= single_asset_url %>">
+                        <button class="fullWidth btnPopover thumbBtnEpisodes" >
+                           <span class="pophtml_en"><%= POPOVER_EPISODESObj.en_US%></span>
+                           <span class="pophtml_es"><%= POPOVER_EPISODESObj.es_ES%></span>
+                    </button></a>
+                <% } else { %>
+                    <a  href="<%= single_asset_url %>">
+                        <button class="fullWidth btnPopover thumbBtnWatch" >
+                           <span class="pophtml_en"><%= POPOVER_PLAYObj.en_US%></span>
+                           <span class="pophtml_es"><%= POPOVER_PLAYObj.es_ES%></span>
+                    </button></a>
+                 <% } %>
+
+
+
+                <% if(
+                  ( getCookie('loggedin')=='true' ||getCookie('loggedin')==true )
+                  && (typeof itemObj.show_type != 'undefined' && itemObj.show_type!='Series')
+                ){  %>
+
+                <!-- add to playlist -->
+
+                  <button  style="display: none;" onclick="watchListTrigger(this,'<%= itemObj.titleId %>')"
+                      class="fullWidth POPoverAddtoPlaylist btnPopover thumbBtnAdd" >
+                      <span class="pophtml_en"><%=BTN_ADD_TO_PLAYLISTObj.en_US%></span>
+                      <span class="pophtml_es"><%=BTN_ADD_TO_PLAYLISTObj.es_ES%></span>
+                  </button>
+
+                <!-- remove from playlist -->
+
+                  <button style="display: none;" onclick="openDeleteWatchlistDialogTrigger(this,'<%= itemObj.titleId %>')"
+                      class="fullWidth POPoverRemovefromPlaylist btnPopover thumbBtnRemove" >
+                      <span class="pophtml_en"><%=BTN_REMOVE_FROM_PLAYLISTObj.en_US%></span>
+                      <span class="pophtml_es"><%=BTN_REMOVE_FROM_PLAYLISTObj.es_ES%></span>
+                  </button>
+                <% }else{ %>
+
+                <% } %>
+
+
+                </div>
+              </div>
+              <div class="row">
+                 <div class="col-md-12 col-sm-12 col-xs-12">
+<!--                    <h6 class="thumb-popover-title pophtml_en"><%= itemObj.title %></h6> -->
+   <!--                 <h6 class="thumb-popover-title pophtml_en">
+                        <a  href="<%= single_asset_url %>" style="text-decoration: none;"><%= itemObj.title %></a>
+                    </h6>
+   -->
+                    <h4 class="thumb-popover-mainheader pophtml_en">
+                        <a  href="<%= single_asset_url %>" style="text-decoration: none;">
+                            <%= itemObj.title %>
+
+                            <% if( typeof itemObj.season_id!='undefined' ) { %>
+                             <%=TXT_ADMIN_SEASON_WATCHLISTObj.en_US%> <%= itemObj.season_id %>
+                            <% } %>
+                            <% if( typeof itemObj.episode_id!='undefined' ) { %>
+                             -
+                             <%=TXT_EPISODE_LIVEObj.en_US%> <%= itemObj.episode_id %>
+                            <% } %>
+
+
+                        </a>
+                    </h4>
+
+       <!--              <h6 class="thumb-popover-title pophtml_es"  style="display:none"><%= itemObj.title_es %></h6> -->
+                    <h4 class="thumb-popover-mainheader pophtml_es"  style="display:none">
+                        <a  href="<%= single_asset_url %>" style="text-decoration: none;">
+                            <%= itemObj.title_es %>
+
+                            <% if( typeof itemObj.season_id!='undefined' ) { %>
+                             <%=TXT_ADMIN_SEASON_WATCHLISTObj.es_ES%> <%= itemObj.season_id %>
+                            <% } %>
+                            <% if( typeof itemObj.episode_id!='undefined' ) { %>
+                             -
+                             <%=TXT_EPISODE_LIVEObj.es_ES%> <%= itemObj.episode_id %>
+                            <% } %>
+
+
+                        </a>
+                    </h4>
+                 </div>
+              </div>
+
+               <div class="row">
+                 <div class="col-md-12 col-sm-12 col-xs-12">
+                    <h6 class="thumb-popover-subheader">
+                        <%=itemObj.year %> | <%= itemObj.genre %>
+                    </h6>
+                    <p class="thumb-popover-content pophtml_en">
+                        <%= itemObj.details %>
+                    </p>
+                    <p class="thumb-popover-content pophtml_es" style="display:none">
+                        <%= itemObj.details_es %>
+                    </p>
+
+                    <h6 class="thumb-popover-subheader pophtml_en"><%= itemObj.duration %> <span><%=TXT_MINObj.en_US%> </span> </h6>
+                    <h6 class="thumb-popover-subheader pophtml_es"><%= itemObj.duration %> <span><%=TXT_MINObj.es_ES%> </span> </h6>
+               <!--     <% if(itemObj.airedOn!='NA' && itemObj.airedOn!='' ){ %>
+                    <h6 class="thumb-popover-subheader pophtml_en">AIRED ON DATE
+                    <span class="thumb-popover-content"><%= itemObj.airedOn %></span></h6>
+                    <h6 class="thumb-popover-subheader pophtml_es" style="display:none">TRANSMITDO EL FECHA
+                    <span class="thumb-popover-content"><%= itemObj.airedOn %></span></h6>
+                    <% } %> -->
+<!--                   <%= itemObj.RatingSystem %> -->
+                    <h6 class="thumb-popover-subheader"><%= itemObj.ratings.toUpperCase() %></h6>
+
+                    <% if(typeof itemObj.staring!='undefined'  && itemObj.staring!='NA'  && itemObj.staring!=''){ %>
+                    <h6 class="thumb-popover-subheader pophtml_en"><%=TXT_STARRINGObj.en_US%> <span class="thumb-popover-content">
+                            <%= itemObj.staring %></span></h6>
+
+                    <h6 class="thumb-popover-subheader pophtml_es" style="display:none"><%=TXT_STARRINGObj.es_ES%> <span class="thumb-popover-content">
+                            <%= itemObj.staring_es %></span></h6>
+                    <% } %>
+                    <% if(typeof itemObj.company!='undefined'  && itemObj.company!='NA'  && itemObj.company!=''){ %>
+                    <h6 class="thumb-popover-subheader pophtml_en">Creator <span class="thumb-popover-content">
+                            <%= itemObj.company %></span></h6>
+                    <h6 class="thumb-popover-subheader pophtml_es"  style="display:none">Creador <span class="thumb-popover-content">
+                            <%= itemObj.company_es %></span></h6>
+                    <% } %>
+                 <!--   <% if(itemObj.audio!='NA'  && itemObj.audio!=''){ %>
+                    <h6 class="thumb-popover-subheader">Audio <span class="thumb-popover-content">
+                            <%= itemObj.audio %></span></h6>
+                    <% } %> -->
+                   </div>
+                </div>
+         </div>
+    </script>
+
+<!--  onebyTwo style rail updated template        -->
+<!-- params :- itemSmall1Html,itemSmall2Html,itemSmall3Html -->
+<script type="text/html" id='NEW_onebytwoRailItemwith3inColHtml'>
+<div class="item" style="margin-left: 0;">
+<div class="col-md-6 col-sm-6 col-xs-6 no-padding">
+<div class="OWLsmallImgHolder" style="position:relative;overflow:hidden;margin-left: 1.7%;margin-right:1.7%;" >
+           <% if(itemSmall1Html!='') {%>
+             <div class="itemImg" style="float:left; display:block;">
+               <%= itemSmall1Html %>
+             </div>
+           <% } %>
+       </div>
+  <div class="OWLsmallImgHolder" style="position:relative;overflow:hidden;margin-left: 1.7%;margin-right:1.7%;" >
+
+           <% if(itemSmall2Html!='') {%>
+             <div class="itemImg" style="float:left; display:block;">
+               <%= itemSmall2Html %>
+             </div>
+           <% } %>
+       </div>
+  <div class="OWLsmallImgHolder" style="position:relative;overflow:hidden;margin-left: 1.7%;margin-right:1.7%;" >
+
+           <% if(itemSmall3Html!='') {%>
+             <div class="itemImg" style="float:left; display:block;" >
+               <%= itemSmall3Html %>
+              </div>
+            <% } %>
+        </div>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-6 no-padding">
+<div class="OWLsmallImgHolder" style="position:relative;overflow:hidden;margin-left: 1.7%;margin-right:1.7%;" >
+           <% if(itemSmall4Html!='') {%>
+             <div class="itemImg" style="float:left; display:block;">
+               <%= itemSmall4Html %>
+             </div>
+           <% } %>
+       </div>
+  <div class="OWLsmallImgHolder" style="position:relative;overflow:hidden;margin-left: 1.7%;margin-right:1.7%;" >
+
+           <% if(itemSmall5Html!='') {%>
+             <div class="itemImg" style="float:left; display:block;">
+               <%= itemSmall5Html %>
+             </div>
+           <% } %>
+       </div>
+  <div class="OWLsmallImgHolder" style="position:relative;overflow:hidden;margin-left: 1.7%;margin-right:1.7%;" >
+
+           <% if(itemSmall6Html!='') {%>
+             <div class="itemImg" style="float:left; display:block;" >
+               <%= itemSmall6Html %>
+              </div>
+            <% } %>
+        </div>
+</div>
+
+</div>
+</script>
+
+<!-- style="position:relative;overflow:hidden;margin-left: 1.7%;margin-right:1.7%;"
+params :- itemBigHtml,itemSmallLeftHtml,itemSmallRightHtml
+-->
+<script type="text/html" id='NEW_onebytwoRailItemHtml'>
+<div class="item">
+      <div class="itemImg">
+       <%= itemBigHtml %>
+      </div>
+       <div class="OWLsmallImgHolder"  >
+
+           <% if(itemSmallLeftHtml!='') {%>
+             <div class="itemImg" style="width:50%;float:left" >
+               <%= itemSmallLeftHtml %>
+             </div>
+           <% } %>
+           <% if(itemSmallRightHtml!='') {%>
+             <div class="itemImg"  style="width:50%;float:right">
+               <%= itemSmallRightHtml %>
+              </div>
+            <% } %>
+        </div>
+</div>
+</script>
+
+<!-- params : -  itemObj,single_asset_url, data-src,Kclass, PlayICOClass,PicCaptionClass,HideDesc<%= HideDesc %>,totalMins -->
+    <script type="text/html" id='NEW_onebytwoRailInnerHtml'>
+        <a <% if(typeof playOnPopup!='undefined' && playOnPopup==true){ %>
+                 onclick="triggerPopupPlayBack('<%= itemObj.TitleTypeId %>','<%=itemObj.contentID %>','<%= itemObj.imagePath %>','<%= itemObj.title %>')"
+               <% } else { %>
+                 href="<%= single_asset_url %>"
+               <% }  %>
+           class="titleIDclass_<%= itemObj.titleId %>" >
+<img class="lazyOwl placeholder" src="<%= placeholderImg_url %>"/>
+<img class="lazyOwl <%= Kclass %>" <%= data_src %>="<%= itemObj.imagePath %>" alt="<%= itemObj.title %>" data-failover="failoverimage" />
+              <span class="glyphicon <%= PlayICOClass %>" style="display:none;">
+                  </span>
+                  <!-- <div class="gradientOverlay"></div> -->
+                  <% if(totalMins != '') { %>
+                  <div class="listProgressbarContainer">
+                    <div class="listProgressbar" style=" width:<%= totalMins %>;"></div>
+                  </div>
+                  <% } %>
+
+
+                  <div class="<%=PicCaptionClass%>">
+                 <h5 class="customthumbnail_imageheader"><%= itemObj.title_showname %></h5>
+                 <p class="customthumbnail_imagepara"  >
+<!--                    <% if(typeof itemObj.season_id != 'undefined') { %>
+                        Season <%= itemObj.season_id %>
+                    <% } %>
+                    <% if(typeof itemObj.episode_id != 'undefined') { %>
+                          <% if(typeof itemObj.season_id != 'undefined') { %>
+                           -
+                          <% } %>
+                         Episode <%= itemObj.episode_id %>
+                    <% } %> -->
+                    <% if(typeof itemObj.show_type != 'undefined' && itemObj.show_type=='series') { %>
+                        <h6>Series</h6>
+
+                       <% } else if(typeof itemObj.show_type != 'undefined' && itemObj.show_type!='movie') { %>
+                             <% if(typeof itemObj.title_season_episode != 'undefined') { %>
+                                    <%= itemObj.title_season_episode %>
+                             <% } %>
+                       <% } %>
+                  </p>
+                 </div></a>
+
+    </script>
+
+
+<!--  end of onebyTwo style rail updated template -->
+
+<!-- underscore template for grid layout -->
+<script  type="text/html" id='RailgridlayoutContainerHtml'>
+<div class="container ">
+    <div class="row fivecolumns" style="padding-bottom:2%;">
+<%= loopedAndInnerHtml %>
+    </div>
+</div>
+</script>
+<!-- end of -->
+<script  type="text/html" id='RailgridlayoutInnerHtml'>
+        <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2" >
+            <div class="item networkImgContainer RailgridLayout">
+                <a <% if(typeof playOnPopup!='undefined' && playOnPopup==true){ %>
+                 onclick="triggerPopupPlayBack('<%= itemObj.TitleTypeId %>','<%=itemObj.contentID %>','<%= itemObj.imagePath %>','<%= itemObj.title %>')"
+               <% } else { %>
+                 href="<%= single_asset_url %>"
+               <% }  %>
+                    class="titleIDclass_<%= itemObj.titleId %>">
+                    <img class="img-responsive" src="<%= itemObj.imagePath %>" data-failover="failoverimage" >
+              <span class="glyphicon playIco <% if(typeof itemObj.show_type != 'undefined' && itemObj.show_type=='series') { %>playIcoSeries<%}%>"
+                    style="display:none;">
+                  </span>
+                  <!-- <div class="gradientOverlay"></div> -->
+                  <% if(totalMins != '') { %>
+                  <div class="listProgressbarContainer">
+                    <div class="listProgressbar" style=" width:<%= totalMins %>;"></div>
+                  </div>
+                  <% } %>
+                    <div class="piccaption"><h5><%= itemObj.title %></h5></div>
+                </a>
+            </div>
+        </div>
+</script>
+<!-- end of -->
+
+<!-- exact onebyTwo style -->
+       <!-- underscore template -->
+    <script type="text/html" id='BasicBigImgone_one_twoRailsItemHtml'>
+     <div class="item">
+        <div class="itemImg itemImgBig">
+        <a <% if(typeof playOnPopup!='undefined' && playOnPopup==true){ %>
+                onclick="triggerPopupPlayBack('<%= itemObj.TitleTypeId %>','<%=itemObj.contentID %>','<%= itemObj.imagePath %>','<%= itemObj.title %>')"
+               <% } else { %>
+                 href="<%= single_asset_url %>"
+               <% }  %>
+             class="titleIDclass_<%= itemObj.titleId %>" >
+          <img class="lazyOwl placeholder" src="<%= placeholderImg_url %>"/>
+          <img class="lazyOwl" data-src="<%= itemObj.imagePath %>" alt="<%= itemObj.title %>" data-failover="failoverimage" />
+                  <span class="glyphicon playIco <% if(typeof itemObj.show_type != 'undefined' && itemObj.show_type=='series') { %>playIcoSeries<%}%>"
+                        style="display:none;">
+                  </span>
+                  <!-- <div class="gradientOverlay"></div> -->
+                  <% if(totalMins != '') { %>
+                  <div class="listProgressbarContainer">
+                    <div class="listProgressbar" style=" width:<%= totalMins %>;"></div>
+                  </div>
+                  <% } %>
+
+
+                      <div class="piccaption">
+                     <h5 class="customthumbnail_imageheader"><%= itemObj.title_showname %></h5>
+                     <p class="customthumbnail_imagepara">
+<!--                    <% if(typeof itemObj.season_id != 'undefined') { %>
+                         Season <%= itemObj.season_id %>
+                    <% } %>
+                    <% if(typeof itemObj.episode_id != 'undefined') { %>
+                          <% if(typeof itemObj.season_id != 'undefined') { %>
+                           -
+                          <% } %>
+                        Episode <%= itemObj.episode_id %>
+                    <% } %> -->
+
+                        <% if(typeof itemObj.show_type != 'undefined' && itemObj.show_type=='series') { %>
+                            <h6>Series</h6>
+
+                       <% } else if(typeof itemObj.show_type != 'undefined' && itemObj.show_type!='movie') { %>
+                             <% if(typeof itemObj.title_season_episode != 'undefined') { %>
+                                    <%= itemObj.title_season_episode %>
+                             <% } %>
+                       <% } %>
+
+
+                     </p>
+                     </div></a>
+
+               </div>
+               </div>
+       </div>
+    </script>
+<!-- end of underscore template -->
+
+
+<script type="text/html" id='NEW_one_one_twoRailItemwith2inColHtml'>
+<div class="item" style="margin-left: 0;">
+<div class="col-md-6 col-sm-6 col-xs-6 no-padding">
+<div class="OWLsmallImgHolder" style="position:relative;overflow:hidden;margin-left: 1.7%;margin-right:1.7%;" >
+           <% if(itemSmall1Html!='') {%>
+             <div class="itemImg" style="float:left; display:block;">
+               <%= itemSmall1Html %>
+             </div>
+           <% } %>
+       </div>
+  <div class="OWLsmallImgHolder" style="position:relative;overflow:hidden;margin-left: 1.7%;margin-right:1.7%;" >
+
+           <% if(itemSmall2Html!='') {%>
+             <div class="itemImg" style="float:left; display:block;">
+               <%= itemSmall2Html %>
+             </div>
+           <% } %>
+       </div>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-6 no-padding">
+  <div class="OWLsmallImgHolder" style="position:relative;overflow:hidden;margin-left: 1.7%;margin-right:1.7%;" >
+           <% if(itemSmall3Html!='') {%>
+             <div class="itemImg" style="float:left; display:block;" >
+               <%= itemSmall3Html %>
+              </div>
+            <% } %>
+        </div>
+  <div class="OWLsmallImgHolder" style="position:relative;overflow:hidden;margin-left: 1.7%;margin-right:1.7%;" >
+           <% if(itemSmall4Html!='') {%>
+             <div class="itemImg" style="float:left; display:block;">
+               <%= itemSmall4Html %>
+             </div>
+           <% } %>
+       </div>
+</div>
+
+</div>
+</script>
+<!-- exact onebyTwo style -->
+
+<!-- PortraitBasicRailsItemHtml underscore template -->
+    <script type="text/html" id='PortraitBasicRailsItemHtml'>
+        <div class="item">
+          <% if(typeOfRail == 'xdr') { %>
+            <a onclick="setResumePlayheadPosition('<%= base_url  %>', '<%= itemObj.titleId  %>', '<%= playhead_seconds  %>')"  class="titleIDclass_<%= itemObj.titleId %>" >
+
+              <img class="lazyOwl" data-src="<%= itemObj.imagePath %>" alt="<%= itemObj.title %>" data-failover="failoverimage" />
+              <img class="lazyOwl placeholder" src="<%= placeholderImg_url %>"/>
+             <% if(itemObj.contentID != '' && typeof itemObj.contentID != 'undefined' ) { %>
+               <!-- Max 5/58: Uncommented rows below according to YAVWEB-171 -->
+               <!-- <div class="playBtnRail porthtml_en"><%=TXT_PLAY_VIDEOObj.en_US%></div>
+                <div class="playBtnRail porthtml_es" style="display:none;"><%=TXT_PLAY_VIDEOObj.es_ES%></div> -->
+                     <span class="glyphicon playIco <% if(typeof itemObj.show_type != 'undefined' && itemObj.show_type=='series') { %>playIcoSeries<%}%>"
+                           style="display:none;"></span>
+              <% } %>
+                <!-- <div class="gradientOverlay"></div> -->
+                <% if(totalMins != '') { %>
+                  <div class="listProgressbarContainer">
+                    <div class="listProgressbar" style=" width:<%= totalMins %>;"></div>
+                  </div>
+                <% } %>
+                  <div class="piccaption">
+                    <h5 class="customthumbnail_imageheader"><%= itemObj.title_showname %></h5>
+                    <p class="customthumbnail_imagepara">
+                       <% if(typeof itemObj.show_type != 'undefined' && itemObj.show_type=='series') { %>
+                            Series
+                       <% } else if(typeof itemObj.show_type != 'undefined' && itemObj.show_type!='movie') { %>
+                             <% if(typeof itemObj.title_season_episode != 'undefined') { %>
+                                   <%=  itemObj.title_season_episode %>
+                             <% } %>
+                       <% } %>
+<!--                    <% if(typeof itemObj.season_id != 'undefined') { %>
+                         Season <%= itemObj.season_id %>
+                    <% } %>
+                    <% if(typeof itemObj.episode_id != 'undefined') { %>
+                          <% if(typeof itemObj.season_id != 'undefined') { %>
+                           -
+                          <% } %>
+                         Episode <%= itemObj.episode_id %>
+                    <% } %> -->
+                    </p>
+                  </div>
+            </a>
+          <% } else { %>
+            <a  <% if(typeof playOnPopup!='undefined' && playOnPopup==true){ %>
+                 onclick="triggerPopupPlayBack('<%= itemObj.TitleTypeId %>','<%=itemObj.contentID %>','<%= itemObj.imagePath %>','<%= itemObj.title %>')"
+               <% } else { %>
+                 href="<%= single_asset_url %>"
+               <% }  %>
+               class="titleIDclass_<%= itemObj.titleId %>" <% if(!itemObj.contentID){ %> style="cursor:default;" <% }  %> >
+              <img class="lazyOwl" data-src="<%= itemObj.imagePath %>" alt="<%= itemObj.title %>" data-failover="failoverimage" />
+              <img class="lazyOwl placeholder" src="<%= placeholderImg_url %>"/>
+              <% if(itemObj.contentID != '' && typeof itemObj.contentID != 'undefined' ) { %>
+                <!-- Max 5/58: Uncommented rows below according to YAVWEB-171 -->
+                <!-- <div class="playBtnRail porthtml_en"><%=TXT_PLAY_VIDEOObj.en_US%></div>
+                <div class="playBtnRail porthtml_es" style="display:none;"><%=TXT_PLAY_VIDEOObj.es_ES%></div> -->
+                     <span class="glyphicon playIco <% if(typeof itemObj.show_type != 'undefined' && itemObj.show_type=='series') { %>playIcoSeries<%}%>"
+                           style="display:none;"></span>
+              <% } %>
+                <!-- <div class="gradientOverlay"></div> -->
+                  <div class="piccaption">
+                    <h5 class="customthumbnail_imageheader"><%= itemObj.title_showname %></h5>
+                    <p class="customthumbnail_imagepara">
+<!--                    <% if(typeof itemObj.season_id != 'undefined') { %>
+                         Season <%= itemObj.season_id %>
+                    <% } %>
+                    <% if(typeof itemObj.episode_id != 'undefined') { %>
+                          <% if(typeof itemObj.season_id != 'undefined') { %>
+                           -
+                          <% } %>
+                         Episode <%= itemObj.episode_id %>
+                    <% } %> -->
+                      <% if(typeof itemObj.show_type != 'undefined' && itemObj.show_type=='series') { %>
+                           Series
+
+                       <% } else if(typeof itemObj.show_type != 'undefined' && itemObj.show_type!='movie') { %>
+                             <% if(typeof itemObj.title_season_episode != 'undefined') { %>
+                                    <%= itemObj.title_season_episode %>
+                             <% } %>
+                       <% } %>
+                    </p>
+                  </div>
+            </a>
+          <% } %>
+        </div>
+        </div>
+    </script>
+<!-- PortraitBasicRailsItemHtml end of underscore template -->
+<div id="fb-root"></div>
+
+<script type="text/javascript">
+    //window.language = 'en';
+scrolltotop();
+function scrolltotop()
+{
+    jQuery(document).ready(function ($) {
+   $("html, body").animate({ scrollTop: 0 }, "slow");
+    });
+
+}
+//isTpcAllowed(function(allowed) {
+//    console.log("third party cookie");
+//    console.log(allowed);
+//});
+//var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+//var eventer = window[eventMethod];
+//var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+//
+//// Listen to message from child window
+//eventer(messageEvent,function(e) {
+//    var key = e.message ? "message" : "data";
+//    var data = e[key];
+//    //run function//
+//    console.log(e.message);
+//},false);
+
+//var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+//var eventer = window[eventMethod];
+//var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+//
+//// Listen to message from child window
+//eventer(messageEvent,function(e) {
+//  console.log('parent received message!:  ',e.data);
+//},false);
+
+
+</script>
+
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5J7G8D"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5J7G8D');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5J7G8D"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5J7G8D');</script>
+<!-- End Google Tag Manager -->
+
+</body>
+</html>

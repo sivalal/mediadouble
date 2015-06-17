@@ -1,0 +1,23 @@
+<div class="col-md-9 col-sm-8 col-xs-12 no-padding resultVideos">
+	<div class="catHeadResult fullWidth">
+		<div class="alignLeft" ng-init ="isDisabled = !(tab.query_option && tab.query_option != '')" ng-repeat="tab in filterSearchTab" ng-class="{'linkActive': $index == selected,'linkInvalid':isDisabled||ajaxSearchSpinner_FullPeople}" ng-disabled="isDisabled || ajaxSearchSpinner_FullPeople" ng-click="isDisabled || ajaxSearchSpinner_FullPeople || goToFullPage(tab.id,'',$index)"><span ng-bind="tab.title[CurrentLang]"></span><span ng-if="$index == selected" ng-bind="allItemsCount"></span></div>
+	</div>
+	<div class="fullWidth row" infinite-scroll='getMoreResults()'  infinite-scroll-disabled="disablePeopleScroll" infinite-scroll-distance='1' infinite-scroll-immediate-check ='false'>
+		<div class="searchItem col-md-3 col-sm-4 col-xs-6" ng-repeat = "people in searchAssets[type].results" ng-init="people.showFallback=true">
+      <a href="/{{people.source}}?titleId={{people.id}}">
+        <div class="searchThumb fullWidth no-padding"  ng-class="{'loading':people.showFallback}" style="" >
+        	<img class="fullWidth placeholder" ng-if="people.showFallback" ng-src="{{fallbackImageURL}}" />
+          <img class="fullWidth lazyThumb" ng-src="{{updateimagePath(people.imagePath)}}" imageonload="people.showFallback=false" fallback-src="{{fallbackImageURL}}"/>
+        </div>
+        <div class="fullWidth thumbCaption" style="">
+          <h4 style="" ng-bind="people.title"></h4>
+          <p style="" ng-bind="people.Year"></p>
+        </div>
+      </a>
+    </div>
+    <div class="fullWidth parent" style="height:100px;">
+    <h3 ng-if="showNoResult" translate="TXT_SEARCHTYPE_NORESULT" class="searchNoResultsText"></h3>
+    <span ng-show="ajaxSearchSpinner_FullPeople" us-spinner="{radius:15, width:4, length: 20}" class="yelloworangeloader" ></span>
+    </div>
+	</div>
+</div>

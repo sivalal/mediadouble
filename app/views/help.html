@@ -1,0 +1,61 @@
+<style type="text/css">
+	
+
+	#help-container .dropdown-menu
+	{
+
+		width: 600px;
+		background-color: white;
+		border-radius: 0;
+		padding: 10px;
+	}
+
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
+    background: #C8362E;
+}
+</style>
+
+<div id="help-container" class="container" style="background-color:white">
+	 <div class="row extras-top ">
+		<div class="col-md-12" style="height:150px" >	
+			<div class="col-md-6 col-md-offset-5 col-sm-12 col-sm-offset-5 col-xs-12 col-xs-offset-2">
+				<label style="font-size: xx-large;padding-top: 62px;">Help Center </label>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12" style="margin-top:-25px;">
+	 	<input type="text" class="help-search"  ng-model="searchTxt" typeahead="help for help in helpoptions| filter:$viewValue | limitTo:8" typeahead-min-length="3" >
+	</div> 
+	<div class="col-md-8 col-md-offset-2">
+		<div class="row">
+				<div class="col-md-4"> </div>
+		</div>
+	</div>
+	<div style="height:300px">
+	</div>
+	<div class="row help-bottom ">
+		<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12" >
+			<label class="help-bottom-head"><b>Can't find what you are looking for?</b></label>
+		</div>
+		<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12" >
+		  <form novalidate  name="helpform" role="form">
+			<label>Contact Us</label>
+			<br/><br/>
+			<label>Whats your question about us</label>
+			 <select class="dropdown-bottom" ng-model="mstep" ng-options="state for state in states">
+		 		<option style="display:none;" selected value="">PLEASE CHOOSE ONE..</option>
+			 </select>
+			 <br/><br/>
+			<label>Your Name</label>
+			<input type="text" maxlength="100" ng-model="username" class="width-max" ng-required="true">
+			<br/><br/>
+			<label>Your "Company" email address</label>
+			<input type="text" maxlength="100" ng-model="email" class="width-max" ng-required="true">
+			<br/><br/>
+			<label>How can we help?</label>
+			<textarea rows="5" maxlength="200" ng-model="helpTxt" class="width-max form-control" ng-required="true"></textarea>
+			<button ng-disabled="!helpform.$valid"  ng-click="requestSubmit()"  class="btn btn-default navbar-btn signup">SEND</button>
+			</form>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,272 @@
+
+<!-- <div class="fullWidth billingHistory">
+  <div class="fullWidth">
+    <span ng-if="ajaxPaymentFormSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+    <div class="fullWidth formHolder">
+      <div class="billHistoryHead fullWidth">
+        <div class="alignLeft">
+          <div class="billBreadcrumbs">
+            <a href="manageAccount">
+              Account Management
+            </a>
+            > Billing History
+          </div>
+          <h4  translate="TXT_HEADER_BILLING_HISTORY"></h4>
+        </div>
+        <div class="alignRight billingDatePick">
+          <label class="margin-md-col-right-2 alignLeft" for="from" translate="TEXT_BILLING_CUSTOM_DATE_RANGE"></label>
+          <div class="alignLeft billingDatePicker">
+            <input class="form-control col-md-9 col-sm-9 col-xs-9" type="text" id="fromBillingDate" name="from" ng-model="fromBillDate" readonly="readonly">
+          </div>
+          <div class="alignLeft billingDatePicker">
+            <label class="margin-md-col-right-2" for="to" translate="TEXT_TO"></label>
+            <input class="form-control col-md-9 col-sm-9 col-xs-9" type="text" id="toBillingDate" name="to"  ng-model="toBillDate" readonly="readonly">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-sm-12 col-xs-12 billHistoryContents">
+        <table class="table" id="billtab">
+          <thead>
+            <tr>
+              <th translate="TEXT_DATE" ng-click="sortByDate()"></th>
+              <th translate="TEXT_METHOD"></th>
+              <th translate="TEXT_TRANSACTION_CODE"></th>
+              <th translate="TEXT_BILLING_PERIOD"></th>
+              <th translate="TEXT_TOTAL"></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="billingList" ng-show="isShowNextBilling">
+              <td>
+                <span class="fullWidth">Next Billing Date</span>
+                {{nextBillingObject.transaction_items[0].service_period_end_date | date:'MM/dd/yyyy'}}
+              </td>
+              <td ng-if="nextBillingObject.source_payment_method.type == 'CreditCard'">
+                <img src="" alt="CreditCard" title="XXXXXXXXXXXX{{nextBillingObject.source_payment_method.credit_card.last_digits}}">
+              </td>
+              <td ng-if="nextBillingObject.source_payment_method.type == 'PayPal'">
+                <img src="" alt="PayPal">
+              </td>
+              <td>
+                --
+              </td>
+              <td>
+                {{nextBillingObject.transaction_items[0].service_period_start_date | date:'MM/dd/yyyy'}} - {{nextBillingObject.transaction_items[0].service_period_end_date | date:'MM/dd/yyyy'}}
+              </td>
+              <td>
+                ${{nextBillingObject.amount}} {{nextBillingObject.currency}}
+              </td>
+              <td>
+                <div ng-click="slideUpDown($index,'nextBilling')">
+                  +
+                </div>
+              </td>
+              <div id="nextBilling_" style="display:none;padding:5px">
+                <div ng-repeat="items in nextBillingObject.transaction_items">
+                  <span ng-bind="items.name"></span>
+                  <span ng-bind="items.price"></span>
+                </div>
+              </div>
+            </tr>
+
+            <tr class="billingList" ng-repeat="transaction in listOfTransactions | orderBy:'timestamp' : tfValue">
+              <td>
+                {{transaction.timestamp | date:'MM/dd/yyyy'}}
+              </td>
+              <td ng-if="transaction.source_payment_method.type == 'CreditCard'">
+                <img src="" alt="CreditCard" title="XXXXXXXXXXXX{{transaction.source_payment_method.credit_card.last_digits}}">
+              </td>
+              <td ng-if="transaction.source_payment_method.type == 'PayPal'">
+                <img src="" alt="PayPal">
+              </td>
+              <td>
+                {{transaction.merchant_transaction_id}}
+              </td>
+              <td>
+                {{transaction.transaction_items[0].service_period_start_date | date:'MM/dd/yyyy'}} - {{transaction.transaction_items[0].service_period_end_date | date:'MM/dd/yyyy'}}
+              </td>
+              <td>
+                ${{transaction.amount}} {{transaction.currency}}
+              </td>
+              <td>
+                <div ng-click="slideUpDown($index)">
+                  +
+                </div>
+              </td>
+              <div id="{{$index}}" style="display:none;padding:5px">
+                <div ng-repeat="items in transaction.transaction_items">
+                  <span ng-bind="items.name"></span>
+                  <span ng-bind="items.price"></span>
+                </div>
+              </div>
+            </tr>
+          </tbody>
+        </table>
+        <button ng-disabled="totalPages==currentPageNumber" ng-click="loadMore()">Load More</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="fullWidth billingHistory">
+  <div class="fullWidth">
+  <!-- billing history -->
+    <div class="fullWidth formHolder">
+      <div class="billHistoryHead fullWidth">
+        <div class="alignLeft">
+          <div class="billBreadcrumbs mobHide">
+            <a href="manageAccount">
+              Account Management
+            </a>
+            > Billing History
+          </div>
+          <h4><span class="dollar">$</span><span translate="TXT_HEADER_BILLING_HISTORY"></span> </h4>
+        </div>
+        <div class="alignRight billingDatePick mobHide">
+          <label class="alignLeft" for="from" translate="TEXT_BILLING_CUSTOM_DATE_RANGE"></label>
+          <div class="alignLeft billingDatePicker">
+            <span class="calenderIcon" id="fromBillingDateImg"></span>
+            <input class="form-control alignLeft" type="text" id="fromBillingDate" name="from" ng-model="fromBillDate" readonly="readonly">
+          </div>
+          <label class="alignLeft" for="to" translate="TEXT_TO_DATE_RANGE"></label>
+          <div class="alignLeft billingDatePicker">
+            <span class="calenderIcon" id="toBillingDateImg"></span>
+            <input class="form-control alignLeft" type="text" id="toBillingDate" name="to"  ng-model="toBillDate" readonly="readonly">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-sm-12 col-xs-12 no-padding billHistoryContents">
+        <div  class="rTable" id="billtab">
+          <div class="rTableRow fullWidth thead mobHide">
+            <div class="rTableRow fullWidth">
+              <div class="rTableHead dateSortArrowUp" id="dateSort" ng-click="sortByDate()">
+                <div class="alignVert">
+                  <span class="parent" translate="TEXT_DATE"></span>
+                </div>
+              </div>
+              <div class="rTableHead">
+                <div class="alignVert">
+                  <span translate="TEXT_METHOD"></span>
+                </div>
+              </div>
+              <div class="rTableHead mobHide">
+                <div class="alignVert">
+                  <span translate="TEXT_TRANSACTION_CODE"></span>
+                </div>
+              </div>
+             <!--  <div class="rTableHead mobHide">
+                <div class="alignVert">
+                  <span translate="TEXT_BILLING_PERIOD"></span>
+                </div>
+              </div> -->
+              <div class="rTableHead">
+                <div class="alignVert">
+                  <span translate="TEXT_TOTAL"></span>
+                </div>
+              </div>
+              <div class="rTableHead arrowColumn"></div>
+            </div>
+          </div>
+          <div class="rTableRow">
+            <span ng-if="ajaxBillingHistorySpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+            <div class="rTableRow fullWidth billingList nextBillingRow parent" id="nextBillingMain_" ng-show="isShowNextBilling">
+              <div class="rTableCell parent billDateCell">
+                <div class="alignVert">
+                  <span class="fullWidth">Next Billing Date</span>
+                  {{nextBillingObject.transaction_items[0].service_period_end_date | date:'MM/dd/yyyy'}}
+                </div>
+              </div>
+              <div class="rTableCell parent" ng-if="nextBillingObject.source_payment_method.type == 'CreditCard'">
+                <div class="alignVert">
+                  <div class="paymentCreditcard" title="XXXXXXXXXXXX{{nextBillingObject.source_payment_method.credit_card.last_digits}}"></div>
+                </div>
+              </div>
+              <div class="rTableCell parent" ng-if="nextBillingObject.source_payment_method.type == 'PayPal'">
+                <div class="alignVert">
+                  <div class="paymentPaypal" title="Paypal"></div>
+                </div>
+              </div>
+              <div class="rTableCell parent mobHide">
+                <div class="alignVert">
+                --
+                </div>
+              </div>
+            <!--   <div class="rTableCell parent mobHide">
+                <div class="alignVert">
+                {{nextBillingObject.transaction_items[0].service_period_start_date | date:'MM/dd/yyyy'}} - {{nextBillingObject.transaction_items[0].service_period_end_date | date:'MM/dd/yyyy'}}
+                </div>
+              </div> -->
+              <div class="rTableCell parent">
+                <div class="alignVert">
+                  <div class="priceTag ">${{nextBillingObject.amount}} <span>{{nextBillingObject.currency}}</span></div>
+                </div>
+              </div>
+              <div class="rTableCell arrowColumn">
+                  <div ng-click="slideUpDown($index,'nextBilling')" class="billArrowDown parent">
+                  </div>
+              </div>
+              <div id="nextBilling_" class="billPackageDetails" style="display:none;">
+                <div class="fullWidth parent" ng-repeat="items in nextBillingObject.transaction_items">
+                  <div ng-bind="items.name" class="alignLeft"></div>
+                  <div class="priceTag alignRight">${{items.price}} <span>{{nextBillingObject.currency}}</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="rTableRow billingList fullWidth parent" ng-repeat="transaction in listOfTransactions | orderBy:'timestamp' : tfValue" id="billingMain_{{$index}}">
+              <div class="rTableCell parent">
+                <div class="alignVert">
+                  {{transaction.timestamp | date:'MM/dd/yyyy'}}
+                </div>
+              </div>
+              <div class="rTableCell parent" ng-if="transaction.source_payment_method.type == 'CreditCard'">
+                <div class="alignVert">
+                  <div class="paymentCreditcard" title="XXXXXXXXXXXX{{transaction.source_payment_method.credit_card.last_digits}}"></div>
+                </div>
+              </div>
+              <div class="rTableCell parent" ng-if="transaction.source_payment_method.type == 'PayPal'">
+                <div class="alignVert">
+                  <div class="paymentPaypal" title="Paypal"></div>
+                </div>
+              </div>
+              <div class="rTableCell parent mobHide">
+                <div class="alignVert">
+                {{transaction.merchant_transaction_id}}
+                </div>
+              </div>
+              <!-- <div class="rTableCell parent mobHide">
+                <div class="alignVert">
+                {{transaction.transaction_items[0].service_period_start_date | date:'MM/dd/yyyy'}} - {{transaction.transaction_items[0].service_period_end_date | date:'MM/dd/yyyy'}}
+                </div>
+              </div> -->
+              <div class="rTableCell parent">
+                <div class="alignVert">
+                  <div class="priceTag">${{transaction.amount}} <span>{{transaction.currency}}</span></div>
+                </div>
+              </div>
+              <div class="rTableCell arrowColumn">
+                  <div ng-click="slideUpDown($index)" class="billArrowDown parent">
+                  </div>
+              </div>
+              <div id="{{$index}}" class="billPackageDetails" style="display:none;">
+                <div class="fullWidth parent" ng-repeat="items in transaction.transaction_items">
+                  <div ng-bind="items.name" class="alignLeft"></div>
+                  <div class="priceTag alignRight">${{items.price}} <span>{{transaction.currency}}</span></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <button class="btn btnOrange loadMoreBtn center-block" ng-disabled="totalPages==currentPageNumber" ng-click="loadMore()">Load More</button>
+      </div>
+    </div>
+  </div>
+</div>
+

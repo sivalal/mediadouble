@@ -1,0 +1,79 @@
+<script>
+  jQuery(document).ready(function ($) {
+    "use strict";
+    $('#movieScroll').perfectScrollbar();
+  });
+</script>
+
+<div id="movieScroll" class="contentHolderSearch">   
+  <div>
+      <div class="col-md-12 col-sm-12 col-xs-12 billingHeaderNav">
+        <a ng-click="backToMenu('views/admin/billing.html')" class="icon-custom-back" translate="HOVER_TXT_ADMIN_BACK_WATCHLIST"></a>
+        <h4 class="billingFont text-center" translate="ADMIN_SIDE_BAR_BILLING_HISTORY"></h4>
+      </div> 
+  </div>
+  <div class="st-nav-acc-container"> 
+    <div ng-show="userPackageContainer" class="col-md-12 col-sm-12 col-xs-12 col-md-margin-top-2"> 
+      <div class="col-md-12 col-sm-12 col-xs-12  col-md-margin-top-2" >
+        <div class="col-md-7 col-sm-7 col-xs-7 st-nav-acc-package extra-padding-3">
+          <h2  class="text-center" style="color: #fff;">{{userSubscriptionDetails.packageTitle[CurrentLang]}}</h2>
+          <h5  class="text-center" style="font-size: 1.2em;">{{'TXT_CURRENCY' | translate}}{{userSubscriptionDetails.subscriptionNextPricingAmount}} {{'TXT_SIGNUP_PRICE_A_MONTH' | translate}}</h5>
+        </div>
+        <div class="col-md-5 col-sm-5 col-xs-5 billingDate extra-padding-3" ng-style="{'background-color':userSubscriptionDetails.colorCode}">
+          <h5  class="text-center" style="font-size: 1.4em; padding: 5%;">{{userSubscriptionDetails.subscriptionNextBillingTimestamp}}</h5>
+        </div>
+      </div>  
+      <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:2px;">
+        <div class="col-md-7 col-sm-7 col-xs-7 st-nav-acc-monthlysub padding-0">
+          <h6 class="st-nav-adminHeader text-center">{{userSubscriptionDetails.packageDescription[CurrentLang]}}</h6>  
+        </div> 
+        <div class="col-md-5 col-sm-5 col-xs-5 st-nav-acc-monthlysub padding-0" style="border-left: 1px solid #fff;">
+          <h6 class="st-nav-adminHeader text-center" translate="TEXT_NEXT_BILLING_DATE"></h6>  
+        </div>
+      </div>
+    </div>
+  <span ng-show="ajaxBillingHistorySpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>  
+  <div class="col-md-10 col-sm-10 col-xs-10 col-md-margin-top-1 col-md-offset-1">
+    <div class="col-md-6 col-sm-6 col-xs-6 billingDatePicker">
+      <label class="margin-md-col-right-2" for="from" translate="TEXT_FROM"></label>
+      <input class="form-control col-md-9 col-sm-9 col-xs-9" type="text" id="fromBillingDate" name="from" ng-model="fromBillingDate" jqdatepickerfrom readonly="readonly">
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-6 billingDatePicker">
+      <label class="margin-md-col-right-2" for="to" translate="TEXT_TO"></label>
+      <input class="form-control col-md-9 col-sm-9 col-xs-9" type="text" id="toBillingDate" name="to"  ng-model="toBillingDate" jqdatepickerto readonly="readonly">
+    </div>
+  </div>
+    <div class="col-md-12 col-sm-12 col-xs-12 col-md-margin-top-1" ng-show="userPackageInBillingHistoryContainer" >
+      <div class="col-md-12 col-sm-12 col-xs-12 col-md-margin-top-1">
+        <table class="table" id="billtab">
+          <thead>
+            <tr>
+              <th translate="TEXT_DATE"></th>
+              <th translate="TEXT_METHOD"></th>
+              <th translate="TEXT_TRANSACTION_CODE"></th>
+              <th translate="TEXT_BILLING_PERIOD"></th>
+              <th translate="TEXT_TOTAL"></th>
+            </tr>
+          </thead>
+            <tr ng-repeat="transaction in transactionList">
+              <td>{{transaction.timestamp}}</td>
+              <td>Visa**** **** **** {{transaction.source_payment_method.credit_card.last_digits}} </td>
+              <td>{{transaction.merchant_transaction_id}}</td>
+              <td>{{transaction.transaction_items[0].service_period_start_date}} / {{transaction.transaction_items[0].service_period_end_date}}</td>
+              <td>${{transaction.amount}} {{transaction.currency}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div ng-if="transactionList.length == 0" translate="TXT_CONTENT_NOT_AVAILABLE" style=" text-align: center; color: #91A4B1; "></div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="fullWidth errorMsg" ng-show="transactionHistoryError">
+              <span class="errorIcon">{{transactionHistoryMessage | translate}}</span>
+              <span class="closeError" ng-click="closeTransactionHistoryMessageAlert()"></span>
+            </div>
+        </div>
+    </div> 
+    </div>
+   </div>     
+</div>
+    
+    

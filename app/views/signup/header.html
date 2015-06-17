@@ -1,0 +1,18 @@
+<div class="signupHeader">
+	<div id="logo" class="navbar-header navbar-left">   
+        <!-- LOGO IMAGE -->
+        <a data-tap-disabled="true" ng-click="redirectToHome()" style="cursor:pointer;"><img ng-src="{{logoweb}}" ng-show="showlogo" ></a>
+    </div>
+    <div class="signupMenu">
+		<a ng-repeat="page in signupConfiguration.signup_page track by $index" ng-href="{{page.link}}" ng-class="(page.id == 'selectPackage') ? '' : 'inactiveLink'">
+			<span class="count" ng-bind="$index + 1" ng-class="(routePath == page.link) ? 'activeSignup' : ''"></span>
+			<span class="text" ng-bind="page.header_txt[CurrentLang]" ng-class="(routePath == page.link) ? 'activeSignup' : ''"></span>
+		</a>
+    </div>
+    <div id="logSin" class="nav navbar-nav pull-right parent
+    " >
+        <button ng-click="loginModal(1)" ng-if="!isLoggedIn" class="navbar-btn login " ng-class="(CurrentLang == 'es_ES') ? 'login_es' : ''" id="login" translate="BTN_LOGIN_TXT"></button>
+        <span ng-if="ajaxLogoutSpinner" us-spinner="{radius:4, width:4, length: 8}" class="yelloworangeloader"></span>
+        <button ng-click="logOut()" ng-if="isLoggedIn" class="navbar-btn login " ng-class="(CurrentLang == 'es_ES') ? 'login_es' : ''" id="login" translate="BTN_SIGN_OUT_TXT"></button>
+    </div>
+</div>

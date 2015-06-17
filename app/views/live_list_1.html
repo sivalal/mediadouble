@@ -1,0 +1,114 @@
+<style type="text/css">
+    .upgradeOverlay{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 8;
+        background: rgba(0, 0, 0, 0.25);
+    }
+    .dollar_icon{
+        background: image-url('icon/dollar_burst.png') center no-repeat;
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+</style>
+<span ng-show="ajaxTrackSpinnerInitial" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+<div class="live">
+	<div class="livePlayer parent">
+		<!-- <img class="img-responsive fullWidth" src="images/player_dummy.png"> -->
+        <div  id='liveshow_playerwrapper' class="tvPlayerWrapper"  style='width:0;height:0'>
+        </div>
+		<div class="liveContents" ng-hide="showList" ng-class="{'showPrograms':isProgramVisible}">
+			<div class="liveContentHolder">
+			<span ng-bind = "dateToDisplayGuide" class = "dateDisplay"></span>
+			<span class="openPrograms" ng-click="showProgramTimes()" translate="SHOWTIME_TXT"></span>
+			<span class="closePrograms" ng-click="hideProgramTimes()" translate="HIDETIME_TXT"></span>
+			<div class="livePrograms">
+				<div class="liveDate">
+					<div class="transOpac">
+						<span id="prev_day" class="prevDayBtn" ng-click="button_clicked || previousDayMove()" ng-disabled="button_clicked" style="text-align:center;"></span>
+						<h4 ng-bind="dateToDisplayGuide"></h4>
+						<span id="next_day" class="nextDayBtn" ng-click="button_clicked || nextDayMove()" ng-disabled="button_clicked" style="text-align:center;"></span>
+					</div>
+				</div>
+				<div class="liveTimeLine">
+					<div class="scrollBarTop">
+						<div id="next_nav" class="nextBtn" ng-click="nextMove()"></div>
+						<div id="prev_nav" class="prevBtn" ng-click="previousMove()"></div>
+					</div>
+					<div id = "liveTimeLineRow" class="timeSlot" style ="margin-left:0px;">
+						<div ng-repeat="time in segments.max_time_slot" class="block" ng-class="(curr_timeslot == $index && slotPosition != 0) ? 'currentslot':'' ">
+                                <span ng-bind="time"></span>
+                            </div>
+					</div>
+				</div>
+					<div class="liveProgramTable">
+	    				<div class="scrollBarChannelTop block" ng-click="topMove()">
+							<div id="top_nav" class="upBtn"></div>
+						</div>
+						<div class="scrollBarChannelBottom block" ng-click="downMove()">
+							<div id="down_nav" class="downBtn"></div>
+						</div>
+						<div class="liveChannelList">
+							<div class="liveChannelListCont fullWidth" style ="margin-top:0px;">
+								<div ng-repeat="track in tracks" class="liveChannelLogo block" ng-click="LivePlayerStart(track.embed_code,track.title,track.channelId,$index)" ng-class="{blockActive:selectedChannelIndex==$index}">
+                                                                    <img ng-src="{{track.imagePath}}">
+                                                                    <a ng-href="{{upgradePage}}" class="upgradeOverlay" ng-show="!track.isEntitled">
+                                                                       <span class="dollar_icon"></span>
+                                                                    </a>
+                                                                </div>
+							</div>
+						</div>
+						<span ng-show="ajaxTrackSpinnerChannel" us-spinner="{radius:25, width:8, length: 16}" class="blackloader"></span>
+						<div class="liveProgramList">
+							<div class="liveProgramListHolder">
+								<div id="livelistcontainer" class="pull-left" style ="margin-left:0px;" ng-style="{ width:bigRowLength}">
+									<div id="trackRow" class="liveListContents" ng-repeat="channel in segments.channels" >
+										<div class="block" style="padding:7px" ng-style="{ width:program.rowWidth}" ng-repeat="program in channel.programs">
+											<h5 title="{{program.virtual_asset.metadata.long_title}}" ng-bind="program.virtual_asset.metadata.long_title"></h5>
+											<span id="timeSpan" class="liveProgramTimeSpan" style="visibility: hidden;" ng-if="program.start_time"><span ng-bind="program.start_time"></span>-<span ng-bind="program.end_time"></span>
+											<!-- {{program.start_time}} - {{program.end_time}} -->
+											</span>
+											<div class="liveProgramDetails">
+												<span ng-bind="program.virtual_asset.metadata.program_type" ng-if="program.virtual_asset.metadata.program_type">
+												</span>
+												<span style="text-transform:none; margin-left:10px;" ng-bind="program.virtual_asset.metadata.tv_rating">
+												</span>
+												<span style="text-transform:none; margin-left:10px;" ng-if="program.duration"><span ng-bind="program.duration"></span><span translate="LIVE_MINS_TXT"></span></span>
+											</div>
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="liveBottomLine">
+						<div class="scrollBarTop">
+							<div id="next_nav" class="nextBtn" ng-click="nextMove()"></div>
+							<div id="prev_nav" class="prevBtn" ng-click="previousMove()"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div>
+</div>
+
+
+<!-- Common Rails -->
+<div ng-class="{visitorRails:!isLoggedIn}" class="commonRails fullWidth">
+  <div ng-include="'/views/railtemplate_page.html'" ></div>
+</div>
+<!--/ Common Rails -->

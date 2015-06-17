@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>yaveo by DIRECTV</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="css/yaveo.css" rel="stylesheet">
+	<link href="fonts/yaveo/yaveofont.css" rel='stylesheet'>
+	
+<!--<script type="text/javascript" src="js/830ca62f.vendor.js"></script>-->
+<!--<script type="text/javascript" src="js/analytics-service.js"></script>-->
+	<script type="text/javascript" src="js/Ooyala_Omniture.js"></script>
+		
+	<script type="text/javascript">
+function resetEvars() {
+    s.pageName = '';
+    s.server = '';
+    s.pageType = '';
+    s.events = '';
+    s.eVar17 = '';
+    s.eVar8 = '';
+    s.prop9 = '';
+    s.eVar18 = '';
+    s.eVar4 = '';
+    s.eVar1 = '';
+    s.prop1 = '';
+    s.eVar2 = '';
+    s.prop5 = s.eVar5 = '';
+    s.eVar10 = '';
+    s.eVar14 = '';
+}
+	var s = Reporting.getReportingObject('dtvdirectvhottprod'); // 'dtvdtvdirectvhottest' for testing, 'dtvdirectvhottprod' for production
+	s.channel = 'https:www.yaveo.com'; // https:www.yaveo.com for production
+resetEvars();
+var pageName = 'SizzleSpanish';
+s.pageName = pageName;
+s.server = '';
+s.pageType = '';
+s.events = 'event1,event2';
+var accountNumber = ''; //Sessions.getCookie('userid');
+//account_number
+if (typeof accountNumber !== 'undefined') s.eVar17 = accountNumber;
+s.eVar1 = ''; //<subscriber_type> Subscriber/Non Subscribe //on page load
+s.prop1 = navigator.userAgent; //<device_type>
+s.prop9 = (typeof propNine !== 'undefined') ? propNine : '';
+s.eVar2 = ''; //package of the user  //on page load
+//s.prop2='' //not known
+s.eVar3 = ''; //<search_term_typed>  //on search
+s.prop3 = ''; //# of results from search  //on search
+s.eVar4 = ''; //Piped origin of playback  //on video playback
+s.prop4 = ''; //view type
+s.prop5 = s.eVar5 = 'es_ES'; //selected language(en_US/es_ES)  //on page load
+s.eVar7 = ''; //genre if applicable  on page with genre info  //on page load
+//s.prop7        //# of Videos in Watchlist //on page load of watchlist
+//s.eVar8        //<movie_title | Showname_Seasonid_Episodeid> //on video playback
+//s.prop8        //promocodes // on signup completion or new subscribtion
+//s.eVar9        //Name of social sharing network  //on sharing video
+s.eVar10 = navigator.userAgent; //<device_type>    //on page load
+//s.eVar12       //<connection_type>  //not sure for web  //on page load
+//s.eVar13       //<programmer_name>(if applicable) Only when user selects a network. Capital letter Network Name
+//on page load
+s.eVar14 = ''; //<subscription_type> // on signup completion
+//s.eVar15       //Number of videos in watchlist page  //on page load
+//s.eVar16       //<promo_codes>  // on signup completion
+var s_code = s.t();
+if (s_code) console.log(s_code);
+console.log(pageName);
+
+</script>
+
+</head>
+
+<!--video one will have to be set in the src of the iframe in index.php.
+second video url will have to be set in the yaveo.js file.-->
+
+
+<body>
+	<div id="videoBox">
+		<div id="videoTrigger">
+			<div id="playBox">
+				<img src="img/play-graphic_sp.png" class="img-responsive"/>
+				<br/>
+				<a href="//yaveo.com/signup" class="btn btn-ghost">&#161;Reg&#237;strate hoy&#33;</a>
+			</div>
+		</div>
+		<iframe id="video" src="//player.vimeo.com/video/120850026?api=1&player_id=video" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+	</div>
+	<div id="greyBox">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-7">
+					<div class="cta-text" style="text-align: center;">Descubre un nuevo mundo de entretenimiento en espa&ntilde;ol al alcance de tu mano</div>
+				</div>
+				<div class="col-md-5">
+					<a href="//yaveo.com/signup" class="btn btn-orange btn-block">Comienza tu primera semana gratis</a>
+					<p class="freetrial">Solo $7.99 al mes, despu&eacute;s de la prueba gratis*</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<ul class="orange-dot">
+						<li>Nuevo servicio de streaming en espa&ntilde;ol dedicado a los hispanos en EE. UU.</li>
+						<li>Miles de horas de la mejor programaci&oacute;n de Latinoam&eacute;rica, Espa&ntilde;a y EE. UU.</li>
+						<li>F&uacute;tbol en vivo de las mejores ligas europeas incluyendo La Liga, Serie A y Ligue 1</li>
+						<li>Sin antena satelital ni contratos</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="content">
+		<div class="container">
+			<div class="section-title">
+				Yaveo funciona en una gran variedad de dispositivos conectados a Internet. 
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<img src="img/device-desktop.jpg" class="img-responsive"/>
+					<div class="device-text">PC</div>
+				</div>
+				<div class="col-sm-4">
+					<img src="img/device-mobile.jpg" class="img-responsive"/> 
+					<div class="device-text spacer">IOS Y ANDROID</div>
+				</div>
+				<div class="col-sm-4">
+					<img src="img/device-xbox.jpg" class="img-responsive"/>
+					<div class="device-text"><p>XBOX </p></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<div class="container textcenter">
+			<ul class="list-inline">
+				<li class="bluetext">&copy; 2015 DIRECTV Digital LLC</li>
+				<li class=""><a href="//yaveo.com/pp">Pol&iacute;tica de Privacidad</a></li>
+				<li class=""><a href="//yaveo.com/tou">T&eacute;rminos de Uso</a></li>
+				<li class=""><a href="//ayuda.yaveo.com">Ayuda</a></li>
+			</ul>
+		</div>
+	</footer>
+	
+	<div id="greyBox">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="disclaimer-text">
+						
+					<b>*Los canales en vivo est&aacute;n incluidos por tiempo limitado en el servicio b&aacute;sico de Yaveo de $7.99. <u>*OFERTA DE LA PRIMERA SEMANA GRATIS:</u> Se requiere un m&eacute;todo de pago v&aacute;lido durante el registro (&ldquo;M&eacute;todo de pago&rdquo;) para usar esta oferta. DIRECTV comenzar&aacute; a facturar a tu m&eacute;todo de pago el costo de la membres&iacute;a mensual al final del per&iacute;odo de prueba gratis. SI CANCELAS ANTES DEL FIN DEL PER&Iacute;ODO DE PRUEBA, NO HABR&Aacute; CARGOS EN TU M&Eacute;TODO DE PAGO. Vamos a seguir facturando el costo de la membres&iacute;a mensual a tu m&eacute;todo de pago hasta que canceles tu cuenta. Las ofertas de prueba gratis pueden estar sujetas a t&eacute;rminos y condiciones adicionales que ser&aacute;n provistas durante el registro. <u>CANCELACI&Oacute;N:</u></b> Tu membres&iacute;a continuar&aacute; activa mes a mes, a menos que y hasta que la canceles adecuadamente de acuerdo con los &quot;T&eacute;rminos de Uso&quot;. Debes cancelar tu membres&iacute;a antes de que se renueve el siguiente mes para evitar la facturaci&oacute;n de ese pr&oacute;ximo mes. PARA CANCELAR TU MEMBRES&Iacute;A, VISITA LA P&Aacute;GINA DE &ldquo;MI CUENTA&rdquo;, HAZ CLIC EN &ldquo;CANCELAR CUENTA&rdquo; Y SIGUE LAS INSTRUCCIONES DE CANCELACI&Oacute;N. TEN EN CUENTA QUE NOSOTROS NO PROVEEMOS REEMBOLSOS POR MEMBRES&Iacute;A CANCELADA EN EL MEDIO DEL MES O POR PEL&Iacute;CULAS O PROGRAMAS NO VISTOS. La membres&iacute;a de Yaveo est&aacute; sujeta a los T&eacute;rminos de uso de Yaveo; texto provisto por yaveo.com/tou,<b>&copy;2015 DIRECTV DIGITAL LLC. Im&aacute;gen de Mi Coraz&oacute;n Es Tuyo reproducida con el permiso de Televisa, S.A. de C.V. Todos los derechos reservados. Yaveo y los dise&ntilde;os de cuadros de Yaveo son marcas registradas de DIRECTV DIGITAL, LLC.</b>
+					
+					</div>
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/yaveo_sp.js"></script>
+
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5J7G8D"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5J7G8D');</script>
+<!-- End Google Tag Manager -->
+
+	<!--[if lt IE 9]>
+		<script type="text/javascript"  src="js/respond.js"></script>
+	<![endif]-->
+</body>
+</html>

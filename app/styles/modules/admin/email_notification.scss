@@ -1,0 +1,113 @@
+@import '../index';
+
+/*admin email notification*/
+.st-vertical-menu-container .selected-index:before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-left: 12px solid #294861;
+  right: -24px;
+  z-index: 1;
+}
+.selected-index a{
+  color:$color-orange1;
+}
+.onoffswitch {
+    position: relative; 
+    width: 50px;
+    -webkit-user-select:none; 
+    -moz-user-select:none; 
+    -ms-user-select: none;
+}
+input[type=checkbox].onoffswitch-checkbox{
+    display: none;
+}
+.onoffswitch-label {
+    display: block; 
+    overflow: hidden; 
+    cursor: pointer;
+    border-radius: 20px;
+}
+.onoffswitch-inner {
+    width: 200%; 
+    margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "";
+    padding-left: 10px;
+    background-color: #63BD63;
+}
+.onoffswitch-inner:after {
+    content: "";
+    padding-right: 10px;
+    background-color: #CBD2D8;
+    text-align: right;
+}
+.onoffswitch-switch {
+    width: 20px; 
+    margin: 4px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    position: absolute; 
+    top: 0; 
+    bottom: 0; 
+    right: 20px;
+    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
+.email-notification-default-style{
+  color: #98A9B5;
+  font-family: 'DINWebPro-Medium';
+  .reminder-heading {
+  }
+  .reminder-details{
+    font-family: 'DINWebPro-Medium';
+  }
+  .reminder-set {
+    border-bottom: 1px solid #eee;
+    padding-top: 3%;
+    padding-bottom: 3%;
+  }
+  span{
+    font-size: 16px;
+    color: #B4B4B4;
+  }
+  .successMsg, .errorMsg{
+    span{
+      color: #FFF;
+    }
+  }
+  p{
+    font-size: 15px;
+    color: #B0B1B1;
+    font-family: 'DINWebPro';
+  }
+}
+.background-overlay {
+  pointer-events: none;
+  opacity: 0.5;
+  background: #eee;
+}
+.emailNOtiBottom{
+  margin: 20px 0px;
+  button{
+    height: 50px;
+  }
+}

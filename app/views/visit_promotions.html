@@ -1,0 +1,293 @@
+<div style="height:50px">
+</div>
+ <div ng-controller="HomeCtrl">
+    
+    <carousel id="promo_car" interval="myInterval">
+      <slide ng-repeat="slide in slides" active="slide.active">
+        <img ng-src="{{slide.Path}}" style="margin:auto;">
+       <div class="carousel-caption promo_carousel" >
+          <h2>{{'All the Entertainment You Love'}}</h2>
+         
+          <div style=""><button class="empty-button"> {{'VIEW ALL THE PACKAGES'}}</button></div>
+        </div>
+        <!--  <div class="prom-capt-low-div" style="top:50%;position:none;text-align:center">
+          <h2>{{'All the Entertainment You Love'}}</h2>
+          <div><button class="empty-button"> WATCH TRAILER</button></div>
+        </div> -->
+      </slide>
+    </carousel>
+    
+<div class="carousel-stat-footer navbar-fixed-top">
+ <div class="row">
+              <div  class="col-md-7 col-md-offset-1 col-sm-8 col-xs-6 carousel-stat-footer-l">
+              {{'Watch TV Shows & Movies anytime, anywhere'}}
+              <br/>
+              {{'Only $7.99 a month.'}}
+              </div>
+                <div  class="col-md-3 col-sm-4 col-xs-6 carousel-stat-footer-r" >
+               <button class="btn-custom-orange btnOrange" ng-click="signupModal(1)">{{'START YOUR FREE MONTH'}}</button>
+              </div>
+              </div>
+</div>
+
+
+
+  <!-- rail1 -->
+  <div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+      <h5 class="railsHeader">Featured<span class="railsHeaderArrow" ></span></h5>
+      <div id="owl-rails1" class="owl-carousel">
+        
+      </div>
+      
+  </div>
+  </div>
+<!--  end of rails1 -->
+
+
+  <!-- rail4 -->
+  <div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+      <h5 class="railsHeader">TOP<span class="railsHeaderArrow" ></span></h5>
+      <div id="owl-rails4" class="owl-carousel">
+        
+      </div>
+      
+  </div>
+  </div>
+<!--  end of rails4 -->
+
+<div class="container">
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:2% 0px;">
+    <a href="/promotions">
+    <img src="images/homepromotionbanner.png" class="img-responsive center-block"/>
+    </a>
+  </div>
+</div>
+</div>
+  <!-- rail2 -->
+  <div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+      <h5 class="railsHeader">Live Now<span class="railsHeaderArrow"></span></h5>
+      <div id="owl-rails2" class="owl-carousel">
+      </div>
+      
+  </div>
+  </div><!-- end rail2 -->
+
+  
+  <!-- rail3 -->
+  <div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+      <h5 class="railsHeader">Top shows<span class="railsHeaderArrow"></span></h5>
+      <div id="owl-rails3" class="owl-carousel">
+      </div>
+      
+  </div>
+  </div>
+  
+  <!-- end rail3 -->
+  
+<script type="text/javascript">
+    $(document).ready(function() {
+
+//-----------rails common code--------------------
+ function attachEvent(elem){
+
+    //attach popover to all items in rails 
+      elem.find('.item').each(function(){
+        var options = {
+         placement: function (context, source) {
+            var position = jQuery(source).offset();
+            if (position.left > 515) {
+                return "left";
+            }
+            if (position.left < 515) {
+                return "right";
+            }
+            if (position.top < 110){
+                return "bottom";
+            }
+            return "top";
+        },
+        trigger: 'manual',
+        html:true,
+        container: elem,
+        animation: false,
+        content:function(){ 
+            //railsPopover
+            jQuery(this).attr("data-content", jQuery(this).find('.thumb-popover').html() );     
+        }
+    };
+    jQuery(this).popover(options);
+   });
+//attach popover
+
+    elem.find('.item').on('mouseover',function(){
+        
+        //close all popovers
+        $('.owl-carousel').each(function(){
+            jQuery(this).find('.item').each(function() { 
+              jQuery(this).popover("hide"); 
+              jQuery(this).find('span').css('display','none');
+              clearTimeout(jQuery(this).data('timeoutId'));
+            });            
+        });            
+        jQuery(this).find('span').css('display','block');
+         if ( (!Modernizr.touch) || enablePopoverOnTouch )
+          {
+            jQuery(this).popover("show");     
+          }    
+    }).on("mouseleave",function(){        
+                jQuery(this).find('span').css('display','none');                      
+             if ( (!Modernizr.touch) || enablePopoverOnTouch )
+             {
+                var itemClassElement = jQuery(this),
+                  timeoutId = setTimeout(function(){
+                               itemClassElement.popover("hide");
+                              }, 6000);
+                itemClassElement.data('timeoutId', timeoutId);
+             }    
+    });
+    
+  }//end of attachEvent
+  
+     function popOverHtml(data)
+     {
+          var content = "";
+          for(var i in data["thumblistCarouselOneArr"]){
+
+            var imagePath = data["thumblistCarouselOneArr"][i].imagePath;
+            var alt = data["thumblistCarouselOneArr"][i].title;
+            var desc= data["thumblistCarouselOneArr"][i].desc;
+            var duration= data["thumblistCarouselOneArr"][i].duration;
+            var airedOn= data["thumblistCarouselOneArr"][i].airedOn;
+            var staring= data["thumblistCarouselOneArr"][i].staring;
+            var creator= data["thumblistCarouselOneArr"][i].creator;
+            var audio= data["thumblistCarouselOneArr"][i].audio;
+                content += 
+              '<div class="item">'+
+              '<img class="lazyOwl" data-src="'+imagePath+'" alt="'+alt+'"'+
+              'data-toggle="popover"'+ 
+              ' data-placement="left" />'+
+              '<span class="glyphicon playIco" style="display:none;">'+
+              '<img src="images/icon/Play_But.png" class="img-responsive"/></span>';  
+
+          content +=
+                  '<div class="piccaption">'+
+                 '<h5 class="customthumbnail_imageheader">'+alt+'</h5>'+
+                 '<p class="customthumbnail_imagepara">'+desc+'</p>'+
+              '</div>';
+  
+          content+=
+        '<div class="thumb-popover" style="display:none;">'
+          +'<div class="row">'
+            +'<div class="col-md-12 col-sm-12 col-xs-12">'
+              +'<h6 class="thumb-popover-title">'+alt+'</h6>'
+              +'<h4 class="thumb-popover-mainheader">'+alt+'</h4>'
+            +'</div>'
+         +'</div>'
+
+          +'<div class="row">'
+            +'<div class="col-md-12 col-sm-12 col-xs-12">'
+              +'<h6 class="thumb-popover-subheader">HORROR</h6>'
+              +'<p class="thumb-popover-content">'
+              +desc
+              +'</p>'
+              +'<h6 class="thumb-popover-subheader">SEASON 1 EPISODE 5 - '+duration+' MINS</h6>'
+              +'<h6 class="thumb-popover-subheader">AIRED ON DATE'
+              +'<span class="thumb-popover-content">'+airedOn+'</span></h6>'
+              +'<h6 class="thumb-popover-subheader">TV-MA<h6>'
+              +'<h6 class="thumb-popover-subheader">STARRING <span class="thumb-popover-content">'+staring+'</span></h6>'
+              +'<h6 class="thumb-popover-subheader">CREATOR <span class="thumb-popover-content">'+creator+'</span></h6>'
+              +'<h6 class="thumb-popover-subheader">AUDIO <span class="thumb-popover-content">'+audio+'</span></h6>'
+              +'<div class="row">'
+                  +'<div class="col-md-12 col-sm-12 col-xs-12">'
+                    +'<button class="btn btn-default thumb-btn-green">WATCH CLIP</button>'
+                  +'</div>'
+                  +'<div class="col-md-12 col-sm-12 col-xs-12">'
+                    +'<button onclick="signUpTrigger()" class="btn btn-default thumb-btn-orange">SIGNUP</button></span>'
+                  +'</div>'
+              +'</div>'//end of button row
+
+            +'</div>'//end of content column
+          +'</div>'//end content div
+
+          +'</div>' //end of thumb
+        + '</div>';//end of "class='item'"
+        
+          }     
+         return content;
+     }
+//---
+
+   function popoverHider($owlRailDOM)
+   {    $owlRailDOM.find('.item').each(function() { 
+              jQuery(this).popover("hide"); 
+              jQuery(this).find('span').css('display','none');
+            });
+   }
+   function allpopoverHide()
+    {
+        $('.owl-carousel').each(function(){popoverHider($(this));});  
+    }
+    //hide all popover on entering a rails header
+    $('.railsHeader').on('mouseenter',allpopoverHide );
+ //-----------end of rails common code--------------------    
+
+    
+  //rails 1      
+  $("#owl-rails1").owlCarousel({
+    items : 4,
+    lazyLoad : true,
+    navigation : false,
+    jsonPath : '/home',
+    jsonSuccess : function(data){ $("#owl-rails1").html(popOverHtml(data));},
+    afterInit : attachEvent
+    });
+  
+  //rails 2
+  $("#owl-rails2").owlCarousel({
+    items : 4,
+    lazyLoad : true,
+    navigation : false,
+    jsonPath : '/home',
+    jsonSuccess : function(data){ $("#owl-rails2").html(popOverHtml(data));},
+    afterInit : attachEvent
+    });
+
+  //rails 3
+  $("#owl-rails3").owlCarousel({
+    items : 4,
+    lazyLoad : true,
+    navigation : false,
+    jsonPath : '/home',
+    jsonSuccess : function(data){ $("#owl-rails3").html(popOverHtml(data));},
+    afterInit : attachEvent
+    });
+
+  //rails 4
+  $("#owl-rails4").owlCarousel({
+    items : 4,
+    lazyLoad : true,
+    navigation : false,
+    jsonPath : '/home',
+    jsonSuccess : function(data){ $("#owl-rails4").html(popOverHtml(data));},
+    afterInit : attachEvent
+    });
+    
+  });
+</script>
+</div>
+
+
+
+    
+
+
+
+    
+
+    
+    

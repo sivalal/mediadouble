@@ -1,0 +1,571 @@
+@import 'index';
+$live-headercolor:#2D3031;
+$live-columncolor:#93b0bb;
+$program-title: #868d90;
+$time-bgcolor: #93b0bb;
+.live-now-label {
+   text-align: center;
+   color: white !important;
+   font-size: 16px;
+   margin-top: 100px;
+   font-family: 'DINWebPro-Medium';
+} 
+.liveNow{
+  height: 189px;
+}
+.webmobClickable,.webmobClickable:hover{
+    color: $program-title;
+    text-decoration: none;
+}
+.channel {
+  background-color: $live-columncolor;
+  color: $color-white;
+  vertical-align: middle;
+  text-align: center;
+  font-size: .9em;
+  position:relative;
+}
+
+.channel-header {
+  color: $color-white;
+  vertical-align: middle;
+  text-align: center;
+  margin-top:10px;
+  font-size: .9em;
+}
+
+.channel-header-row {
+  background-color: #83A7B3;
+  color: $color-white;
+}
+
+.time-col {
+  width: 10%;
+  overflow: hidden;
+  td{
+    border-left: 0px;
+  }
+  th{
+    line-height: 60px;
+  }
+}
+
+.time-col-mobile {
+  background-color: $live-headercolor !important;
+  width: 20%;
+  td{
+    border-left: 0px;
+  }
+  th{
+    line-height: 60px;
+  }
+}
+
+.live-item {
+  border-left: 5px solid $color-white;
+  border-right: 5px solid $color-white;
+  border-top: 2px solid $color-white;
+  border-bottom: 2px solid $color-white;
+  background-color: $live-columncolor;
+  color: $color-white;
+  font-size: .9em;  
+  height: 40px;
+  padding: 0px 10px;
+}
+
+.time-item {
+  height: 60px;
+  background-color: $time-bgcolor !important;  
+  font-size: 1em;
+  color: #ECECEC;
+}
+
+.item-top-margin {
+  margin-top: 10px;
+}
+
+.channel-col {
+  display: inline-block;
+  width: 30%;
+  overflow: hidden;
+  td{
+  }
+  th{
+    line-height: 60px;
+    font-weight: normal;
+  }
+}
+
+.channel-col-mobile {
+  display: inline-block;
+  width: 80%;
+  th{
+    line-height: 60px;
+  }
+  .live-item{
+    border-color:#FFF; 
+  }
+}
+.mobLiveContainer{
+  tr.remove-white-border{
+    border-color:#FFF; 
+  }
+}
+.live_table{
+ float: left; 
+}
+.live_contents{
+  min-height: 640px;
+  float: left;
+  width: 100%;
+    .main_slider{
+      display: none;
+    }
+  }
+.liveListMainContainer {
+  display: block;
+  margin: 0 auto;
+  width: 90%;
+  height: 500px;
+  margin-top: 70px;
+  margin-bottom: 20px;
+  font-family: 'DINWebPro-Medium';
+}
+.remove-white-border {
+  border-top:3px solid $color-black;
+  border-bottom:3px solid $color-black;
+}
+
+.hide-date-cmp {
+  display: none;
+}
+
+.live-component-cleanup {
+  background-color: rgba(254, 254, 254, 0.68);
+  color: rgb(87, 133, 149);
+  text-align: center;
+  border: none;
+  padding: 5px;
+  width: 142px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px; 
+}
+
+ .programType {
+  color: $color-orange;
+  font-weight: normal;
+  font-size: 12px;
+ }
+
+.programTitle {
+  color: #868d90;
+  font-size: 16px;
+ }
+
+.hide-column
+{
+  opacity:-0.1;
+}
+
+ //DATEPICKER
+
+ .datepicker-header {
+  background: #383B3C;
+}
+
+ .datepicker-button {
+  color: #fff;
+  background: #2D3031;
+}
+
+//OVERRIDE BOOTSTRAP DATEPICKER STYLE
+
+.btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open .dropdown-toggle.btn-info {
+color: #fff;
+background-color: #39b3d7;
+border-color: #269abc;
+}
+
+.btn-info.disabled, .btn-info[disabled], fieldset[disabled] .btn-info, .btn-info.disabled:hover, .btn-info[disabled]:hover, fieldset[disabled] .btn-info:hover, .btn-info.disabled:focus, .btn-info[disabled]:focus, fieldset[disabled] .btn-info:focus, .btn-info.disabled:active, .btn-info[disabled]:active, fieldset[disabled] .btn-info:active, .btn-info.disabled.active, .btn-info[disabled].active, fieldset[disabled] .btn-info.active {
+ background-color: #2D3031; 
+ border: 1px #424546;
+}
+.liveDatePicker{
+  table{
+    outline: none;
+  }
+  input{
+    text-transform: uppercase;
+    background: transparent;
+    border: 0;
+    text-indent: 5px;
+    text-align: center;
+    padding: 0;
+    font-size: 21px;
+    line-height: normal;
+  }
+  .dropdown-menu{
+    padding: 0;
+    overflow: hidden;
+      .btn-default{
+        background-color: transparent;
+      font-size: 16px;
+      color: #ccc;
+      }
+      .btn{
+        font-size: 16px;
+      }
+      .active{
+        background: #46b8b1;
+        color: #FFF !important;
+        .text-info{
+          color: #FFF !important;
+        }
+      }
+      li:last-child{
+        display: none;
+      }
+      th{
+        line-height: 40px;
+        .btn-sm{
+          text-transform: uppercase;
+          font-size: 14px;
+          color: #EEE;
+        }
+      }
+      table{
+        thead{
+          background-color: #383b3c;
+          border-bottom: 1px solid #252525;
+          tr:last-child{
+            th:first-child{
+            }
+          }
+          th{
+            text-transform: uppercase;
+            small{
+              color:#808a8d;
+            }
+            :before{
+              opacity: .5;
+            }
+          }
+        }
+        tbody{
+          background-color: #2d3031;
+          tr{
+            td:first-child{
+              opacity:.7;
+            }
+          }
+          td{
+            border: 1px solid #424546;
+            border-collapse: collapse;
+          }
+        }
+        .text-muted {
+          color: #666666;
+        }
+      }
+    }
+}
+.date-picker-row{
+    color: white;
+    float: left;
+    width: 100%;
+    clear: both;
+    .liveDatePicker{
+      text-align:center;
+      margin:auto;
+      position: relative;
+      float: right;
+      p{
+        color: #3c5e6c;
+        display: inline-block;
+        font-family: 'DINWebPro-Medium';
+        margin-right: 5px;
+      }
+      input{
+        width: 220px;
+        line-height: 16px;
+        color: #676768;
+        /*background: $color-orange url("/images/icon/calender_arrow_down.png") no-repeat right center;*/
+        background-color: $color-orange;
+        outline: none;
+        padding: 10px;
+        padding-right: 25px;
+        @include roundCornerL;
+        margin-bottom: 10px;
+        }
+      input:focus{
+      }
+    }
+    .liveDatePickerText{
+        width: 220px;
+        float: none;
+      input{
+        background: none;
+      }
+    }
+    .headerText{
+      float: none;
+      color: #34ace0;
+      font-size: 31px;
+      text-align: center;
+      margin-top: 30px;
+    }
+  }
+.liveListContents{
+  width: 100%;  
+  border-collapse: collapse;
+  th{ 
+    background-color: #93b0bb;
+    color:white;
+    height:60px;
+    text-transform: uppercase;
+    text-align: center;
+    font-family: 'DINWebPro-Medium';
+    font-size: 16px;
+  }
+}
+.liveListMainContainer{
+  .emptyContent{
+    background-color: rgba(24, 24, 25, 0.06);
+    color: #666;
+    text-align: center;
+    padding: 17px 0px;
+    font-size: 16px;
+    width: 100%;
+    clear: both;
+  }
+}
+.contentHolderSearchDetail{
+  .emptyContent{
+    background-color: #181819;
+    color: #666;
+    text-align: center;
+    padding: 20px 0px;
+    font-size: 16px;
+    width: 100%;
+    clear: both;
+  }
+}
+
+
+/* Zebra striping 
+.liveListContents tr:nth-of-type(odd) { 
+  background: #eee; 
+}*/
+
+.liveListContents td, .liveListContents th { 
+  padding: 6px; 
+  border: 1px solid white; 
+}
+.liveSchedule{
+  .popover{
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+  td.channelProgrammeList{
+    vertical-align: top;
+  }
+  td{
+    padding: 0;
+    table{
+      width: 100%;
+      tr{
+        td{
+          padding: 0px 10%;
+        }
+      }
+    }
+  }
+  td.programPopoverHolder{
+    background-color: #e1e1e1 !important;
+    position: relative;
+    &:before{
+      position:absolute;
+      content: '';
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    a{
+      text-decoration: none;
+    }
+  }
+  .programType{
+    a{
+      color: $color-orange;
+      font-family: 'DINWebPro-Medium';
+    }
+  }
+}
+th.liveChannelHead{
+  color: white;
+  font-size: 20px;
+}
+
+.live-now-label:hover .playIco {
+  opacity: .9;
+}
+
+.currentProg{
+  a {
+    cursor: pointer;
+  }
+  h4{
+    font-size: 14px;
+    font-family: 'DINWebPro-Medium';
+    span{
+      color: #34ace0;
+    }
+    span.showType{
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+    span.showName{
+      color:#5b5b5b;
+      margin-left: 5px;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .liveListMainContainer {
+  width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .liveListMainContainer {
+    margin-top: 132px;
+  }
+}
+  @media (max-width:430px) {
+  #seasonToWatchlistbtn{
+   width: 88%;
+   font-size: .7em;
+  }
+  }
+   @media (min-width:430px)and (max-width:768px) {
+  .tvTopBottomMargin{
+   text-align:center;
+    }
+  }
+  @media (max-width:430px) {
+  #livethumb{
+ font-size: .7em;
+ margin-top: -25%;
+ font-family:normal;
+    }
+  }
+  #liveimage{
+  position: relative;
+  margin-top: 2%;
+  }
+  
+  #liveshow_playerwrapper .innerWrapper{
+    position: relative;
+    padding-bottom: 45.25%;
+    height: auto;
+    overflow: hidden;
+    z-index: 0;
+    width: 100%;
+  }
+  #liveshow_playerwrapper .innerWrapper video,
+  #liveshow_playerwrapper .innerWrapper iframe,
+  #liveshow_playerwrapper .innerWrapper object,
+  #liveshow_playerwrapper .innerWrapper embed{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+      
+  }
+.display-none {
+  visibility: hidden;
+}
+.tableTime{
+  width: 15%;
+  float: left;
+}
+.tableChannel{
+  width: 85%;
+  float: left;
+}
+.channelView{
+  div.clickable{
+    a{
+      position: relative !important;
+      opacity: 1 !important;
+      padding: 0;
+      .playIcon{
+        background: url('/images/icon/playIcon.png') center no-repeat;
+        background-size:100%;
+        width: 15%;
+        max-width: 60px;
+        position: absolute;
+        left: 15px;
+        top: 0px;
+        bottom: 0;
+        z-index: 11111;
+      }
+    }
+  }
+}
+.mobLiveContainer{
+  float: left;
+  width: 100%;
+}
+.chanctrl {
+  position: absolute;
+  cursor: pointer;
+  padding: 0px 4px;
+  color: #bdbcbc;
+  font-size: 14px;
+  z-index: 9;
+  border: 1px solid #34ace0;
+  background: #34ace0;
+  top: -25px;
+}
+.chanctrl#prevlivechan {
+  left: 0px;
+}
+.chanctrl#nextlivechan{
+  left: 20px;
+}
+.tableChannel{
+  position: relative;
+}
+
+/*
+ *  STYLE 2
+ */
+#style-2 {
+  overflow: scroll;
+  overflow-y: hidden;
+  -moz-appearance: none !important;
+}
+
+#style-2::-webkit-scrollbar-track
+{
+  background-color: #D8D8D8;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+}
+
+#style-2::-webkit-scrollbar
+{
+  width: 10px;
+  height: 5px;
+  background-color: #D8D8D8;
+}
+
+#style-2::-webkit-scrollbar-thumb
+{
+  background-color: #00A6D6;  
+}
+

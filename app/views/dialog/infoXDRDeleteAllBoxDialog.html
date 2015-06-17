@@ -1,0 +1,29 @@
+<div class="modal-content" >
+    <div class="modal-header"></div>
+    <div class="modal-body dialogModalBody ng-scope">
+        <div class="popupMsg center-block" >
+            <div class="popup-body ng-scope">
+                <h6>
+                    <span class="tickMark" ng-show="tickMark"></span>
+                    <span class="tickMark" ng-show="crossMark"></span>
+                    <span ng-show="message_1" translate="MSG_ARE_YOU_SURE_DELETE_ALL"></span>
+                    <span ng-show="message_2" translate="MSG_WATCHLIST_DELETE_ALL_SUCESS"></span>
+                    <span ng-show="message_3" translate="MSG_WATCHLIST_COULDNOT_DELETE"></span>
+                </h6>
+            </div>
+            <span ng-show="ajaxWatchlistInfoSpinner" us-spinner class="yelloworangeloader"></span>    
+            <div class="popup-footer ng-scope">
+                <div class="buttons center">  
+                    <button class="btn btnOrange btnOk" ng-show="confirm" ng-click="confirmXDRDeleteAllAction()" translate="BTN_OK_LIVE"></button>
+                    <button class="btn btnGrey" ng-show="cancel" ng-click="cancelAction()" translate="BTN_CANCEL_LIVE"></button>
+                    <div class="col-md-12 col-sm-12 col-xs-12" ng-show="existConfirm">
+                        <button class="btn btnRed" ng-click="cancelAction()" translate="BTN_CLOSE_LIVE"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>   
+    <div class="modal-footer ng-scope">
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="col-md-3 col-sm-4 col-xs-12 no-padding resultPeople" style="border-bottom: 1px solid #747474; padding-bottom: 10px;">
+	<div class="catHeadResult fullWidth" style="border-bottom: 1px solid #747474; padding-bottom: 10px;">
+		<div class="alignLeft" style="" translate="TXT_PEOPLE_SEARCH"></div>
+	</div>
+	</hr>
+	<div class="fullWidth peopleList searchDropScroll">
+	<span ng-show="ajaxSearchSpinner_People" us-spinner="{radius:5, width:4, length: 10}" class="yelloworangeloader"></span>
+      <div class="fullWidth" ng-repeat="people in searchApiResult.people.link">
+      	<a style="cursor: pointer; padding:10px" ng-class="{'activeMenu':people.Title == searchTerm}" ng-click="goToFullPage('',people.Title,'')" class="fullWidth" ng-bind="people.Title"></a>
+      </div>
+      <div class="fullWidth"  ng-show="searchApiResult.people.NumOfResults == 0" translate="TXT_SEARCHTYPE_NORESULT"></div>
+    </div>
+</div>

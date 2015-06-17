@@ -1,0 +1,140 @@
+<!-- login-controller-->
+<div ng-controller="LoginCtrl" class="modal-container loginModalContainer">
+    <!-- modal-header -->
+    <div class="modal-header top-button-modal-header">
+    </div><!-- /.modal-header -->
+    <!-- modal-body -->
+    <div  class="modal-body login-modal-body">
+        <!-- login-page-1 -->
+        <div ng-show="login_page_1">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <span class="icon-custom-cancel" ng-click="cancel()"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 login-container">
+                        <div class="row login_header">
+                            <div class="col-md-2 col-sm-4 col-xs-6 center loginLogo text-center">
+                                <a ng-click="onLogoClick()"><img ng-src="{{logoweb}}" ng-show="showlogo" ></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 center col-sm-10 col-xs-10 login-content-box">
+                                <div class="row">   
+                                    <div class="col-md-6 col-sm-6 col-xs-12 box-1" ng-class="{'social-login':!enableSocialLogin}">
+                                        <div class="col-md-12 caption" ng-class="{'spacer':!enableSocialLogin}">
+                                            <label translate="TXT_TOP_TOOLBAR_LIVE_LOGIN_EXISTING_ACCOUNT"></label>
+                                        </div>
+                                        <span ng-show="ajaxSpinner" us-spinner class="yelloworangeloader"></span>
+                                        <form  novalidate name="loginForm" role="form" class="login-form" ng-submit="submitLogin()" method="post"> 
+                                            <div class="col-md-12 col-md-margin-bottom-2 parent">
+                                                <input name="uLoginEmail" ng-model="uLoginEmail" type="text" class="form-control" placeholder="{{'HINT_TXT_EMAIL_ADDRESS_SIGN_UP'|translate}}" required id="uLoginEmail" auto-fill-sync />         
+                                                <span ng-show="loginEmailCheck && loginForm.uLoginEmail.$invalid" class="icon-custom-invalid col-md-1"></span>
+                                            </div>
+                                            <div class="col-md-12 col-md-margin-bottom-2">
+                                                <input name="uLoginPassword" type="password" class="form-control" placeholder="{{'HINT_TXT_PASSWORD_SIGN_UP'|translate}}" required ng-model="uLoginPassword" auto-fill-sync />
+                                                <span ng-show="loginPasswordCheck && loginForm.uLoginPassword.$invalid" class="icon-custom-invalid col-md-1"></span>
+                                            </div>
+                                            <div class="col-md-12 col-md-margin-bottom-2">
+                                                <button type="submit" class="btn-custom-large-orange" ng-disabled="ajaxSpinner" translate="BTN_ADMIN_LOGIN_WATCHLIST"></button>
+                                            </div>
+                                            <div class="col-md-12 col-md-margin-bottom-2">
+                                                <alert class="alert-danger" ng-show="emailError" type="danger" close="closeLoginEmailClientAlert()" class="font-size-7" id="login_email_valid_error">{{'TXT_ERROR_EMAIL_FORMAT'|translate}}</alert>
+                                                <alert class="alert-danger" ng-show="login_error" type="danger" close="closeLoginAlert()" style="font-size: 0.9em;">{{errorLoginMessage | translate}}</alert>
+                                            </div>
+                                        </form>
+                                        <div class="col-md-12 col-md-margin-bottom-2 loginCheckBoxContainer">
+                                            <div ng-class="{loginCheckboxChecked:uRememberme,loginCheckbox:!uRememberme}">
+                                                <label>
+                                                    <input type="checkbox" ng-model="uRememberme" ng-click="isCheckboxChange()"/>{{'TXT_REMEBER_ME_SUBSCRIBER'|translate}}
+                                                </label>
+                                                <a class="alignRight" href="#" ng-click="loginNext(2, 2)" translate="TXT_FORGOT_PASSWORD_SUBSCRIBER"></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 clear text-center subscribeNow" ng-show="!enableSocialLogin">
+                                            <a href="#" ng-click="subscribeNow()" translate="TXT_OR_SUBSCRIBE_NOW_SUBSCRIBER"></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12" ng-if="enableSocialLogin">
+                                        <div class="col-md-12 caption"><label translate="TXT_OR_CONNECT_WITH_SUBSCRIBER"></label></div>
+                                        <span ng-show="ajaxSocialSpinner" us-spinner class="yelloworangeloader"></span>
+                                        <div class="col-md-12 col-md-margin-bottom-2" ng-if="enableFacebook">
+                                            <button class="btn-custom-large-navyblue social-login" ng-click="linkAccount('facebook')"><span class="icon-facebook-small " ng-disabled="ajaxSocialSpinner"></span><span class="icon-text">{{'TXT_FACEBOOK' | translate}}</span></button>
+                                        </div>
+                                        <div class="col-md-12 col-md-margin-bottom-2" ng-if="enableTwitter">
+                                            <button class="btn-custom-large-blue social-login" ng-click="linkAccount('twitter')" ng-disabled="ajaxSocialSpinner"><span class="icon-twitter-small"></span><span class="icon-text">{{'TXT_TWITTER' | translate}}</span></button>
+                                        </div>
+                                        <div class="col-md-12 no-padding col-md-margin-bottom-2">  
+                                            <alert class="alert-danger" ng-show="social_error" type="danger" close="closeSocialLoginAlert()" class="font-size-7">{{errorSocialMessage | translate}}</alert>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <a href="#" ng-click="subscribeNow()" translate="TXT_OR_SUBSCRIBE_NOW_SUBSCRIBER"></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 loginFooter">
+                                        {{'TXT_SUBSCRIBER' | translate}} <a ng-href="{{privacyPolicy[0].mpath}}" target="_blank">{{'TXT_PRIVACT_POLICY' | translate}}</a>
+                                        {{'TXT_APP_SHARE_DATA' | translate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.login-page-1 -->
+        <!-- login-page-2 -->
+        <div ng-show="login_page_2">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <span class="icon-custom-cancel" ng-click="cancel()"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 login-container">
+                        <div class="row login_header">
+                            <div class="col-md-2 col-sm-4 col-xs-6 center loginLogo text-center">
+                                <a href="/"><img ng-src="{{logoweb}}" ng-show="showlogo" ></a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 center col-sm-8 col-xs-12">
+                            <h2 translate="TXT_PASSWORD_RESET_HEADER_MANAGE_ACCOUNT"></h2>
+                        </div>
+                        <div class="row">
+                            <form novalidate  name="resetPWForm" role="form"> 
+                                <div class="col-md-3 center col-sm-8 col-xs-10 login-password-reset-content-box">
+                                    <div class="row">    
+                                        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                            <p translate="TXT_PASSWORD_RESET_BODY_MANAGE_ACCOUNT"></p>
+                                        </div>
+                                        <div class="clear"></div>
+                                        <div class="col-md-12 center col-sm-12 col-xs-12">
+                                            <input type="email" ng-model="uResetEmailID" class="form-control col-md-margin-bottom-2" placeholder="{{'HINT_TXT_EMAIL_ADDRESS_SIGN_UP'|translate}}" class="form-control" ng-pattern="/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/" required>
+                                            <span ng-show="ajaxResetPasswordSpinner" us-spinner class="yelloworangeloader"></span>
+
+                                            <!-- <div class="custom-tootltip staticTooltip">
+                                                <h6>Lorem Ipsum dolar sit amet</h6>
+                                            </div> -->
+                                        </div>
+                                        <div class="col-md-12 center col-md-margin-top-1">
+                                            <alert class="alert-danger" ng-show="reset_pwd_error" type="danger" close="closeResetPwdAlert()" class="font-size-7">{{errorResetPwdMessage | translate}}</alert>
+                                            <alert class="alert-success" ng-show="reset_pwd_success" type="success" close="closeResetPwdSuccess()" class="font-size-7">{{successResetPwdMessage | translate}}</alert>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 center text-center col-sm-6 col-xs-12" ng-show="emailSubmit">
+                                    <button type="submit"  class="btn-custom-green btn-next" ng-click="submitResetPwd(uResetEmailID)" ng-disabled="resetPWForm.$invalid" translate="TXT_SEND_HELP"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.login-page-2 -->
+    </div><!-- /.modal-body -->
+    <!-- modal-footer -->
+    <div class="modal-footer top-button-modal-footer">
+    </div><!-- /.modal-footer -->
+</div>

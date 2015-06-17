@@ -1,0 +1,38 @@
+<div>
+  <div id="showcaseID">
+    <carousel interval="myInterval">
+      <slide active="true">
+        <img src="dummy/live/banner.png" style="margin:auto;">
+          <div class="carousel-caption center-banner-text">
+            <h1>Sitemap</h1>
+          </div>
+      </slide>
+    </carousel>
+  </div>
+</div>
+
+<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 sitemap">
+  <ul class="sitemapLinks">
+    <li ng-if="menu.actionID!='home' && menu.mpath!='null'" ng-repeat="menu in menus track by $index">
+      <a ng-if="menu.action!='link'" ng-href="{{menu.mpath}}" class="nav" show-sub-menu>{{menu.title[CurrentLang]|uppercase}}</a>
+      <a ng-if="menu.action=='link'" target="_blank" ng-href="{{menu.mpath}}" class="nav" show-sub-menu>{{menu.title[CurrentLang]|uppercase}}</a>                
+      <a ng-if="menu.mpath=='null'"  class="nav" show-sub-menu>{{menu.title[CurrentLang]|uppercase}}</a>
+      <ul ng-if="menu.children !=null">
+        <li ng-repeat="submenu in menu.children">
+          <a ng-if="submenu.mpath!='null' && menu.action!='link'" ng-href="{{submenu.mpath}}">{{submenu.title[CurrentLang]|uppercase}}</a>
+          <a ng-if="submenu.mpath!='null' && menu.action=='link'" target="_blank"  ng-href="{{submenu.mpath}}">{{submenu.title[CurrentLang]|uppercase}}</a>
+          <a ng-if="submenu.mpath=='null'">{{submenu.title[CurrentLang]|uppercase}}</a>                    
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a translate="TXT_OTHER"></a>
+      <ul>
+        <li ng-repeat="navLink in footerNavListNewArray">
+          <a ng-if="navLink.type=='iframe_link'" ng-href="{{navLink.mpath}}"   class="footerText" translate="{{navLink.title[CurrentLang]}}"></a>   
+          <a ng-if="navLink.type!=='iframe_link'" ng-href="{{navLink.mpath}}"   class="footerText" translate="{{navLink.title[CurrentLang]}}"></a>                 
+        </li>
+      </ul>
+    </li>         
+  </ul>
+</div> 

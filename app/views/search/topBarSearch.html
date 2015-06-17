@@ -1,0 +1,78 @@
+<div class="form-group parent fullWidth" ng-class="{'search-focus': focused, 'dropdown-on' : showSearchResult || showNoSearchResult || showSearchHint}" click-outside  ng-controller="topBarSearchCtrl">
+  <form novalidate  name="searchForm" role="form" class="search-form" novalidate>
+    <input type="text" class="form-control" id="searchTerm" name="searchTerm" ng-model="searchTerm" ng-change="onChangeGetsearchResult()" ng-focus="onFocus()" placeholder="{{searchPlaceholder|translate}}" ng-enter="goToSearchDetailPage('vod')">
+    <div ng-if="loadingPeopleSpinner || loadingVODSpinner" class="spinner1 alignLeft">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+      </div>
+  </form>
+  <span ng-show="showCloseButtonOnInputField" class="icon-close-round-grey pointer" ng-click="closeSearchInput()"></span>
+  <div class="searchDropdown fullWidth" ng-show="showSearchResult && (searchApiResult.all.NumOfResults > 0 || searchApiResult.people.NumOfResults > 0)">
+    <div id="searchDropdownScroll" class="fullWidth searchDropScroll contentHolderSearch">
+      <div class="searchCatHead fullWidth" ng-if="searchApiResult.all.NumOfResults > 0">
+        <div class="alignLeft" ng-bind="searchApiResult.all.title[CurrentLang]"></div>
+        <div class="alignRight" ng-bind="searchApiResult.all.NumOfResults"></div>
+      </div>
+
+      <div class="searchDropItem fullWidth" ng-repeat="vod in searchApiResult.all.assets track by $index" ng-init="vod.showFallback=true">
+        <div class="searchDropThumb no-padding">
+          <a ng-click="navigateToCustomPage(vod.source, vod.id)">
+            <img class="fullWidth img-responsive gridPlaceholder" ng-if="vod.showFallback" ng-src="{{fallbackImageURL}}" />
+            <img class="fullWidth img-responsive" ng-src="{{updateimagePath(vod.imagePath)}}"  imageonload="vod.showFallback=false" fallback-src="{{fallbackImageURL}}" />
+          </a>
+        </div>
+        <div class="searchDropItemText" style="cursor: pointer;">
+          <a ng-click="navigateToCustomPage(vod.source, vod.id)">
+            <h4 ng-bind="vod.title" ng-class="{'activeMenu':vod.id == titleId}"></h4>
+            <p ng-if="vod.Year" ng-bind="vod.Year"></p>
+            <p ng-if="!vod.Year" ng-bind="vod.show_type"></p>
+          </a>
+        </div>
+      </div>
+
+      <div class="searchCatHead fullWidth" ng-show="searchApiResult.people.NumOfResults > 0">
+        <div class="alignLeft" translate="TXT_PEOPLE_SEARCH"></div>
+        <div class="alignRight" ng-bind="searchApiResult.people.NumOfResults"></div>
+      </div>
+      <div class="searchDropItem fullWidth peopleList" ng-repeat="people in searchApiResult.people.newlink track by $index" ng-click="goToSearchDetailPage('people', people.Title)">
+        <div class="fulLWidth">
+          <a href="#" class="fullWidth" ng-bind="people.Title" style="padding: 0px;"></a>
+        </div>
+      </div>
+    </div>
+    <div class="viewAllResult" ng-click="goToSearchDetailPage('vod')">
+      <span class="alignLeft">{{'TXT_VIEW_ALL_RESULTS'|translate}} "{{searchTerm | uppercase}}"</span>
+    </div>
+  </div>
+  <div class="searchDropdown fullWidth" ng-show="showNoSearchResult && (searchApiResult.all.NumOfResults == 0 && searchApiResult.people.NumOfResults == 0)" >
+    <div id="searchDropdownScroll1" class="fullWidth searchDropScroll contentHolderSearch">
+      <div class="fullWidth noResults">
+        <h6>{{'TXT_VIEW_NO_RESULTS'|translate}} "{{searchTerm | uppercase}}"</h6>
+        <hr/>
+        <div ng-bind-html="htmlTemplate[CurrentLang]|html">       
+        </div>
+        <hr/>
+        <h6 translate="TXT_NORESULT_POPULAR"></h6>
+      </div>
+      <div class="fullWidth">
+        <div class="searchDropItem fullWidth" ng-repeat="asset in recommendedAssets">
+          <div class="searchDropThumb no-padding">
+            <a ng-href="{{asset.assetUrl}}">
+              <img class="fullWidth" ng-src="{{updateimagePath(asset.newImagePath)}}"/>
+            </a>
+          </div>
+          <div class="searchDropItemText">
+            <h4 ng-bind="asset.title_showname"></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+  <div class="searchDropdown fullWidth" ng-show="showSearchHint && (savedSearchTerms.length > 0)">
+    <div class="searchCatHead prevSearchTerm fullWidth" ng-repeat="term in savedSearchTerms track by $index">
+      <div class="alignLeft pointer" ng-click="setHintTextAsSearchTerm(term)" ng-bind="term"></div>
+      <div class="close pointer" ng-click="onRemoveHintValue(term)"></div>
+    </div>
+  </div>         
+</div>

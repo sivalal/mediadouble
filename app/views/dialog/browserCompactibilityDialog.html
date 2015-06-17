@@ -1,0 +1,26 @@
+<div class="geo-location-modal-body">
+    <div class="container-fluid">
+        <div class="browserComp center-block">
+          <div class="browserCompHead center-block">
+            <h4 translate="BROWSER_COMPATIBILITY_HEAD">Yaveo doesn’t support your browser anymore!</h4>
+          </div>
+          <div class="fullWidth">
+            <!-- <h5 translate="TXT_BROWSER_COMPACTIBILITY_MESSAGE"></h5> -->
+            <h5 translate="BROWSER_COMPATIBILITY_MSG">To get the best possible experience on Yaveo, we recommend that you upgrade your browser. </h5>
+            <div class="browserIconHolder row">
+                <div class="col-md-3 col-sm-3 col-xs-3 browserIcon" ng-repeat="browser in allBrowsers">
+                <a href="{{browser.download_link}}">
+                  <img ng-src="{{browser.image_url}}">
+                  <p>{{browser.browser_name}}</p>
+                </a>
+              </div>
+                
+                
+              
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+    </div>
+  </div>

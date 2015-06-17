@@ -1,0 +1,93 @@
+<style type="text/css">
+    .checkoutPackageSelect .selectHolder{
+        border: 0px;
+        border-radius: 0px;
+        background-size: 55px 40px;
+        margin-top: 25px;
+        margin-left: 50px;
+    }
+</style>
+<div class="manageAccount">
+    <div class="fullWidth signupFinalCheckout">
+        <div class="col-md-12 col-sm-12 col-xs-12  center alertMsg" style="display:none;"></div>
+        
+        <div class="manageAccountHeaderMob" style="">
+            <a href="/m.manageAccount" class="backBtnAcMob"></a>
+            <!-- <h3 translate="TXT_HEADER_ACCOUNT_MANAGEMENT" class="center-block"></h3> -->
+            <h3 translate="TXT_PROFILE_SETTINGS" class="center-block"></h3>
+        </div>
+        
+        <h2 translate="TXT_HEADER_ACCOUNT_MANAGEMENT" class="center-block"></h2>
+        <div class="manageAccountForms">
+            <!-- account information -->
+            <div class="finalCheckoutForm col-md-6 col-sm-8 col-xs-12 center-block">
+                <div class="fullWidth formHolder profileSettings" ng-controller="profileSettingsCtrl">
+                    <div class="fullWidth">
+                        <h5 translate="TXT_PROFILE_SETTINGS">Profile Settings</h5>
+                    </div>
+                    <div class="fullWidth checkoutPackageSelect">
+                        <div class="fullWidth block manageEmailSubHead "
+                             ng-class="{'manageEmailSubHeadActive':show}" 
+                             ng-click="toggleShow()">
+                            <h6 translate="TXT_MANAGE_NOTIF">Manage Email Subscriptions</h6>
+                            
+                        </div>
+                        <div class="accMangShowHideContainer fullWidth block" ng-show="show">
+                            <div class="fullWidth block" ng-repeat="notif in manageNotificationEmails" style="background:#FFF;border-bottom:1px solid #d6dde0;">
+                                <div class="leftCont">
+                                    <h6>{{notif.title[CurrentLang]}}</h6>
+                                    <p ng-bind="notif.description[CurrentLang]"></p>
+                                </div>
+                                <div class="language-onoffswitch pull-left col-md-margin-top-7" >
+                                    <input type="checkbox" name="{{notif.gigya_custom_key}}" class="language-onoffswitch-checkbox" style="background: #fb7d2d !important;" id="{{notif.gigya_custom_key}}" ng-change="updateGiyaNotification(notif)" ng-true-value="{{notif.gigya_custom_true_value}}" ng-false-value="{{notif.gigya_custom_false_value}}" ng-model="newObject[notif.gigya_custom_key]">
+                                    <label class="language-onoffswitch-label" for="{{notif.gigya_custom_key}}" ng-class="{true: 'onoffswitch-label-blue'}" style="background: #d6dde0;">
+                                        <div class="language-onoffswitch-inner">
+                                            <span class="left-text" style="color: #747474;" translate="">OFF</span>
+                                            <span class="right-text" style="color: #747474;"  translate="">ON</span>
+                                        </div>
+                                        <div class="language-onoffswitch-switch" ng-class="{true: 'onoffswitch-switch-blue'}" ng-click=""   style="background: #fb7d2d !important;"></div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="fullWidth unSubscribeAll">
+                                <button ng-click="disableAllNotif()" class="center-block" style=" border-radius: 5px;" translate="TXT_MANAGE_NOTIF_ALL_EMAILS">UNSUBSCRIBE FROM ALL EMAILS</button>
+                            </div>
+                        </div>
+                        <div class="fullWidth block">
+                            <h6 translate="TXT_LANGUAGE_SELECT">Select Language</h6>
+                            <div class="language-onoffswitch pull-left col-md-margin-top-7">
+                                <input type="checkbox" name="isCheckboxCheckedForCurrentLangAccManag" class="language-onoffswitch-checkbox" style="background: #fb7d2d !important;" id="isCheckboxCheckedForCurrentLangAccManag" ng-checked="isCheckboxCheckedForCurrentLangAccManag" ng-model="isCheckboxCheckedForCurrentLangAccManag">
+                                <label class="language-onoffswitch-label" for="isCheckboxCheckedForCurrentLangAccManag" ng-class="{true: 'onoffswitch-label-blue'}" style="background: #d6dde0;">
+                                    <div class="language-onoffswitch-inner">
+                                        <span class="left-text" style="color: #747474;" ng-click="change_lang()" translate="APP_LANGUAGE_ESP"></span>
+                                        <span class="right-text" ng-click="change_lang()" style="color: #747474;"  translate="APP_LANGUAGE_ENG"></span>
+                                    </div>
+                                    <div class="language-onoffswitch-switch" ng-class="{true: 'onoffswitch-switch-blue'}" ng-click="change_lang()"   style="background: #fb7d2d !important;"></div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="fullWidth block">
+                            <a ng-href="{{connectDevicesURL[CurrentLang]}}">
+                               <h6 translate="TXT_CONNECT_DEVICE">Connect to Other Devices</h5>
+                            </a>
+                            <span class="connect_device_icon"></span>
+                        </div>
+                    </div>
+                   <!-- <div class="fullWidth formHolder" ng-if="ajaxProfileUserInfoSpinner">
+                    <div class="fullWidth">
+                        <span  us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+                    </div>
+                   </div> -->
+                   <div ng-if="ajaxProfileUserInfoSpinner" class="subscriptionOverlay">
+                    <div class="OverlayCont">
+                         <div class="fullWidth">
+                            <span  us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

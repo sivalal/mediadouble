@@ -1,0 +1,24 @@
+<style type="text/css">
+ hr {
+  border: 0;
+  border-top: 1px solid #0A0A0A;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+p{
+	font-family: DINWebPro-Medium;
+  color: #747474;
+}
+</style>
+<div class="container fullWidth" style="margin-top: 60px;">
+<div style="padding: 15px;" >
+    <p>Sorry, no results found for '{{serchTerm}}'</p>
+    <hr/>
+    <div ng-bind-html="htmlTemplate[CurrentLang]|html">       
+    </div>
+</div>
+    
+</div>
+<!-- RAILS/ngif SECTION -->
+<div ng-include="'/views/railtemplate_page.html'" ></div>
+<!-- RAILS/ngif SECTION END-->  

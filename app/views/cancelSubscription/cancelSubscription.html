@@ -1,0 +1,118 @@
+
+
+<div class="cancelAccount" ng-hide="showConfirmPage && isLoggedIn">
+<!-- notification -->
+<div class="col-md-12 col-sm-12 col-xs-12 informationSuccess center" ng-if="informationSuccessContainer">
+    <span class="successIcon"></span>
+    <span>{{informationSuccessMessage | translate}}</span>
+    <span class="closeInfoAlert" ng-click="closeSuccessMessageAlert()"></span>
+</div>
+<div class="col-md-12 col-sm-12 col-xs-12 informationError center" ng-if="informationErrorContainer">
+    {{informationErrorMessage | translate}}
+    <span class="closeInfoAlert" ng-click="closeErrorMessageAlert()"></span>
+</div>
+<!-- notification -->    
+
+  <div class="fullWidth">
+    <div class="emoLargeSad emo"></div>
+  </div>
+  <h2 ng-bind="cancel_accountObj.page_title[CurrentLang]"></h2>
+  <p ng-bind="cancel_accountObj.page_description[CurrentLang]"></p>
+
+  <div class="blockWhite pickReasons">
+    <div class="clear"></div>
+    <div class="fullWidth">
+        <div class="hideInput fullWidth" 
+             ng-repeat="cstatement in cancel_accountObj.cancellation_statements"
+             ng-init="cstatement.checkoutPackageCheckboxDisable=false"
+             ng-class="{'checkoutPackageCheckboxDisable':cstatement.checkoutPackageCheckboxDisable,checkoutPackageCheckboxChecked:cstatement.statementSelection,checkoutPackageCheckbox:!cstatement.statementSelection}"
+              >
+          <label class="fullWidth" >
+            <input type="checkbox" ng-model="cstatement.statementSelection"                   
+                 ng-change="cancelStatementsChange(cstatement)" 
+                 ng-disabled="disableCancelStatementsChange(cstatement)"
+                 />                  
+            <span>{{cstatement.statement[CurrentLang]}}</span>
+          </label>
+        </div>
+        <div ng-show="showUserComment" class="fullWidth parent signupPackageCont">
+            <textarea placeholder="{{TXTCANCELOTHERHINTObj[CurrentLang]}}" ng-model="cancel_accountObj.userComment"></textarea>
+        </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+  <div class="blockWhite impressions">
+    <h4 ng-bind="cancel_accountObj.product_feedback_question[CurrentLang]"></h4>
+    <div class="clear"></div>
+    <div class="hideInput fullWidth emotionFeedback" 
+           ng-class="{activeEmotion:(cancel_accountObj.feedbackStatementSelection==product_feedback_statement.id),
+                       happy: (product_feedback_statement.emotion_icon=='happy'),
+                        ok: (product_feedback_statement.emotion_icon=='ok'),
+                         sad: (product_feedback_statement.emotion_icon=='sad')
+         }" 
+           class="fullWidth"  
+           ng-repeat="product_feedback_statement in cancel_accountObj.product_feedback_statements" >
+        <label class="fullWidth">
+          <input type="radio" ng-model="cancel_accountObj.feedbackStatementSelection" 
+                ng-value="product_feedback_statement.id"
+            />                  
+          <span class="parent">
+            <span class="feedbackTextVert" style="">{{product_feedback_statement.feedback_statement[CurrentLang]}}</span>
+          </span>
+        </label>
+    </div>
+  </div>
+  <div class="fullWidth" style="text-align:center;">
+		<button class="btn btnOrange signupNextBtn" ng-click="CancelAccountAction()"		     
+		  style="color:{{SubmitFeedbackAndCancelButton.text_color}};background-color:{{SubmitFeedbackAndCancelButton.background_color}}"
+		     ng-bind="SubmitFeedbackAndCancelButton.name[CurrentLang]" >           
+		</button>
+    <button class="btn" ng-click="HomePageAction()"        
+     style="color:{{cancelAccountKeepMeInButton.text_color}};background-color:{{cancelAccountKeepMeInButton.background_color}}"
+         ng-bind="cancelAccountKeepMeInButton.name[CurrentLang]" >            
+    </button>
+			
+          <div class="fullWidth packageDisclaimer" >
+              <span ng-bind="cancel_accountObj.short_description[CurrentLang]"></span>
+              <span ng-bind="nextBillingDate"></span>
+          </div>
+  </div>
+</div>
+
+
+<!-- Cancel Confirm dialog page below -->
+
+<div class="cancelAccount confirmCancelPage" ng-show="showConfirmPage && isLoggedIn">
+    
+<!-- notification -->
+<div class="col-md-12 col-sm-12 col-xs-12 informationSuccess center" ng-if="informationSuccessContainer">{{informationSuccessMessage | translate}}</div>
+<div class="col-md-12 col-sm-12 col-xs-12 informationError center" ng-if="informationErrorContainer">{{informationErrorMessage | translate}}</div>
+<!-- notification -->
+
+<div class="fullWidth">
+    <div class="emoLargeCry emo"></div>
+  </div>
+  <h2 ng-bind="cancel_accountObj.cancel_account_confirmation.confirm_msg_title[CurrentLang]"></h2>
+      <p>
+          <span ng-bind="cancel_accountObj.cancel_account_confirmation.confirm_msg_desc[CurrentLang]" ></span>
+          <span ng-bind="nextBillingDate"></span>
+      </p>
+
+  <form class="confirmPassword">
+    <div class="form-group col-md-12 col-sm-12 col-xs-12 fullWidth note parent">
+      <span ng-if="ajaxPromocodeSpinner" us-spinner class="yelloworangeloader"></span>
+      <input type="password" ng-change="pwdcheck()" ng-model="uLoginPassword" type="text" class="form-control" 
+             id="confirmPassword" placeholder="Enter Password to Confirm"
+             required ng-disabled="ajaxPromocodeSpinner" focus-me="focusInput" >
+      <span ng-show="showIncorrectPasswordError" translate="CANCELACCOUNT_PASSWORDINCORRECT"></span>
+      <button ng-click="CheckPasswordAndConfirm()" class="btn btnOrange confirmBtn"
+              translate="CANCELACCOUNT_PASSWORDCONFIRM"
+              ></button>
+    </div>
+      <button class="goBackBtn" ng-click="NoGoBack()"
+              translate="CANCELACCOUNT_NoGoBack"
+              ></button>
+    <div class="clear"></div>
+  </form>
+</div> 

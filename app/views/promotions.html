@@ -1,0 +1,56 @@
+
+<!-- Top fixed div -->
+  <div class="top-div-fixed">
+   	<a ng-click="backurl()" class="icon-custom-back">BACK</a>
+   	</div>
+  </div>
+  <div>
+      <img src="/images/banner_promotion.png" style="width:100%; height:auto; ">
+  </div>
+  <div  style="height:50px" >
+    <!--   Rails goes in here -->
+  </div>
+  <div class="row">
+    <div  class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12 clickable no-padding" >
+       <img src="/images/homepromotionbanner.png" style="width:100%; height:auto; "/>
+    </div>
+  </div>
+  <div  style="height:50px"></div>
+  
+  
+<div ng-if="railList!='noRails'">
+  <div ng-repeat="rail in railList"  ng-if="rail.usergroup=='all' || (rail.usergroup=='visitor' && accessToken=='') || (rail.usergroup=='subscribed' && accessToken!='')||(rail.usergroup!='visitor' && rail.usergroup!='all' && rail.usergroup!='subscribed')"
+       on-finish-render-filters>
+   <!-- rails -->
+  <div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12" ng-if="rail.query!='promotion'" >
+      <h5 class="railsHeader" style="display:none;"  >
+          
+          <a ng-if="rail.query!='similar' && rail.query!='similar_genre'" href="/filter?pageid={{pagename}}&position={{$index}}">
+              {{rail.title[CurrentLang]}}
+          <span class="railsHeaderArrow" ></span>
+          </a>
+          
+          <a ng-if="rail.query=='similar' || rail.query=='similar_genre'" >
+              {{rail.title[CurrentLang]}}
+          <span class="railsHeaderArrow" ></span>
+          </a>
+
+      </h5>
+      <div id="owl-rails_{{$index}}" class="owl-carousel">
+        
+      </div>
+  </div>
+  <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 no-padding" ng-if="rail.query=='promotion'">
+      <a ng-if="rail.action=='link'" ng-href="{{rail.actionID}}">             
+      <img ng-src="{{appgridAssets[rail.promotion.banner_asset_id[CurrentLang]]}}" class="fullWidth">
+      </a>
+      <a ng-if="rail.action=='custom'" ng-href="/page?pageid={{rail.actionID}}">
+      <img ng-src="{{appgridAssets[rail.promotion.banner_asset_id[CurrentLang]]}}" class="fullWidth">
+      </a>
+  </div>
+  </div>
+<!--  end of rails -->
+  </div>
+</div><!-- ngif end -->
+

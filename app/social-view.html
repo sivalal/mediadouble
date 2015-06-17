@@ -1,0 +1,123 @@
+<?php ob_start(); ?>
+<head>
+  <title><?php print $this->data['title'] ?></title>
+  <?php
+
+    $this->headLink(array('rel' => 'canonical', 'href' => $this->data['url']));
+    echo $this->headLink();
+
+    // General Meta Tags
+    $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
+                     ->appendHttpEquiv('Content-Language', $this->data['language']);
+
+      // Facebook Meta Tags
+      $this->headMeta()->setProperty('og:site_name', 'Yaveo by DirecTV');
+      $this->headMeta()->setProperty('og:url', $this->data['url']);
+      $this->headMeta()->setProperty('og:type', $this->data['show_type']);
+      $this->headMeta()->setProperty('og:title', $this->data['social_title']);
+      $this->headMeta()->setProperty('og:description', $this->data['description']);
+      $this->headMeta()->setProperty('og:image', $this->data['image']);
+
+      // Twitter Meta Tags
+      $this->headMeta()->setProperty('twitter:card', 'summary_large_image');
+      $this->headMeta()->setProperty('twitter:site', '@yaveo');
+      $this->headMeta()->setProperty('twitter:title', $this->data['title']);
+      $this->headMeta()->setProperty('twitter:description', $this->data['description']);
+      $this->headMeta()->setProperty('twitter:image', $this->data['image']);
+      // Twitter Meta Tags for Mobile App
+      $this->headMeta()->setProperty('twitter:app:country', 'US');
+      // iPhone
+      $this->headMeta()->setProperty('twitter:app:name:iphone', $this->data['mobile_app_config']['ios_app_name']);
+      $this->headMeta()->setProperty('twitter:app:id:iphone', $this->data['mobile_app_config']['ios_app_id']);
+      $this->headMeta()->setProperty('twitter:app:url:iphone', $this->data['mobile_url']);
+      // iPad
+      $this->headMeta()->setProperty('twitter:app:name:ipad', $this->data['mobile_app_config']['ios_app_name']);
+      $this->headMeta()->setProperty('twitter:app:id:ipad', $this->data['mobile_app_config']['ios_app_id']);
+      $this->headMeta()->setProperty('twitter:app:url:ipad', $this->data['mobile_url']);
+      // Android
+      $this->headMeta()->setProperty('twitter:app:name:googleplay', $this->data['mobile_app_config']['android_app_name']);
+      $this->headMeta()->setProperty('twitter:app:id:googleplay', $this->data['mobile_app_config']['android_app_id']);
+      $this->headMeta()->setProperty('twitter:app:url:googleplay', $this->data['mobile_url']);
+    
+    echo $this->headMeta();
+
+    $mobileDetect = $this->mobileDetect();
+    $isMobile = $mobileDetect->isMobile();
+    if($isMobile) {
+      $htmlReadyToWatch = [
+        'en_US' => "You are almost ready to watch",
+        'es_ES' => "Estás casi listo para ver"
+      ];
+      $htmlDownloadApp = [
+        'en_US' => "<strong>Yaveo&trade;</strong> is a <strong>free</strong> app required to watch instantly on your device.",
+        'es_ES' => "<strong>Yaveo&trade;</strong> es un app <strong>gratuito</strong> requerido para ver inmediatamente en tu dispositivo."
+      ];
+      $platform = $mobileDetect->isAndroidOS() ? 'Android' : 'iOS';
+      $downloadAppText = 'Get Yaveo App';
+      $downloadAppLink = ($platform=='iOS') ? $this->data['mobile_app_config']['ios_app_download'] : $this->data['mobile_app_config']['android_app_download'];
+  ?>
+
+    <script type="text/javascript">
+      window.setTimeout(function(){
+        window.location.href = "<?php echo $this->data['mobile_url']; ?>";
+      },500);
+      window.setTimeout(function(){
+        window.location.href = "<?php echo $downloadAppLink; ?>";
+      },1000);
+    </script>
+
+  <?php
+    } else { // this is desktop
+  ?>
+
+    <script type="text/javascript">
+      window.location.href = "<?php echo $this->data['web_redirect_url']; ?>";
+    </script>
+
+  <?php
+    }
+  ?>
+</head>
+<body style="background-color: #e1e1e1;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+
+  <div id="menu" style="width:100%;height:60px;border:0;margin-bottom:0;background-color:#34ace0;">
+    <div id="logo" style="height:59px;float:left;"><img src="https://appgrid-api.cloud.accedo.tv/asset/5544ceb12ca5b084ee44bb003db20227842d62fbf9edce66" style="width:180px;padding:10px;"/></div>
+  </div>
+
+  <div id="content" style="color:#3c5e6c;padding:1%;text-align:center;">
+
+<?php
+  if($isMobile) {
+?>
+    <p style="font-size: 22px;margin-top:30px;"><?php echo $htmlReadyToWatch[$this->data['language']]; ?></p>
+    <h1 style="margin-top:0;font-size:20px;text-transform:uppercase;"><?php echo $this->data['title'] ?></h1>
+
+    <p style="font-size: 22px;margin-top:30px;"><?php echo $htmlDownloadApp[$this->data['language']]; ?></p>
+
+    <div id="app-links" style="margin:30px;">
+      <a href="<?php echo $downloadAppLink ?>" style="color:#fff;font-size:1em;font-weight:400;text-decoration:none;background-color:#f47322;opacity:.85;line-height:26px;height:35px;border-radius:8px;padding:15px;">
+        <?php echo $downloadAppText; ?>
+      </a>
+    </div>
+    <br style="clear:both" />
+
+    <a href="<?php echo $downloadAppLink ?>">
+      <img src="<?php echo $this->data['thumb'] ?>" style="width:100%"/>
+    </a>
+
+<?php
+  } else {
+?>
+  <h1 style="margin-top:0;font-size:20px;text-transform:uppercase;"><?php echo $this->data['title'] ?></h1>
+  <img src="<?php echo $this->data['thumb'] ?>" style="width:100%"/>
+
+<?php
+  }
+?>
+
+  </div>
+
+  <div id="footer" style="text-align:center;width:100%;min-height:130px;padding:10px 0;margin-bottom:36px;margin-top:100px;color:#37abe4;">&copy;<script>document.write(new Date().getFullYear())</script> DIRECTV DIGITAL LLC</div>
+
+</body>
+<?php ob_end_flush(); ?>

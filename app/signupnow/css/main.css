@@ -1,0 +1,177 @@
+/*
+--------------------------------------------------------------
+HELPER CLASSES
+--------------------------------------------------------------
+*/
+.textleft { text-align: left !important; }
+.textright { text-align: right !important; }
+.textcenter { text-align: center !important; }
+.alignleft { float: left; margin:0px 10px 10px 0px; }
+.alignright { float: right;	margin:0px 0px 10px 10px; }
+.aligncenter { display: block; margin:0px auto 10px auto !important; }
+b,strong { font-family: 'yaveobold'; }
+
+/*
+--------------------------------------------------------
+CONTENT STYLES
+--------------------------------------------------------
+*/
+body {
+	font-family: 'yaveo-regular';
+	font-size: 18px;
+	line-height: 24px;
+	margin: 0 auto;
+	color: #fff;
+	background: url(../img/pattern-yaveo.jpg) top left repeat #e1e1e1;
+}
+
+a {
+	color: #37ace2;
+	text-decoration: none;
+}
+
+
+
+#blueBacker {
+	background-color: #2a75ab;
+	padding: 40px 20px 30px;
+}
+
+.logo {
+	position: relative;
+	z-index: 500;
+}
+
+.hero {
+	margin-top: -100px;
+}
+
+.main-copy {
+	padding-top: 40px;
+	text-align: center;
+	font: 22px 'yaveo-regular';
+}
+
+.yellow-callout-text {
+	color: #fdd301;
+	text-transform: uppercase;
+	padding: 15px 0px;
+}
+
+.white-small-text {
+	font-size: 16px;
+	font-family: 'yaveo-regular';
+	padding: 5px;
+}
+
+.content-disclaimer {
+	text-align: center;
+	font-size: 8px;
+	line-height: 11px;
+}
+
+.main-disclaimer {
+	text-align: left;
+	font-size: 13px;
+	line-height: 18px;
+	color: #878787;
+	padding: 20px;
+}
+
+/*
+--------------------------------------------------------
+BUTTONS
+--------------------------------------------------------
+*/
+.btn {
+	display: inline-block;
+	position: relative;
+	padding: 7px 35px;
+	cursor: pointer;
+	font: 22px/40px 'yaveomedium';
+	text-align: center;
+	text-transform: uppercase;
+	text-decoration: none;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	color: #333333;
+	border: none;
+	border-radius: 2px;
+	background: #b3b3b3;
+	background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0));
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0));
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.45), 1px 1px 4px rgba(0,0,0,0.6); 
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+
+.btn:hover,
+.btn:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn:active,
+.btn.active {
+    outline: 0;
+    background-image: none;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+.btn-orange {
+    color: #fff;
+    text-shadow: 0px 0px 3px #000;
+    background-color: #f67303;
+}
+
+.spanishbtn !important
+{
+	padding: 0 100px;
+}
+
+/*
+--------------------------------------------------------
+RESPONSIVE
+--------------------------------------------------------
+*/
+@media (max-width: 1460px) {
+	.main-copy {
+		padding-top: 15px;
+		font: 19px 'yaveo-regular';
+	}
+}
+
+@media (min-width: 993px) and (max-width: 1200px) {
+	.main-copy {
+  		padding-top: 0px;
+	}
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+	.btn {
+		font: 20px/40px 'yaveomedium';
+	}
+
+	.yellow-callout-text {
+		font-size: 15px;
+	}
+
+	.content-disclaimer {
+		padding: 20px 0px 0px;
+	}
+}
+
+@media (max-width: 563px) {
+	.hero {
+  		margin-top: 0px;
+	}
+
+	.btn {
+		font: 17px/40px 'yaveomedium';
+	}
+}

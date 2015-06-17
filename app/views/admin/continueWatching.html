@@ -1,0 +1,48 @@
+<script>
+  jQuery(document).ready(function ($) {
+    "use strict";
+    $('#movieScroll').perfectScrollbar();
+  });
+</script>
+
+ <div id="movieScroll" class="contentHolderSearch">
+ 	<div class="col-md-12 col-sm-12 col-xs-12 col-md-padding-top-4">
+ 		<div class="col-md-12 col-sm-12 col-xs-12">
+			<h5 class="st-nav-adminHeader" translate="ADMIN_SIDE_BAR_CONTINUE"></h5>
+		</div>
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<hr class="border-top-width-1 noBorder"/>
+		</div>
+		<div style="width:100%; display:inline-block;">
+			<button class="btn btnRed" style="float: right; margin-right:10px; width:50%;" ng-click="removeAllContinueWatching()" translate="BTN_ADMIN_CLEAR_CONTINUE_WATCHING"></button>
+		</div>
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<hr class="border-top-width-1" />
+		</div>
+		<span ng-show="ajaxContinueWatchlistSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+		<div class="cwAssetList" data-ng-repeat="watching in continueWatchingList">
+            <a class="cwThumb" ng-click="setResumePlayheadPosition(watching.source, watching.id, watching['xdrContent'].playhead_seconds)">
+				<img ng-src="{{newbase}}{{watching.imagePath}}"/>
+			</a>
+			<div class="cwAssetIntro">
+				<div class="cwTitles">
+					<div class="admin-watchlist-secondary-title">
+						<b></b>
+						<!-- , {{watching.details.season}}, {{watching.details.episode}}, {{watching.details.episodeTitle}} -->
+					</div>
+					<div class="admin-watchlist-primary-title">
+						{{watching.title}}<!-- Last Watched {{watching.lastWatched}} -->
+					</div>
+				</div>
+				<div class="listProgressbarContainer">
+		      		<div class="listProgressbar" ng-style="{width: getElapsedPercentage($index)}"></div>
+				</div>
+				<a class="trash-icon alignRight col-md-margin-top-3" ng-click="removeContinueWatching($index,watching.contentID[0],continueWatchingList)">
+				</a>
+			</div>
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<hr class="border-top-width-1" />
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,149 @@
+<div ng-if="railList!='noRails'" infinite-scroll='loadMore()' 
+     infinite-scroll-distance='1'
+     infinite-scroll-disabled="disableInfiniteScroll"
+     class="fullWidth">
+
+    <div ng-repeat="rail in VisiblerailList" class="RailngRepeatClass" 
+         ng-class="(rail.query!='null' && rail.query!='promotion') ? 'railLoading' : ''" 
+         ng-hide="!isLoggedIn && rail.query=='xdr'" ng-if="railDisplayFilter(rail)"       
+       on-finish-render-filters>
+    
+    <!-- bolt_on_promo rail  style="background-color: {{rail['promo-rail-content']['rail-bg-color']}}" -->    
+    <div class="promoBoltOn fullWidth" ng-if="rail.query=='bolt_on_promo'">
+        <div class="col-md-5 col-sm-5 col-xs-6 promoBoltOnText">
+          <h2 ng-bind="rail['promo-rail-content']['title'][CurrentLang]"></h2>
+          <p ng-bind="rail['promo-rail-content']['description'][CurrentLang]"></p>
+          <span class="learnMoreText" 
+              ng-click="boltonPromoLearnMore(rail['promo-rail-content']['learn-more-link'])"
+              ng-bind="rail['promo-rail-content']['learn-more-text'][CurrentLang]">                
+          </span>
+          
+          <button class="btn btnOrange" 
+              style="background-color: {{rail['promo-rail-content']['buy-now-color']}}"
+              ng-click="boltonPromoBuyNow(rail['promo-rail-content']['buy-now-link'],rail['boltonid'])" 
+              ng-bind="rail['promo-rail-content']['buy-now-text'][CurrentLang]">                    
+          </button>
+        </div>
+        <!-- bolt_on_promo rail images div -->
+        <div class="col-md-7 col-sm-7 col-xs-6 bolt_on_promoRailCont">            
+            <div id="boltonpromoRail_{{$index}}"  class="bolt_on_promoRail fullWidth">
+                <div class="col-md-4 col-sm-4 col-xs-4 bolt_on_promoRail_item" ng-repeat="promoBasset in rail.BoltonPromoRailAssets"
+                     ng-init="promoBasset.showFallback=true" >
+                    <img class="img-responsive gridPlaceholder" ng-if="promoBasset.showFallback" ng-src="{{fallbackImageURL}}" />
+                    <img class="img-responsive" ng-src="{{promoBasset.imagePath}}" 
+                         alt="{{promoBasset.title}}" 
+                         imageonload="promoBasset.showFallback=false" fallback-src="{{fallbackImageURL}}"
+                         />
+                    <div class="piccaption">
+                        <h5 class="customthumbnail_imageheader" ng-bind="promoBasset.title"></h5>
+                    </div>
+                </div>  
+            </div>            
+        </div>
+        <!-- end of bolt_on_promo rail images div -->
+    </div>
+    <!-- end of bolt_on_promo rail -->
+    
+   <!-- all rails except bolt_on_promo -->
+    <div class="" ng-if="rail.query!='bolt_on_promo'">
+      <div class="fullWidth"
+           ng-if="rail.query!='null' && rail.query!='promotion'" >
+        <!-- rail headers for not loggedin users -->
+        <h5 class="railsHeader"  ng-if="!isLoggedIn" style="display:none;"  >
+          <a ng-if="rail.query!='live' && rail.query!='similar' && rail.query!='similar_genre' && rail.query!='appgrid'" >
+              {{rail.title[CurrentLang]}}
+            <span class="railsHeaderArrow" ></span>
+          </a>
+            
+          <a ng-if="rail.query=='live' || rail.query=='appgrid' || rail.query=='similar'" >
+              {{rail.title[CurrentLang]}}
+            <span class="railsHeaderArrow" ></span>
+          </a>          
+          <a ng-if="rail.query=='similar_genre'" >
+              {{rail.title[CurrentLang]}} {{assetData.genres}}
+            <span class="railsHeaderArrow" ></span>
+          </a>
+        </h5>       
+        <!-- rail headers for loggedin users; links are accessible only to loggedin users -->
+        <h5 class="railsHeader {{rail.query}}" ng-if="isLoggedIn" style="display:none;"  >
+          <a ng-if="rail.query!='live' && rail.query!='similar' && rail.query!='similar_genre' && rail.query!='appgrid'" href="/filter?pageid={{pagename}}&position={{$index}}">
+              {{rail.title[CurrentLang]}}
+            <span class="railsHeaderArrow" ></span>
+          </a>
+            
+          <a ng-if="rail.query=='live'" href="/liveList">
+              {{rail.title[CurrentLang]}}
+            <span class="railsHeaderArrow" ></span>
+          </a>
+          
+          <a ng-if="rail.query=='appgrid'" >
+              {{rail.title[CurrentLang]}}
+            <span class="railsHeaderArrow" ></span>
+          </a>
+
+          <a ng-if="rail.query=='similar'" >
+              {{rail.title[CurrentLang]}}
+            <span class="railsHeaderArrow" ></span>
+          </a>
+          
+          <a ng-if="rail.query=='similar_genre'" >
+              {{rail.title[CurrentLang]}} {{assetData.genres}}
+            <span class="railsHeaderArrow" ></span>
+          </a>
+        </h5>
+        <div id="owl-rails_{{$index}}" class="owl-carousel">
+            <div></div>
+        </div>
+      </div>
+      <!-- Promotion type static -->
+      <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 no-padding" 
+           ng-if="rail.query=='promotion' && rail.promotion.type=='static'">
+          <a ng-if="rail.action=='link'" ng-href="{{rail.actionid}}">             
+          <img ng-src="{{appgridAssets[rail.promotion.banner_asset_id[CurrentLang]]}}" class="fullWidth">
+          </a>
+          <a ng-if="rail.action=='custom'" ng-href="/page?pageid={{rail.actionid}}">
+          <img ng-src="{{appgridAssets[rail.promotion.banner_asset_id[CurrentLang]]}}" class="fullWidth">
+          </a>
+          <a ng-if="rail.action=='page'" ng-href="/{{rail.actionid}}">             
+          <img ng-src="{{appgridAssets[rail.promotion.banner_asset_id[CurrentLang]]}}" class="fullWidth">
+          </a>
+      </div>
+    </div>
+  <!-- Promotion type dynamic html -->
+  <div class="container anyTimeAnyWhere" ng-if="rail.query=='promotion' && rail.promotion.type=='dynamic_html'">
+    <div class="row ">
+      <div class="col-md-12 col-sm-12 col-xs-12 ">
+        <h2 class="text-center">{{rail.promotion.title[CurrentLang]}}</h2>
+      </div>
+     </div> 
+     <div class="row ">
+      <div class="col-md-12 col-sm-12 col-xs-12 packageBottomSpacing">
+        <a ng-if="!rail.promotion.call_to_action.isModal" class="img-responsive text-center glyphicon glyphicon-arrow-right" ng-href="{{rail.promotion.call_to_action.href}}" id="howitworks" target="{{rail.promotion.call_to_action.target}}">
+          <span>{{rail.promotion.call_to_action.title[CurrentLang]}}</span>
+        </a>
+        <a ng-if="rail.promotion.call_to_action.isModal" class="img-responsive text-center glyphicon glyphicon-arrow-right" id="howitworks" ng-click="signupModal(1)">
+          <span>{{rail.promotion.call_to_action.title[CurrentLang]}}</span>
+        </a>
+      </div>
+     </div>
+     <div class="row packageBottomSpacing" ng-if="rail.promotion.assets">
+     <div class="col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
+      <div class="col-md-4 col-sm-12 col-xs-12 col-md-margin-bottom-2" ng-repeat="assest in rail.promotion.assets">
+        <div ng-if="!assest.isModal" class="img-responsive text-center" ng-href="{{assest.href}}" target="{{assest.target}}"> 
+          <img  ng-src="{{assest.imgSrc}}">
+        </div>
+        <div ng-if="assest.isModal" class="img-responsive text-center" ng-click="signupModal(1)"> 
+          <img  ng-src="{{assest.imgSrc}}">
+        </div>
+        <div class="how-it-works-link-container">
+          <a ng-if="!assest.isModal" ng-href="{{assest.href}}" target="{{assest.target}}">{{assest.title[CurrentLang]}}</a>
+          <a ng-if="assest.isModal" ng-click="signupModal(1)">{{assest.title[CurrentLang]}}</a>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+<!--  end of rails -->
+  </div>
+</div><!-- ngif end -->
+

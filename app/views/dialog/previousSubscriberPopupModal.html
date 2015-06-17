@@ -1,0 +1,27 @@
+<div class="modal-content" >
+    <div class="modal-header"></div>
+    <div class="modal-body dialogModalBody ng-scope">
+        <div class="popupMsg welcomeBack center-block">
+            <div class="popup-body ng-scope">
+                <h6>
+                    <span translate="TXT_FOR_INFO"></span>
+                </h6>
+                <p ng-if="subscriptionStatus == 'alert'" ng-bind="txtForaccountWithInExpiryDate[CurrentLang]"></p>
+                <p ng-if="subscriptionStatus == 'reactivate'">{{'TXT_ACCOUNT_EXPIRY_CROSSED_CURRENT_DATE' | translate}}</p>
+            </div> 
+            <div class="popup-footer ng-scope">
+                <div class="buttons center">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <button ng-if="subscriptionStatus == 'alert'" class="btn btnOrange" translate="BTN_OK_LIVE" ng-click="reSubscriberAction()"></button>
+                        <button  ng-if="subscriptionStatus == 'alert'" class="btn btnGrey" translate="BTN_CANCEL_LIVE" ng-click="activeAction()"></button>
+                        <button ng-if="subscriptionStatus == 'reactivate'" class="btn btnOrange" translate="BTN_PROCEED_LIVE" ng-click="proceedAction()"></button>
+                        <button  ng-if="subscriptionStatus == 'reactivate'" class="btn btnGrey" translate="BTN_CANCEL_LIVE" ng-click="cancelSubscriptionAction()"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div> 
+    <div class="modal-footer ng-scope">
+    </div>
+</div>

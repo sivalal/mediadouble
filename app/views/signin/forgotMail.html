@@ -1,0 +1,106 @@
+<style type="text/css">
+    p.resetPwdText{
+        font-size: 18px;
+        color: #747474;
+    }
+    @media(max-width: 480px){
+        p.resetPwdText{
+            font-size: 15px;
+        }
+    }
+</style>
+
+<div class="loginModalContainer">
+    <div  class="login-modal-body">
+        <div class="col-md-12 col-sm-12 col-xs-12 informationSuccess center" ng-if="informationSuccessContainer">{{informationSuccessMessage | translate}}</div>
+        <div class="col-md-12 col-sm-12 col-xs-12 informationError center" ng-if="informationErrorContainer">{{informationErrorMessage | translate}}</div>
+        <div class="col-md-12 col-sm-12 col-xs-12 informationError center" ng-if="mailErrorContainer">{{findMailErrorMessageStart | translate}}
+        <a ng-href="{{gigyaFrgtPswd.help_desk_url[CurrentLang]}}">{{findMailErrorMessageLink | translate}}</a>
+            <span ng-show="validEndTextExist">{{findMailErrorMessageEnd | translate}}</span>
+        </div>
+
+        <div ng-show="showMailScreen">
+            <div class="fullWidth signupCreateAccount">
+                <div class="col-md-12 caption">
+                    <h2 translate="TXT_MAIL_FORGOT_HEADER_MANAGE_ACCOUNT" style="padding-bottom:20px; margin-bottom: 0;"></h2>
+                </div>
+                <div class="col-md-5 col-sm-8 col-xs-12 text-center center-block" style="margin-bottom: 28px; float:none;">
+                    <p class="resetPwdText" translate="TXT_MAIL_FORGOT_BODY_MANAGE_ACCOUNT"></p>
+                </div>
+                <div class="createAccountForm clear col-md-3 center col-sm-8 col-xs-12 center-block package-content-box-3">
+                    <div class="container-fluid no-padding">
+                        <div class="login-container signupTop">
+                            <span ng-show="ajaxResetPasswordSpinner" us-spinner class="yelloworangeloader"></span>
+                            <form novalidate  ng-submit="showUserMailIds()" name="resetMailForm" role="form" class="fullWidth">
+                                <div class="fullWidth">
+                                    <div class="form-group parent">
+                                        <input type="text" ng-model="uResetEmailFName" class="form-control col-md-margin-bottom-2" placeholder="{{'HINT_TXT_EMAIL_FIRSTNAME'|translate}}" class="form-control" ng-maxlength="25" ng-pattern="/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/" required>
+                                    </div>
+                                    <div class="form-group parent">  
+                                        <input type="text" ng-model="uResetEmailLName" class="form-control col-md-margin-bottom-2" placeholder="{{'HINT_TXT_EMAIL_LASTNAME'|translate}}" class="form-control" ng-maxlength="25" ng-pattern="/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/" required>
+                                    </div> 
+                                    <div class="form-group parent">
+                                        <input type="text" class="form-control" name="vin_PaymentMethod_creditCard_account" ng-model="vin_PaymentMethod_creditCard_account" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="resetMailForm.vin_PaymentMethod_creditCard_account.$card.type" placeholder="{{'BTN_CARD_NUMBER_MANAGE_ACCOUNT'|translate}}" id="credit_card" required ng-change="checkCreditcardType(resetMailForm.vin_PaymentMethod_creditCard_account.$card.type)" card-number-type-check="{{resetMailForm.vin_PaymentMethod_creditCard_account.$card.type}}"/>
+                                        <div class="selected_cards" ng-class="resetMailForm.vin_PaymentMethod_creditCard_account.$card.type"></div>
+                                    </div>
+                                    <div>
+                                        <button type="submit"  class="btn-custom-large-orange" ng-disabled="resetMailForm.$invalid" translate="TXT_SEND_HELP" style="background-color:#f47322"></button>
+                                    </div>
+                                    <div class="textCenter">
+                                        <a href="#" ng-click="findHelp()">
+                                            {{'TXT_FIND_EMAIL_NODETAILS'|translate}}
+                                        </a>
+                                    </div>
+                                    <!-- <div class="custom-tootltip staticTooltip">
+                                        <h6>Lorem Ipsum dolar sit amet</h6>
+                                    </div> -->
+                                    <div class="col-md-12 center col-md-margin-top-1">
+                                        <alert class="alert-danger" ng-show="reset_pwd_error" type="danger" close="closeResetPwdAlert()" class="font-size-7">{{errorResetPwdMessage | translate}}</alert>
+                                        <alert class="alert-success" ng-show="reset_pwd_success" type="success" close="closeResetPwdSuccess()" class="font-size-7">{{successResetPwdMessage | translate}}</alert>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-3 center text-center col-sm-6 col-xs-12" ng-show="emailSubmit">
+                                    <button type="submit"  class="btn-custom-green btn-next" ng-click="submitResetPwd(uResetEmailID)" ng-disabled="resetPWForm.$invalid" translate="TXT_SEND_HELP"></button>
+                                </div> -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div ng-show="showFoundMailScreen">
+            <div class="fullWidth signupCreateAccount">
+                <div class="col-md-12 caption">
+                    <h2 translate="TXT_MAIL_FORGOT_HEADER" style="padding-bottom:20px; margin-bottom: 0;"></h2>
+                </div>
+                <div class="col-md-5 col-sm-8 col-xs-12 text-center center-block" style="margin-bottom: 28px; float:none;">
+                    <p class="resetPwdText" translate="TXT_MAIL_FORGOT_SUB_HEADER"></p>
+                </div>
+                <div class="createAccountForm clear col-md-3 center col-sm-8 col-xs-12 center-block package-content-box-3">
+                    <div class="container-fluid no-padding">
+                        <div class="login-container signupTop">
+                            <div class="fullWidth">
+                                <div class="clear"></div>
+                                <div class="fullWidth">
+                                    <div class="center textCenter">
+                                        <div style="font-size:22px;">
+                                                mailid@mail.com
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button class="btn-custom-large-orange" ng-click="selectMailid('mailid@mail.com')" translate="BTN_CONTINUE_TXT"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer top-button-modal-footer">
+            </div>
+        </div>
+    </div>
+</div>

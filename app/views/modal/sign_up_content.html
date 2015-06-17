@@ -1,0 +1,505 @@
+<!--invoke Gigya's Plugin --> 
+<script>
+    jQuery(document).ready(function ($) {
+    "use strict";
+      $('#tc').perfectScrollbar();
+      $('#billingInfo').perfectScrollbar();
+    });
+
+    if(window.DeviceOrientationEvent) {
+        window.addEventListener("orientationchange", function() {
+        var focusedField = document.activeElement;    
+        focusedField.blur();
+        focusedField.focus();
+        }, false);
+    };  
+    
+</script>
+
+<!-- sign-up-controller-->
+<div ng-controller="SignUpCtrl" class="modal-container" id="signUpCtrl">
+    <!-- modal-header -->
+    <div class="modal-header top-button-modal-header">
+        <div class="listProgressbarContainer signupProgress" id="listProgressbarContainer">
+            <div class="listProgressbar" ng-style="{width: getCoveredPagePercentage()}"></div>
+        </div>
+    </div><!-- /.modal-header -->
+    <!-- modal-body -->
+    <div  class="modal-body sign-up-package-modal-body">
+        <!-- sign-up-page-1 -->
+        <div ng-show="signup_page_1">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <span class="icon-custom-cancel" ng-click="cancelWithUrlParams()"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 subscribeNowHead">
+                        <h2 translate="TXT_CREATE_ACCOUNT_TITLE"></h2>
+                    </div>
+                </div>    
+                <span ng-show="ajaxPackageSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+                <div class="row">
+                    <div class="center-block package-list" ng-style="{'width':packageWidth.container_width+'%'}">
+                        <div ng-class="packageWidth.item_class_in_modal" class="col-md-margin-bottom-2" ng-repeat="package in packageList | orderObjectBy:'priority'">
+                            <div class="col-md-12 col-sm-12 col-xs-12 package-box-item">
+                                <h2 ng-bind="package.name[CurrentLang]"></h2>
+                                <p ng-bind-html="package.description[CurrentLang]"></p>
+                                <span class="center-block" ng-repeat="period in package.pricing[0].billing_plan.periods | filter: { free: false }">
+                                    <span ng-bind="'TXT_CURRENCY' | translate"></span>
+                                    <span ng-bind="period.price_amount"></span>
+                                    <span ng-bind="'TXT_SIGNUP_PRICE_A_MONTH' | translate" style="font-size: 20px;"></span>
+                                </span>
+
+                                <p style="text-align:center;" ng-bind="package.pricing[0].billing_plan.description[CurrentLang]"></p>
+                                <!-- <button id="package-button-{{package.id}}" ng-click="packageSelected(package)"
+                                translate="BTN_SELECT_PACKAGE_SIGNUP" ng-style="{'color': package.color_code}" ng-mouseover="packButtonHover(package.id, package.color_code)" ng-mouseleave="packButtonLeave(package.id, package.color_code)"></button> -->
+                                <button class="btnOrange" id="package-button-{{package.id}}" ng-click="packageSelected(package)"
+                                translate="BTN_SELECT_PACKAGE_SIGNUP"></button>
+                            </div>
+                            <div class="disclaimerPackage" translate="TXT_SIGNUP_DISCLAIMER"></div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div><!-- /.sign-up-page-1 -->
+        <!-- sign-up-page-2 -->
+        <div ng-show="signup_page_2">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <span class="icon-custom-back icon-custom-back-pop" ng-click="signupBack(1, 8)"></span>
+                        <span class="icon-custom-cancel" ng-click="cancelAllAndClearCookie()"></span>
+                    </div>
+                </div>
+                <form novalidate  name="signupForm" role="form" class="signup-form">
+                    <div class="row">
+                        <div class="col-md-6 center col-sm-8 col-xs-12">
+                            <h2 translate="TXT_SIGNUP_CREATE_ACCOUNT_EXISTING_ACCOUNT"></h2>
+                        </div>
+                    </div>
+                    <span ng-show="ajaxRegisterFormSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+                    <div class="row">
+                        <div class="col-md-3 center col-sm-8 col-xs-12 package-content-box-3">
+                            <span class="icon-user-logo center-block col-md-margin-bottom-3"></span>
+                            <div class="form-group note parent">
+                                <span ng-show="usernameCheckSpinner" us-spinner="{radius:5, width:4, length: 8}" class="blackloader"></span>
+                                <input id="uName" name="uName" type="text" class="form-control" placeholder="{{'HINT_SIGN_UP_USERNAME'|translate}}" ng-model="uName" ng-maxlength="25" ng-pattern="/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/" required>
+                                <!-- <div class="custom-tootltip" ng-show="usernameExist" ng-click="closeUsernameExist()">
+                                     <h6 translate="TXT_SIGNUP_ACCOUNT_EXISTS_EXISTING_ACCOUNT"></h6>
+                                </div> -->
+                                <span ng-show="signupForm.uName.$valid && signupForm.uName.$dirty" class="icon-custom-valid col-md-1"></span>
+                                <span ng-show="signupForm.uName.$invalid && signupForm.uName.$dirty" class="icon-custom-invalid col-md-1"></span>
+                            </div>  
+                            <div class="form-group note parent">
+                                <span ng-show="emailCheckSpinner" us-spinner="{radius:5, width:4, length: 8}" class="blackloader"></span>
+                                <input name="uEmail" ng-model="uEmail" type="text" class="form-control" placeholder="{{'HINT_TXT_EMAIL_ADDRESS_SIGN_UP'|translate}}" required ng-pattern="/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/" ng-blur="checkEmailExist(uEmail)"> 
+                                <div class="custom-tootltip" ng-show="emailExist" ng-click="closeEmailExist()">
+                                     <h6 translate="TXT_SIGNUP_ACCOUNT_EXISTS_EXISTING_ACCOUNT"></h6>
+                                </div>
+                                <!-- <div class="custom-tootltip staticTooltip" ng-show="emailExist" ng-click="closeEmailExist()">
+                                     <h6 translate="TXT_SIGNUP_ACCOUNT_EXISTS_EXISTING_ACCOUNT"></h6>
+                                </div> -->
+                                <span ng-show="signupForm.uEmail.$invalid && signupForm.uEmail.$dirty" class="icon-custom-invalid col-md-1"></span>
+                                <span ng-show="signupForm.uEmail.$valid && signupForm.uEmail.$dirty" class="icon-custom-valid col-md-1"></span>
+                            </div>
+                            <div class="form-group">
+                                <input name="uReEmail" ng-model="uReEmail" type="text" class="form-control" placeholder="{{'HINT_TXT_CONFIRM_EMAIL_ADDRESS_SIGN_UP'|translate}}" required ng-pattern="/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/" equals="{{uEmail}}">
+                                <span ng-show="signupForm.uReEmail.$invalid && signupForm.uReEmail.$dirty" class="icon-custom-invalid col-md-1"></span>
+                                <span ng-show="signupForm.uReEmail.$valid && signupForm.uReEmail.$dirty" class="icon-custom-valid col-md-1"></span>
+                            </div>
+                            <div class="form-group">
+                                <input name="uPassword" type="password" class="form-control" placeholder="{{'HINT_TXT_PASSWORD_SIGN_UP'|translate}}" ng-model="uPassword" ng-minlength="6" ng-maxlength="20" required>
+                                <span ng-show="signupForm.uPassword.$invalid && signupForm.uPassword.$dirty" class="icon-custom-invalid col-md-1"></span>
+                                <span ng-show="signupForm.uPassword.$valid && signupForm.uPassword.$dirty" class="icon-custom-valid col-md-1"></span>
+                            </div>
+                            <div class="form-group">
+                                <input name="uRepassword" type="password" class="form-control" placeholder="{{'HINT_TXT_PASSWORD_REENTER_SIGN_UP'|translate}}" ng-model="uRepassword" equals="{{uPassword}}" ng-minlength="6" ng-maxlength="20" required>
+                                <span ng-show="signupForm.uRepassword.$invalid && signupForm.uRepassword.$dirty" class="icon-custom-invalid col-md-1"></span>
+                                <span ng-show="signupForm.uRepassword.$valid && signupForm.uRepassword.$dirty" class="icon-custom-valid col-md-1"></span>
+                            </div>
+                            <div class="form-group" ng-if="enableSocialLinking">
+                                <div class="col-md-12 col-md-padding-left-15 link_social_accounts">
+                                    <h5 class="text-lightgrey" translate="TXT_LINK_SOCIAL_ACCOUNT_SIGNUP"></h5>
+                                    <button ng-click="iconFacebookGigya()" ng-class="{'icon-link-facebook':!facebookButtonStatus,'icon-link-active-facebook':facebookButtonStatus}" ng-disabled="!signupForm.$valid || emailCheckSpinner" ng-if="enableFacebook"></button>
+                                    <button ng-click="iconTwitterGigya()" ng-class="{'icon-link-twitter':!twitterButtonStatus,'icon-link-active-twitter':twitterButtonStatus}" class="icon-link-twitter" ng-disabled="!signupForm.$valid || emailCheckSpinner" ng-if="enableTwitter"></button>
+
+                                    <div class="custom-tootltip" ng-show="providerExist" ng-click="closeProviderExist()">
+                                         <h6>{{socialProvider | uppercase}} {{'TXT_SIGNUP_ACCOUNT_EXISTS_EXISTING_ACCOUNT' | translate}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- <div class="col-md-3 center col-sm-8 col-xs-12 errorMsg" ng-show="usernameExist">
+                            <span class="errorIcon" translate="TXT_SIGNUP_ACCOUNT_EXISTS_EXISTING_ACCOUNT"></span>
+                            <span class="closeError" ng-click="closeUsernameExistErrorAlert()"></span>
+                        </div> -->
+                        <div class="col-md-3 center col-sm-8 col-xs-12 errorMsg" ng-show="registrationError">
+                            <span class="errorIcon">{{registrationErrorMessage | translate}}</span>
+                            <span class="closeError" ng-click="closeRegistrationErrorAlert()"></span>
+                        </div>
+                        <div class="col-md-3 center col-sm-8 col-xs-12 errorMsg" ng-show="socialRegistrationError">
+                            <span class="errorIcon">{{socialProvider | uppercase}} {{socialRegistrationErrorMessage | translate}}</span>
+                            <span class="closeError" ng-click="closeSocialRegistrationErrorAlert()"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="ppContainer" style="width: 425px;">
+                        <span ng-bind="'TXT_CREATE_ACCOUNT_TERMS_AND_CONDITIONS' | translate"></span>
+                        <a ng-href="{{toc[0].mpath}}" target="_blank" ng-bind="'TXT_TERMS_OF_USE' | translate"></a>{{'TXT_AND' |  translate}}<a ng-href="{{privacyPolicy[0].mpath}}" target="_blank" ng-bind="'TXT_PRIVACT_POLICY' | translate"></a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 center text-center col-sm-6 col-xs-12"> 
+                            <button class="btn-custom-orange btn-next btn-block" ng-click="registrationProcessFunction()" translate="BTN_CREATE_ACCOUNT_SIGNUP" ng-disabled="!signupForm.$valid || ajaxRegisterFormSpinner || emailCheckSpinner"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.sign-up-page-2 -->
+        <!-- sign-up-page-3 -->
+        <div class="billingInfoDetails" ng-show="signup_page_3">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <span class="icon-custom-cancel" ng-click="cancelWithClearUrl()"></span>
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col-md-4 center col-sm-12 col-xs-12">
+                            <h2 translate="TXT_ADMIN_BILLING_INFO_BILLING_DETAILS"></h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 center col-sm-8 col-xs-10 package-content-box-5">
+                            <div class="row">
+                                <div class="col-md-5 col-sm-5 col-xs-5 text-center box-1">
+                                    <span translate="TXT_SIGNUP_30_DAYS_TRIAL"></span>
+                                    <h6 ng-bind="promocodeOffer.description[CurrentLang]"></h6>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-7 text-center box-2">
+                                    <span ng-bind="'TXT_CURRENCY' | translate"></span>
+                                    <span ng-bind="priceAmount"></span>
+                                    <span ng-bind="'TXT_SIGNUP_PRICE_A_MONTH' | translate" style="font-size: 20px;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form name="promoCodeForm" novalidate>
+                        <div class="row">
+                            <div class="col-md-6 center col-sm-8 col-xs-10 package-content-box-6 form-group">
+                                <div ng-show="retryErrorDisplay" class="retry">
+                                    <a ng-click="enablePromocodeForm()">{{'TXT_TO_CLICK' | translate}}</a> {{'TXT_TO_RETRY' | translate}}
+                                </div>
+                                <input name="promocode" type="text" class="form-control" id="promoCodeId" placeholder="{{'TXT_HAVE_PROMO_CODE'|translate}}" ng-model="promocode" required ng-disabled="ajaxPromocodeSpinner || retryErrorDisplay" focus-me="focusInput">
+                                <button type="submit" class="btn-custom-yellow" translate="BTN_APPLY_MANAGE_ACCOUNT" ng-click="applyPromocode()"  ng-disabled="ajaxPromocodeSpinner || retryErrorDisplay"></button>
+                                <span ng-show="ajaxPromocodeSpinner" us-spinner class="yelloworangeloader"></span>
+                                <span ng-show="validPromocodeImg" class="icon-custom-valid col-md-1"></span>
+                                <span ng-show="invalidPromocodeImg" class="icon-custom-invalid col-md-1"></span>
+                                <div class="clear-both"></div>
+                                <div class="errorMsg" ng-show="invalidPromocodeImg">
+                                    <span class="errorIcon">{{promocodeMessage | translate}}</span>
+                                    <span class="closeError" ng-click="closePromocodeErrorAlert()"></span>
+                                </div>
+                                <div class="clear-both"></div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-md-4 center col-sm-8 col-xs-10 text-center col-md-margin-top-1 after_charge">
+                        {{'TXT_SIGNUP_FREE_TRIAL_FOR_30_DAYS'|translate}} {{'TXT_CURRENCY'|translate}}{{priceAmount}} {{'TXT_SIGNUP_PRICE_PER_MONTH'|translate}}
+                        </div>
+                    </div>
+                    <form novalidate  name="billingForm" role="form" id="billingForm" method="POST">
+                        <div class="row">
+                            <div class="col-md-10 col-sm-10 col-xs-12 center-block billingFormContainer col-md-margin-top-1">
+                                <div class="col-md-6 col-sm-12 col-xs-12 bill_info">
+                                    <h5 translate="TXT_ADMIN_BILLING_INFO_BILLING_DETAILS"></h5>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xs-6 col-md-padding-right-1 col-md-margin-bottom-2">
+                                            <input type="text" class="form-control col-md-padding-bottom-2" placeholder="{{'HINT_TXT_FIRST_NAME_MANAGE_ACCOUNT'|translate}}" id="billingAddressFirstName" ng-model="billingAddress_firstname" ng-maxlength="25" ng-pattern="/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/" required> 
+                                        </div>  
+                                        <div class="col-md-6 col-sm-6 col-xs-6 col-md-padding-left-1 col-md-margin-bottom-2">
+                                            <input type="text" class="form-control col-md-padding-bottom-2" placeholder="{{'HINT_TXT_LAST_NAME_MANAGE_ACCOUNT'|translate}}"  id="billingAddressLastName" ng-model="billingAddress_lastname" ng-maxlength="25" ng-pattern="/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/" required>
+                                        </div> 
+                                        <div class="col-md-12 col-sm-6 col-xs-6 addressInput1 col-md-margin-bottom-2">
+                                            <input name="vin_PaymentMethod_billingAddress_addr1" ng-model="vin_PaymentMethod_billingAddress_addr1" type="text" class="form-control col-md-padding-bottom-2" placeholder="{{'HINT_TXT_ADDRESS_MANAGE_ACCOUNT'|translate}}" id="billingAddress1" required>
+                                        </div>
+                                        <div class="col-md-12  col-sm-6 addressInput2 col-xs-6 col-md-margin-bottom-2">
+                                            <input name="vin_PaymentMethod_billingAddress_addr2" ng-model="vin_PaymentMethod_billingAddress_addr2" type="text" class="form-control col-md-padding-bottom-2" placeholder="{{'HINT_TXT_ADDRESS_TWO_MANAGE_ACCOUNT'|translate}}" id="billingAddress2">
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4 col-md-padding-right-1 col-md-margin-bottom-2 fullMob">
+                                            <div class="selectHolder">
+                                                <select ng-model="billingAddress_country" class="form-control styled-select" id="billingAddress_country" required  ng-options="countryList.indexOf(billingAddress_country) as billingAddress_country.name for billingAddress_country in countryList" ng-change="getStates()">
+                                                    <option style="display:none;" selected value="">{{'HINT_TXT_COUNTRY_MANAGE_ACCOUNT'|translate}}</option>
+                                                </select>
+                                            </div>
+                                            <input type="hidden" name="vin_PaymentMethod_billingAddress_country" id="vin_PaymentMethod_billingAddress_country" value="{{countryList[billingAddress_country].code}}">
+                                        </div>  
+                                        <div class="col-md-4 col-sm-4 col-xs-4 col-md-padding-left-1 col-md-margin-bottom-2 stateSelect fullMob">
+                                            <div class="selectHolder">
+                                                <select ng-model="billingAddress_district" class="form-control styled-select" ng-options="state.code as state.name for state in stateList" id="billingAddress_district" required>
+                                                    <option style="display:none;" selected value="">{{'HINT_TXT_STATE_MANAGE_ACCOUNT'|translate}}</option>
+                                                </select>
+                                            </div>
+                                            <input type="hidden" name="vin_PaymentMethod_billingAddress_district" id="vin_PaymentMethod_billingAddress_district" value="{{billingAddress_district}}">
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4 col-md-padding-left-1 col-md-margin-bottom-2 fullMob">
+                                            <input name="vin_PaymentMethod_billingAddress_city" ng-model="vin_PaymentMethod_billingAddress_city" type="text" class="form-control col-md-padding-bottom-2" placeholder="{{'HINT_TXT_CITY_MANAGE_ACCOUNT'|translate}}" id="billingCity" required>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4 col-md-padding-right-1 col-md-margin-bottom-3">
+                                            <input name="vin_PaymentMethod_billingAddress_postalCode"  type="text" class="form-control" placeholder="{{'HINT_TXT_ZIP_CODE_MANAGE_ACCOUNT'|translate}}" id="billingPostalCode" ng-model="vin_PaymentMethod_billingAddress_postalCode" ng-pattern="validate(countryList[billingAddress_country].zip_regular_expression)" re-apply="" required>
+
+                                        </div>
+                                        <div class="col-md-8 col-sm-8 col-xs-8 col-md-padding-left-1 col-md-margin-bottom-3">
+                                            <input name="vin_PaymentMethod_billingAddress_phone" ng-model="vin_PaymentMethod_billingAddress_phone" type="text" class="form-control" placeholder="{{'HINT_TXT_PHONE_NUMBER_MANAGE_ACCOUNT'|translate}}" ng-pattern="/^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/" id="billingPhone" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12 pay_method">
+                                    <h5 translate="TXT_SIGNUP_PAYMENT_METHOD"></h5>
+                                    <span ng-show="ajaxPaymentFormSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding col-md-margin-bottom-2 payMethodHead">
+                                        <div class="col-md-8 col-sm-8 col-xs-8 no-padding">
+                                            <input name="paymentMethod" class="alignLeft" type="radio" ng-model="paymentMethod" value="CreditCard" ng-init="paymentMethod='CreditCard'">
+                                            <div class="col-md-10 col-sm-10 col-xs-10 col-md-padding-left-1 no-padding col-md-margin-bottom-2 payment_method">
+                                                <span class="icon-visa"></span>
+                                                <span class="icon-master"></span>
+                                                <span class="icon-amex"></span> 
+                                                <span class="icon-discover"></span> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4 paypalIcon">
+                                            <input name="paymentMethod" class="alignLeft" type="radio" ng-model="paymentMethod" value="PayPal">
+                                            <span class="icon-paypal"></span>
+                                        </div>
+                                    </div>
+                                    <div class="creditCardPayment" ng-show="paymentMethod == 'CreditCard'">
+                                        <input type="hidden" name="vin_WebSession_vid" id="transSessionId" required>
+                                        <input type="hidden" name="vin_AutoBill_items_0_Product_merchantProductId" id="transNewProductId">
+                                        <input type="hidden" name="vin_Account_emailAddress" id="accountEmail">
+                                        <input type="hidden" name="vin_Account_name" id="paymentAccountName">
+                                        <input type="hidden" name="vin_PaymentMethod_billingAddress_name" id="paymentBillingAddressName">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 no-padding col-md-margin-bottom-2 parent">
+                                            <input type="text" class="form-control" name="vin_PaymentMethod_creditCard_account" ng-model="vin_PaymentMethod_creditCard_account" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="billingForm.vin_PaymentMethod_creditCard_account.$card.type" placeholder="{{'BTN_CARD_NUMBER_MANAGE_ACCOUNT'|translate}}" id="credit_card" required ng-change="checkCreditcardType(billingForm.vin_PaymentMethod_creditCard_account.$card.type)" card-number-type-check="{{billingForm.vin_PaymentMethod_creditCard_account.$card.type}}"/>
+
+                                            <div class="selected_cards" ng-class="billingForm.vin_PaymentMethod_creditCard_account.$card.type"></div>
+                                            
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12 no-padding col-md-margin-bottom-2 creditBottomRow">
+                                            <div class="col-md-3 col-sm-3 col-xs-3 no-padding text-normal" translate="TXT_ADMIN_EXPIRATION_DATE_WATCHLIST">
+                                            </div>                                                 
+                                            <div class="col-md-3 col-sm-3 col-xs-3 selectOption no-padding col-md-padding-right-1">
+                                                <div class="selectHolder">
+                                                    <select name="vin_PaymentMethod_creditCard_expirationDate_Month" ng-model="vin_PaymentMethod_creditCard_expirationDate_Month" class="form-control styled-select" ng-options="k as v for (k,v) in genericFields.month_range[CurrentLang]" id="vin_PaymentMethod_creditCard_expirationDate_Month" expiry-month required>
+                                                        <option style="display:none;" selected value="">{{'BTN_MONTH_MANAGE_ACCOUNT'|translate}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-3 selectOption no-padding col-md-padding-left-1">
+                                                <div class="selectHolder">
+                                                    <select name="vin_PaymentMethod_creditCard_expirationDate_Year" ng-model="vin_PaymentMethod_creditCard_expirationDate_Year" class="form-control styled-select" ng-options="k as v for (k,v) in expiryYearValue" id="vin_PaymentMethod_creditCard_expirationDate_Year" expiry-year required>
+                                                        <option style="display:none;" selected value="">{{'BTN_YEAR_MANAGE_ACCOUNT'|translate}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-3 no-padding col-md-margin-bottom-1 cvvNumber">
+                                                <input type="text" class="form-control" name="vin_PaymentMethod_nameValues_cvn" ng-model="vin_PaymentMethod_nameValues_cvn" payments-validate="cvc" payments-format="cvc" payments-type-model="type" placeholder="{{'BTN_CVV_NUMBER_MANAGE_ACCOUNT'|translate}}" required/>
+                                                <span class="icon-info">
+                                                    <span class="securityInfo" translate="TXT_SECURITY_CODE_SIGNUP_BILLING">
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="infoBottom fullWidth" translate="TXT_READ_AND_AGREE_TERMS_OF_USE_CREDITCARD"></div>
+                                        <input type="hidden" name="vin_PaymentMethod_accountHolderName" id="paymentMethodAccountName">
+                                    </div>
+                                    <div class="paypalContent col-md-8 col-sm-8 col-xs-8 no-padding center col-md-margin-top-15" ng-show="paymentMethod == 'PayPal'">
+                                        <div class="infoBottom fullWidth" translate="TXT_READ_AND_AGREE_TERMS_OF_USE_PAYPAL"></div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-margin-bottom-2">
+                            <div class="col-md-3 center col-sm-8 col-xs-12 errorMsg" ng-show="transactionError">
+                                <span class="errorIcon">{{transactionErrorMessage | translate}}</span>
+                                <span class="closeError" ng-click="closeReviewTransactionErrorAlert()"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                                <div ng-class="{signupCheckboxChecked:tccheck,signupCheckbox:!tccheck}" class="agreeTerms">
+                                    <label>
+                                        <input type="checkbox" ng-model="tccheck" ng-click="isCheckboxChange()" required/>
+                                        <span class="alignLeft ng-binding">{{'TXT_FINAL_CHECKOUT_TERMS_AND_CONDITIONS' | translate}}<a ng-href="{{toc[0].mpath}}" target="_blank" ng-bind="'TXT_TERMS_OF_USE' | translate"></a>{{'TXT_AND' |  translate}}<a ng-href="{{privacyPolicy[0].mpath}}" target="_blank" ng-bind="'TXT_PRIVACT_POLICY' | translate"></a></span>
+                                    </label>
+                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 center text-center col-sm-6 col-xs-12 ">
+                                <button ng-show="paymentMethod == 'CreditCard'" class="btn-custom-orange btn-next" style="border: 0;" ng-disabled="!billingForm.$valid" ng-click="paymentBillingFormSubmit('CreditCard')" translate="BTN_BILLING_INFORMATION_SIGNUP"></button>
+                                <button ng-show="paymentMethod == 'PayPal'" class="btn-custom-orange btn-next" style="border: 0;" ng-disabled="!tccheck || billingForm.billingAddress_firstname.$invalid || billingForm.billingAddress_lastname.$invalid || billingForm.vin_PaymentMethod_billingAddress_addr1.$invalid || billingForm.billingAddress_country.$invalid || billingForm.billingAddress_district.$invalid || billingForm.vin_PaymentMethod_billingAddress_city.$invalid || billingForm.vin_PaymentMethod_billingAddress_postalCode.$invalid || billingForm.vin_PaymentMethod_billingAddress_phone.$invalid || ajaxPaymentFormSpinner" ng-click="paymentBillingFormSubmit('PayPal')" translate="BTN_BILLING_INFORMATION_SIGNUP"></button>
+                            </div>
+                        </div>
+                    </form>
+            </div>
+        </div><!-- /.sign-up-page-3 -->
+        <!-- sign-up-page-4 -->
+        <div ng-show="signup_page_4">
+            <span ng-show="ajaxReviewSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+        </div><!-- /.sign-up-page-4 -->
+        <!-- sign-up-page-5 -->
+        <div ng-show="signup_page_5">
+            <div class="container-fluid">
+                <span ng-show="ajaxConfirmSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <span class="icon-custom-cancel" ng-click="cancel()"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 center col-sm-12 col-xs-12">
+                        <h2 translate="TXT_CHECKOUT_MANAGE_ACCOUNT"></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 center col-sm-8 col-xs-10 package-content-box-5">
+                        <div class="row">
+                            <div class="col-md-5 col-sm-5 col-xs-5 text-center box-3">
+                                <h4 translate="TXT_SIGNUP_FREE_TRIAL"></h4>
+                                <span class="text-large">${{priceAmount}}</span>
+                                <span class="text-normal" translate="TXT_SIGNUP_PRICE_A_MONTH"></span>
+                                <h6 class="color-white" translate="TXT_SIGNUP_30_DAYS_TRIAL"></h6>
+                            </div>
+                            <div class="col-md-7 col-sm-7 col-xs-7 text-center box-4" translate="TXT_CHECKOUT_FREE_SUBSCRIPTION">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 center col-sm-8 col-xs-10 package-content-box-6">
+                       <h6 ng-if="sessionId" translate="TXT_READ_AND_AGREE_TERMS_OF_USE_CREDITCARD"></h6>
+                       <h6 ng-if="vindiciaVid" translate="TXT_READ_AND_AGREE_TERMS_OF_USE_PAYPAL"></h6>
+                    </div>
+                </div>
+                <div class="row" ng-show="enableTwitterSharing || enableFacebookSharing">
+                    <div class="col-md-5 center col-sm-8 col-xs-10 confirmation-box-2">
+                        <h6 translate="BTN_SPREAD_WORD_MANAGE_ACCOUNT"></h6>
+                            <div class="col-md-12 col-sm-12 col-xs-12 center">
+                                <div class="col-md-12 col-sm-12 col-xs-10 center" style="text-align:center;">
+                                    <div id="shareButtons"></div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <form novalidate  name="subscribeForm" role="form">
+                    <div class="row">
+                        <div ng-class="{signupCheckboxChecked:subscribecheck,signupCheckbox:!subscribecheck}" class="subscribeCheck parent">
+                            <span ng-show="ajaxSubscribeSpinner" us-spinner class="yelloworangeloader"></span>
+                            <label>
+                                <input type="checkbox" name="subscribecheck" ng-model="subscribecheck" ng-click="isSubscribeToNewsletter()" required/>
+                                    <span translate="CHKBOX_SUBSCRIBE_TO_LETTER_MANAGE_ACCOUNT"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 center col-sm-8 col-xs-12 successMsg" ng-show="subscribedSuccess">
+                            <span class="successIcon">{{subscribedSuccessMsg | translate}}</span>
+                            <span class="closeError" ng-click="closeSubscribedSucessMsgAlert()"></span>
+                        </div>
+                        <div class="col-md-3 center col-sm-8 col-xs-12 errorMsg" ng-show="subscribedError">
+                            <span class="errorIcon">{{subscribedErrorMsg | translate}}</span>
+                            <span class="closeError" ng-click="closeSubscribedErrorMsgAlert()"></span>
+                        </div>
+                        <div class="col-md-3 center col-sm-8 col-xs-12 errorMsg" ng-show="confirmtransactionError">
+                            <span class="errorIcon">{{confirmtransactionErrorMessage | translate}}</span>
+                            <span class="closeError" ng-click="closeConfirmTransactionErrorAlert()"></span>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-md-3 center text-center col-sm-6 col-xs-12 col-md-margin-top-1"> 
+                        <button class="btn-custom-orange btn-next" ng-click="confirmTransaction()" translate="BTN_COMPLETE_SIGNUP" ng-disabled="ajaxConfirmSpinner || ajaxSubscribeSpinner"></button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.sign-up-page-5 -->
+        <!-- sign-up-page-6 -->
+        <div ng-show="signup_page_6">
+            <div class="container-fluid">
+                <span ng-show="ajaxConfirmSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+                <div class="row">
+                    <div class="col-md-5 center col-sm-12 col-xs-12">
+                        <h2 translate="SIGNUP_CONFIRM_HEADER_TXT"></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 center col-sm-8 col-xs-10 package-content-box-6" style="border-top: 0px;">
+                        <h6 translate="SIGNUP_CONFIRM_DESCRIPTION_TXT"></h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 center col-sm-8 col-xs-12 errorMsg" ng-show="confirmtransactionError">
+                        <span class="errorIcon">{{confirmtransactionErrorMessage | translate}}</span>
+                        <span class="closeError" ng-click="closeConfirmTransactionErrorAlert()"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 center text-center col-sm-6 col-xs-12 col-md-margin-top-1"> 
+                        <button class="btn-custom-orange btn-next" ng-click="confirmTransaction()" translate="SIGNUP_CONFIRM_TXT" ng-disabled="ajaxConfirmSpinner"></button>
+                    </div>
+                    <div class="col-md-3 center text-center col-sm-6 col-xs-12 col-md-margin-top-3" ng-click="cancelWithClearUrl()" translate="SIGNUP_CONFIRM_CANCEL_TXT" style="text-decoration: underline;color: #3c5e6c;cursor: pointer;"> 
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.sign-up-page-6 -->
+        <!-- sign-up-page-7 -->
+        <div ng-show="signup_page_7">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4 center col-sm-12 col-xs-12">
+                        <h2 translate="SIGNUP_SUCCESS_HEADER_TXT"></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 center col-sm-8 col-xs-10 package-content-box-6" style="border-top: 0px;">
+                        <h6 translate="SIGNUP_SUCCESS_DESCRIPTION_TXT"></h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 center text-center col-sm-6 col-xs-12 col-md-margin-top-1"> 
+                        <button class="btn-custom-orange btn-next" ng-click="cancelWithClearUrl()" translate="SIGNUP_ERROR_BUTTON_TXT"></button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.sign-up-page-7  -->
+        <!-- sign-up-page-8 -->
+        <div ng-show="signup_page_8">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4 center col-sm-12 col-xs-12">
+                        <h2 translate="SIGNUP_ERROR_HEADER_TXT"></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 center col-sm-8 col-xs-10 package-content-box-6" style="border-top: 0px;">
+                        <h6 translate="SIGNUP_ERROR_DESCRIPTION_TXT"></h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 center text-center col-sm-6 col-xs-12 col-md-margin-top-1"> 
+                        <button class="btn-custom-orange btn-next" ng-click="cancelWithClearUrl()" translate="SIGNUP_ERROR_BUTTON_TXT"></button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.sign-up-page-8 -->
+    </div><!-- /.modal-body -->
+    <!-- modal-footer -->
+    <div class="modal-footer top-button-modal-footer">
+    </div>
+    <!-- /.modal-footer -->
+</div><!-- /.sign-up-controller -->

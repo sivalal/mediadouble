@@ -1,0 +1,146 @@
+@import '../index';
+
+.cwAssetList{
+	width: 100%;
+	.cwThumb{
+		float: left;
+		margin-left: 15px;
+		margin-right: 10px;
+		img{
+			width: 165px;
+		}
+	}
+	.cwAssetIntro{
+		float: left;
+		width: 55%;
+		position: relative;
+		.cwTitles{
+			width:80%; 
+			display:inline-block;
+		}
+		.listProgressbarContainer{
+			width: 100%;
+			display: inline-block;
+			margin: 15px 0px;
+		}
+		.trash-icon{
+			position: absolute;
+			top: 0;
+			right: 0;
+			margin-top: 0;
+			width: 25px;
+			height: 25px;
+			background-size: 100%;
+		}
+	}
+	.border-top-width-1 {
+      border-top: 1px solid rgba(38, 55, 61, 0.31);
+    }
+}
+.admin-watchlist-primary-title {
+	color: $color-white;
+	font-size: 18px;
+	font-family: 'DINWebPro';
+	  a{
+	  	color: $color-white;
+	  	text-decoration: none;
+	  }
+}
+.admin-watchlist-secondary-title {
+  color: white;
+  font-size: 14px;
+}
+.admin-watchlist-checkbox-container{
+	display:inline-block; 
+	float:right;
+	margin-top:15px;
+	color: white;
+	font-family: 'DINWebPro-Medium';
+	input[type='radio'] {
+		opacity: 0;
+		width: 15px;
+		float: left;
+		margin-top: 0;
+		margin-left: -10%;
+	}
+	.checkboxBg.checked{
+	  	background:transparent image-url('icon/checked.png') left top no-repeat; 
+	  	float: left;
+	  	padding-left: 6px;
+		margin-left: 10px;
+		line-height: 12px;
+		display: block;
+	}
+	.checkboxBg{
+	  	background:transparent image-url('icon/unchecked.png') left top no-repeat; 
+	  	float: left;
+	  	padding-left: 6px;
+		margin-left: 10px;
+		line-height: 12px;
+		display: block;
+	}
+	label{
+		margin-left: 4px;
+	}
+}
+.admin-watchlistTop{
+	width:100%; 
+	display:inline-block; 
+	margin-top:30px;
+	.navbar{
+		margin-bottom: 0;
+		a.dropdown-toggle{
+			color: #fff;
+			background-color: #163650;
+			width: 130px;
+			font-family: 'DINWebPro-Medium';
+			padding: 10px 15px;
+			.caret{
+				float: right; 
+				margin-top: 9%; 
+				border-bottom-color: #FFF;
+				border-top-color: #FFF;
+			}
+		}
+		.dropdown-menu{
+			a{
+				font-family: 'DINWebPro-Medium';
+			}
+
+		}
+	}
+	li.dropdown:hover> ul.dropdown-menu,
+	li.dropdown:focus> ul.dropdown-menu{
+    display: block;    
+	}
+	ul.dropdown-menu{
+    	&::after{
+    		border-bottom-color:rgba(30, 30, 31, 0.96);
+    	}
+		a{
+			cursor: pointer;
+			@include transColor;
+		}
+		 li.selected{
+		    a{
+		      color: #163650;
+		    }
+		  }
+	}
+}
+.adminCheckboxChecked{
+  	background:transparent image-url('icon/check_box_2.png') left top no-repeat; 
+  	float: left;
+  	padding-left: 6px;
+	margin-left: 10px;
+	line-height: 12px;
+	display: block;
+}
+.adminCheckbox {
+  	background:transparent image-url('icon/login_check_1.png') left top no-repeat; 
+  	float: left;
+  	padding-left: 6px;
+	margin-left: 10px;
+	line-height: 12px;
+	display: block;
+}

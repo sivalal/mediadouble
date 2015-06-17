@@ -1,0 +1,914 @@
+@import 'index';
+.player-container {
+    margin-top: 100px;
+    margin-bottom: 10px;
+}
+
+.tvShowBgBanner{
+  background-size: 100% 100%;
+  .containingBlock {
+    overflow:hidden;
+    position: relative;
+    .advtTimer{
+      font-family: 'DINWebPro-Medium';
+      position: absolute;
+      left: -13px;
+      top: 0;
+      z-index: 1;
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.7);
+      padding: 5px 10px;
+      background: #e28c05;
+      span{
+        color: #000;
+      }
+    }
+    .advtTimer::before{
+      position: absolute;
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      border-right: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      border-left: 16px solid #e28c05;
+      border-top: 16px solid #e28c05;
+      right: -31px;
+      top: 0;
+    }
+    .advtTimer::after{
+      position: absolute;
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+      border-right: 7px solid #804E00;
+      border-top: 7px solid #804E00;
+      left: -1px;
+      bottom: -14px;
+    }
+  }
+}
+
+.tvShowMetaTitle{
+  color: $color-white;
+  font-family: 'DINWebPro-Medium';
+}
+h3.tvShowMetaTitle{
+  font-size:24px; 
+  margin: 0;
+}
+.tvShowMetaLabel {
+  color: $color-metaLabel;
+/*  text-transform: uppercase;*/
+}
+h2.tvShowMetaLabel {
+  text-transform: inherit;
+  margin-top: 0;
+  color: $color-SATitle;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+.tvShowText {
+  color: $color-white;
+  text-align: left;
+  font-size: 16px;
+  font-family: 'DINWebPro-Light';
+}
+
+.tvWatchlistBtn {
+    background-color: $color-addWatchListBtn;
+    font-size: 1em;
+    color: $color-black;
+    height: 35px;
+    @include transBackground;
+    @include roundCornerL;
+    font-family: 'DINWebPro-Medium';
+    .glyphicon-plus, .glyphicon-minus{
+      font-size: 12px;
+      color: #9da8b3;
+      background: #FFF;
+      padding: 5px;
+      border-radius: 50%;
+    }
+}
+.tvWatchlistBtn:hover{
+    background-color: $color-addWatchListBtnHover; 
+}
+.tvWatchlistBtn:active{
+    background-color: $color-addWatchListBtnActive; 
+    outline: none;      
+}
+.tvWatchlisticon{
+  left: 80%;
+  width: 17%;
+  top: 10%;
+  position:absolute;
+  height:29%;
+  font-size: .9em;
+}
+
+.tvWatchNowicon{
+  left: 60%;
+  top: 10%;
+  width: 17%;
+  position:absolute;
+  height:29%;
+  font-size: .9em;
+}
+.tvWatchNowBtn{
+  background-color: $color-WatchNowBtn;
+  font-size: 1em;
+  color: white;
+  height: 35px;
+  width:164px;
+  @include transBackground;
+  @include roundCornerL;
+  font-family: 'DINWebPro-Medium';
+  .glyphicon-play{
+      font-size: 12px;
+      color: $color-WatchNowBtn;
+      background: white;
+      padding: 5px;
+      border-radius: 50%;
+    }
+}
+.btn-default[disabled].tvWatchNowBtn{
+  .glyphicon-play{
+      color: #DDD;
+    }
+}
+.tvWatchNowBtn:hover{
+    background-color: $color-WatchNowBtnHover;
+}
+.tvWatchNowBtn:active, .tvWatchNowBtn:focus{
+    background-color: $color-WatchNowBtnActive;  
+    outline: none;     
+}
+.season_select{
+  margin-top: 15px;
+}
+.season_select_click{
+  background-color:$color-seasonSelectBtn;
+  color: white;
+  padding: 12px 30px;
+  font-family: 'DINWebPro-Medium';
+  font-size: 14px;
+  margin-top: 0;
+  float: right;
+  min-width: 150px;
+  transition: background .3s;
+  -moz-transition: background .3s;
+  -webkit-transition: background .3s;
+  -o-transition: background .3s;
+  text-transform: uppercase;
+  margin-top: 0px !important;
+  @include roundCornerS;
+    span{
+      padding: 0px 4px;
+      float: right;
+      background: #FFF;
+      margin-left: 5px;
+      border-radius: 50%;
+      .caret{
+        color: $color-seasonSelectBtn;
+        border-width: 6px;
+        margin: 0;
+      }
+    }
+  }
+  .season_select_click:hover{
+    text-decoration: none;
+    background-color: $color-seasonSelectBtn;
+    color: white;
+  }
+  .season_select_click_list{
+  font-family: 'DINWebPro-Medium';
+  font-size: 12px;
+  left: 0;
+  right: 0;
+    li{
+      line-height: 30px;
+    }
+   min-width: inherit;  
+  }
+  .video_title_bottom{
+    color: #666;
+    margin-top: 10px;
+    padding-left: 0;
+    h5{
+      font-family: 'DINWebPro-Medium';
+      font-size: 20px;
+      line-height: 35px;
+      color: $color-orange;
+      text-transform: uppercase;
+    }
+  }
+  .season_select_list_top{
+    position: absolute;
+    height: 35px;
+    top: -25px;
+    left: 0;
+    right: 0;
+    background-color: rgba(26, 26, 26, 0);
+  }
+.season_select_row{
+height: 75px;
+margin-top: 10px;
+background: none;
+border: 0;
+}
+.backtoList_banner{
+  .carousel-inner{
+    img{
+      /*min-height: 250px;*/
+    }
+  }
+}
+
+@media screen and (min-width:992px) and (max-width:1199px){
+.tvWatchNowicon,.tvWatchlisticon{
+ font-size: .6em;
+  }
+}
+@media (min-width: 768px){
+  .tvPlayerWrapper{
+    min-height: 285px;
+  }
+}
+.turkoiseBtn{
+  background-color: $color-turkoise;
+  font-family: 'DINWebPro-Medium';
+  font-size: .9em;
+  color: $color-white;
+  height: 50px;
+  background-color: #4bc5be;
+  transition: background .3s;
+  -moz-transition: background .3s;
+  -webkit-transition: background .3s;
+  -o-transition: background .3s;
+  outline: none;    
+}
+.turkoiseBtn:hover{
+  background-color: #46b8b1 !important;
+  color: $color-white;
+}
+.turkoiseBtn:active{
+  background-color: #3a9892 !important; 
+  color: $color-white; 
+  outline: none;      
+}
+.tvTopBottomMargin_listTop{
+  margin-top: 10px;
+  margin-bottom: 10px;  
+  font-family: 'DINWebPro-Medium';
+  button{
+    height: 44px;
+    font-size: 1em;
+    margin: 10px 0px;
+    @include roundCornerS;
+    margin-left: 0px !important;
+  }
+  .turkoiseBtn{
+  font-family: 'DINWebPro-Medium';
+  }
+}
+.tvTopBottomMargin_list{
+  button{
+    height: 40px;
+    margin: 10px 0px;
+  }
+  .tvWatchlistBtn{
+    font-family: 'Glyphicons Halflings';
+  }
+  a.tvWatchNowBtn{
+    height: 40px;
+  }
+  .tvWatchNowBtn{
+    width: auto;
+    font-family: 'Glyphicons Halflings';
+  }
+  .listButtonset{
+    margin-top: 0px;
+    margin-right: 5px;
+  }
+}
+.tvTopBottomMargin_list, .tvTopBottomMargin_grid{
+ font-family: 'DINWebPro-Medium';
+}
+.tvTopBottomMargin_list_row{
+  .listButtonset{
+    button{
+      font-family: 'Glyphicons Halflings' !important;
+    }
+    .tvWatchNowBtn{
+      width: 40px;
+      span{
+        margin-right: -5px;
+      }
+      .glyphicon-play{
+        font-size: 14px;
+        color: white;
+        background: none;
+        padding: 0;
+      }
+    }
+    .tvWatchlistBtn{
+      .glyphicon-plus, .glyphicon-minus{
+        font-size: 14px;
+        color: white;
+        background: none;
+        padding: 0;
+      }
+    }
+    .btn{
+      border-radius:50%;
+    }
+  }
+}
+.video_opt_btn{
+ font-family: 'DINWebPro-Medium';
+}
+.tvRightLeftMargin {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.showGridToggleButton {
+  background: image-url("icon/icon_grid_open.png") no-repeat;
+  height: 30px;
+  width: 60px;
+  margin-bottom: 20px;
+  float: left;
+}
+.showListToggleButton {
+  background: image-url("icon/icon_list_open.png") no-repeat;
+  height: 30px;
+  width:60px;
+  float:left;
+}
+
+.listLabel{
+  vertical-align: middle;
+  display:inline-block;
+  padding-top: .5%;
+  font-family: 'DINWebPro-Medium';
+  font-size: 15px;
+  a{
+    cursor: pointer;
+    &:hover, &:focus{
+      text-decoration:none;
+      span{
+        color: $color-listLabelHover;
+        @include transColor;
+      }
+    }
+  }
+  span{
+    color: $color-listLabel;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 18px;
+    span{
+        display: initial;
+    }
+  }
+}
+/*--Progressbar--*/
+.listProgressbarContainer {
+  vertical-align: middle;
+  display: inline-block;
+  margin: 25px 0px;
+  height: 4px;
+  background-color: $color-progressParent;
+  margin-left: 3%;
+  padding: 0;
+  position: relative;
+ }
+.listProgressbar {
+  background-color:  $color-progressChild;
+  color: #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  transition: width .8s;
+  -webkit-transition: width .8s;
+  -moz-transition: width .8s;
+  -o-transition: width .8s;
+  max-width:100%;
+}
+/*Progressbar for rails*/
+.owl-item{
+  .item{
+    .listProgressbarContainer{
+      height: 6px;
+    }
+  }
+}
+/*--Progressbar ends here--*/
+
+.listButtonset {
+  vertical-align: middle;
+  display:inline-block;
+  float: right;
+  .glyphicon-play{
+    line-height: 24px;
+  }
+}
+.gridProgressbarContainer {
+  width: 100%;
+  button{
+    font-family: 'Glyphicons Halflings';
+  }
+}
+.gridProgressbar {
+  background-color: $color-turkoise;
+  height: 8px;
+  color: #000;
+  vertical-align: bottom;
+}
+.gridImage {
+  vertical-align: top;
+  display:inline-block;  
+}
+.loadMoreBtnContainer {
+  width: 100%;
+  text-align:center;
+  display:inline-block;
+  button{
+    clear: both;
+    display: block;
+    margin: 20px auto;
+    padding: 20px 45px;
+    margin-top: 30px;
+    background-color: #2e2e30;
+    color: $color-lightGrey;
+    @include roundCornerS;
+    &:hover{
+      background-color: #2e2e30;
+    }
+    &:active{
+      background-color: #222224;
+    }
+  }
+}
+
+#tv_playerwrapper .innerWrapper{
+        position: relative;
+        padding-bottom: 56.25%;
+        height: auto;
+        overflow: hidden;
+        z-index: 0;
+        width: 100%;
+        /*
+        padding-bottom: 41.25%;
+        height: 0; */
+    }
+    #tv_playerwrapper .innerWrapper video,
+    #tv_playerwrapper .innerWrapper iframe,
+    #tv_playerwrapper .innerWrapper object,
+    #tv_playerwrapper .innerWrapper embed{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        
+    }
+    .innerWrapper .oo-custom-error-container{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        
+    }
+.singleAssetDetails{
+  margin-bottom: 20px;
+  margin-top: 20px;
+  background-color: $color-SADetails;
+  padding: 25px 0px;
+  .assetCol1{
+    margin-top: 20px;
+    padding: 0;
+    padding-right: 60px;
+  }
+  .assetCol2{
+    margin-top: 20px;
+    padding: 0;
+    padding-left: 60px;
+  }
+  span.tvShowMetaLabel{
+    margin-right: 5px;
+    color: #3c5e6c;
+    font-family: 'DINWebPro-Medium';
+    font-size: 18px;
+  }
+  .tvShowText{
+    color: $color-SATitle;
+    font-family: 'DINWebPro';
+    font-size: 18px;
+  }
+  .AssetDetailShare{
+    float: right;
+    h6{
+      margin-top: 0;
+    }
+  }
+  .singleAssetButtons{
+    div{
+      padding-right: 0;
+    }
+    a.btn{
+      line-height: 26px;
+    }
+    .SABtnHolder{
+      padding-left: 15px;
+    }
+  }
+  .assetCol1, .assetCol2{
+    h6{
+      clear: both;
+      line-height: 18px;
+      float: left;
+      width: 100%;
+      margin: 0px;
+      margin-bottom: 10px;
+    }
+  }
+}
+.SingleAssetRails{
+  background-color: $color-bgSARails;
+  .owl-prev, .owl-next{
+    border-color: $color-bgSARails;
+  }
+}
+.AssetShare{
+    float: right;
+    padding-right: 0;
+    margin-top: -10px;
+  }
+.gridImgHolder{
+  padding-right: 0;
+}
+.gridImg{
+  position: relative;
+  margin-bottom: 15px;
+  .listButtonset{
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    width: 90px;
+    .tvWatchlistBtn, .tvWatchNowBtn{
+      float: right;
+      margin-right: 5px;
+      width: 40px;
+      height: 40px;
+      font-family: 'Glyphicons Halflings' !important;
+      border-radius: 50%;
+      span{
+        padding: 0;
+        background: none;
+        color: white;
+      }
+    }
+    /*.tvWatchNowBtn{
+      float: left;
+      margin-right: 10px;
+    }*/
+  }
+  .piccaption{
+    z-index: 1;
+  }
+  .gradientOverlay{
+    position: absolute;
+    background: url("/images/gradient_overlay_small.png") repeat-x bottom;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    display: none;
+  }
+  .listProgressbarContainer{
+    width: 100%;
+    position: absolute;
+    margin: 0;
+    bottom: 52px;
+    left:0;
+    right: 0;
+    }
+}
+.assetSeriesHead{
+    h3, h2{
+        float:left;
+    }
+}
+@media (max-width: 992px){
+  .tvShowText {
+    line-height: 22px;
+  }
+} 
+@media screen and (max-width:768px){
+    .tvWatchlistBtn,.tvWatchNowBtn{
+      width:auto;
+      font-family: 'DINWebPro-Medium';
+    }
+    .singleAssetDetails{
+      .assetCol1{
+        margin-top: 20px;
+        padding: 0;
+      }
+      .assetCol2{
+        margin-top: 0px;
+        padding: 0;
+        border-left: none;
+      }
+      .gridImgHolder{
+        padding-right: 15px;
+      }
+    }
+    .tvPlayerWrapper{
+    min-height: 200px;
+  }
+  .center-banner-text {
+    top: 5%;
+  }
+}
+@media (max-width: 603px){
+  .singleAssetButtons{
+    width: 105%;
+  }
+  .AssetShare {
+    float: left;
+    margin-top: 10px;
+  }
+}
+@media (max-width: 480px){
+  .season_select_click{
+    min-width: 190px;
+  }
+  .singleAssetDetails{
+    .singleAssetButtons{
+      .SABtnHolder{
+        width: 100%;
+        .btn{
+          width: 100%;
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+  .gridImg{
+    .listButtonset{
+      .tvWatchlistBtn, .tvWatchNowBtn{
+        width: 30px;
+        height: 30px;
+        line-height: 17px;
+        font-size: 12px;
+        padding: 0px;
+      }
+    }
+    .customthumbnail_imagepara{
+      font-size: 14px;
+    }
+  }
+    .assetSeriesHead{
+        h3, h2{
+            float:none;
+        }
+    }
+  .season_select_row{
+    width: 100%;
+    height: initial;
+    .row{
+      float: left;
+      margin-left: 0;
+      width: 100%;
+    }
+    .video_title_bottom{
+      width: 100%;
+      text-align: center;
+    }
+    .season_select{
+      width: 180px;
+      margin: auto;
+      display: block;
+      float: none;
+      height: 40px;
+      margin-bottom: 10px;
+    }
+  }
+  h6.tvShowMetaLabel {
+    font-size: 14px;
+  }
+  .center-banner-text {
+    top: 8%;
+    h1{
+      margin-top: 0;
+    }
+    }
+  .GridListTop{
+    .alignRight{
+      width: 100%;
+      button{
+        float: left;
+        width: 100%;
+        margin: 0;
+        margin-top: 10px;
+        margin-left: 0 !important;
+        white-space: normal;
+      }
+    }
+  }
+}
+@media screen and (max-width:360px){
+  h2.tvShowMetaLabel {
+  font-size: 32px;
+  }
+  .gridImgHolder {
+    width: 100%;
+  }
+  .singleAssetButtons{
+    .col-xs-6{
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+}
+@media screen and (max-width:320px){
+    .tvWatchlistBtn,.tvWatchNowBtn{
+        font-size: 12px;
+    }
+}
+
+/* UP NEXT */
+#up-next-widget {
+  height:100px;
+  z-index:2;
+  position:absolute;
+  right:-450px;
+  bottom:85px;
+}
+.wdgt-wrap {position:relative;}
+.wdgt {
+  position:absolute;
+  top:0;
+  width:800px;
+  right:-400px; 
+  -webkit-animation: slide 10s;
+  animation: slide 10s;
+}
+@keyframes slide {
+  0% {right:-450px}
+  20% {right : -50px}
+  80% {right : -50px}
+  100% {right:-400px}
+}
+@-webkit-keyframes slide {
+  0% {right:-400px}
+  20% {right : -50px}
+  80% {right : -50px}
+  100% {right:-400px}
+}
+.wdgt-left {
+  display:inline-block;
+  height:155px;
+  width:300px;
+  transform:skew(-15deg);
+  z-index:1;
+  margin-top:-5px;
+  background-color:rgb(47,156,218);margin-left:-4px;
+  -webkit-animation: squeeze 10s;
+  animation: squeeze 10s;  
+}
+.wdgt-left::before {
+  position:absolute;
+  left:0;
+  content: "";
+  height:155px;
+  width:44%;
+  background-color:rgb(16,99,214);
+}
+.wdgt-left::after {
+  position:absolute;
+  right:0;
+  content: "";
+  height:155px;
+  width:22%;
+  background-color:rgb(157,216,246);margin-left:-4px;
+}
+@keyframes squeeze { 
+  0% {width : 300px}
+  20% {width : 50px}
+  80% {width : 50px}
+  100% {width : 300px}
+}
+@-webkit-keyframes squeeze {
+  0% {width : 300px}
+  20% {width : 50px}
+  80% {width : 50px}
+  100% {width : 300px}
+}
+.wdgt-top { 
+  height:5px;width:300px;
+  z-index:2;
+  position:absolute;
+  top:0;left:20px; 
+  background-color:rgb(16,99,214);
+}
+.wdgt-right {
+  display:inline-block;
+  margin-left:-25px;
+  height:155px; 
+}
+#thumb {
+  width:300px;
+  display: table;
+  height: 155px;
+}
+#up-next-title, #up-next-info {
+  font-family: Helvetica;
+  z-index:3;
+  color:#fff;
+  display:inline-block;  
+  font-size:20px;
+  margin-top:-50px;
+  margin-left:60px;
+  display:table;
+}
+#up-next-info {
+  font-size:14px;  
+  margin-top:0;
+}
+#play-icon {
+  margin-top:-35px;
+  margin-left:20px;
+  height:32px;width:32px;
+  display:table;
+}
+
+.facebookShare{
+  width:32px;
+  height: 32px;
+  background:image-url("icon/facebook2.png") center no-repeat;
+  margin-right: 10px;
+  float: right;
+  .facebookButton, .facebookCount{
+    display: none;
+  }
+}
+
+.twitterShare{
+  width:32px;
+  height: 32px;
+  background:image-url("icon/twitter.png") center no-repeat;
+  margin-right: 10px;
+  display: block;
+  float: right;
+  iframe{
+    opacity: 0;
+    margin-top: 5px;
+    width: 32px !important;
+  }
+}
+
+.fbWelcome{
+  width:105px;
+  height: 48px;
+  background:url("/dummy/icon/w_share_fb.png") center no-repeat;
+  margin-right: 0;
+  float: left;
+  .facebookButton, .facebookCount{
+    display: none;
+  }
+}
+
+.twWelcome{
+  width:105px !important;
+  height: 48px;
+  background:url("/dummy/icon/w_share_twitter.png") center no-repeat;
+  margin-right: 0;
+  display: block;
+  float: right;
+  iframe{
+    opacity: 0;
+    margin-top: 5px;
+    width: 105px !important;
+  }
+}
+
+.hcount{
+   .btn-o{
+    .btn{
+      opacity: 0;
+      float: left;
+      width: 32px;
+      height: 32px;
+    }
+  }
+  .count-o{
+    display: none;
+  }
+}

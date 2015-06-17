@@ -1,0 +1,108 @@
+<!-- cancel package-container-->
+<div class="modal-container">
+   <!-- modal-header -->
+    <div class="modal-header top-button-modal-header">
+    </div><!-- /.modal-header -->
+    <!-- modal-body -->
+    <div  class="modal-body sign-up-package-modal-body">
+        <!-- cancel_page_1 -->
+        <div ng-show="cancel_page_1">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <span class="icon-custom-cancel" ng-click="cancel()"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+                        <h2 translate="TXT_CANCEL_PACKAGE_HEADING"></h2>
+                    </div>
+                </div>
+                <!-- class for ref: .current-package-box-silver -->
+                <div class="row">
+                    <div class="center-block package-list" ng-style="{'width':packageWidth.container_width+'%'}">
+                        <div ng-class="packageWidth.item_class_in_modal" class="col-md-margin-bottom-2" ng-repeat="package in packageList | orderObjectBy:'priority'">
+                            <div class="col-md-12 col-sm-12 col-xs-12 package-box-item">
+                                <h2>{{package.name[CurrentLang]}}</h2>
+                                <p ng-bind-html="package.description[CurrentLang]"></p>
+                                <span class="center-block" ng-repeat="period in package.pricing[0].billing_plan.periods | filter: { free: false }">${{period.price_amount}} {{period.price_currency}}</span>
+                                <p style="text-align:center;">{{package.pricing[0].billing_plan.description[CurrentLang]}}</p>
+                                <button class="btnOrange" translate="TXT_YOUR_CUREENT_PLAN"></button>
+                                <!-- <button ng-if="userSubscriptionDetails.subscriptionProductId != productId" id="package-button-{{package.id}}" style="cursor: initial;" class="btnOrange" translate="TXT_ONE_FREE_MONTH" ng-click="packageSelected(package)"></button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 center text-center col-sm-6 col-xs-12"> 
+                        <button class="btn-custom-orange btn-next btn-block" ng-click="showConfirmBox()" translate="BTN_ADMIN_CANCEL_ACCOUNT_WATCHLIST"> </button>
+                    </div>
+                    <span ng-show="ajaxCancelPackageSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span> 
+                    <div class="clear"></div>
+                    <div class="row">
+                        <div class="col-md-10 center col-sm-10 col-xs-12 errorMsg" ng-show="cancelError">
+                            <span class="errorIcon">{{cancelErrorMessage | translate}}</span>
+                            <span class="closeError" ng-click="closeCancelErrorAlert()"></span>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div><!-- /.cancel_page_1 -->
+        <!-- cancel_page_2 -->
+        <div class="cancelAcntDialogue" ng-show="cancel_page_2">
+            <div class="popupMsg" ng-show="cancel_page_2">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <span class="icon-custom-cancel" ng-click="cancel()"></span>
+                        </div>
+                    </div>
+                <div class="cancelDialogue parent center-block">
+                    <div class="container-fluid">
+                        <div class="popup-body ng-scope">
+                            <h6>
+                                <span translate="TXT_CANCEL_CONFIRMATION"></span>
+                            </h6>
+                        </div>
+                        <div class="popup-footer ng-scope">
+                            <div class="buttons center">
+                                <button class="btnYellowOrange btnOk" ng-click="accountCancel()" translate="BTN_YES_MANAGE_ACCOUNT"></button>
+                                <button class="btnOrange" ng-click="cancel()" translate="BTN_NO_MANAGE_ACCOUNT"></button>
+                            </div>
+                        </div>
+                        <span ng-show="ajaxCancelPackageConfirmSpinner" us-spinner class="yelloworangeloader"></span> 
+                        <div class="clear"></div>
+                        <div class="row">
+                            <div class="col-md-10 center col-sm-10 col-xs-12 errorMsg" ng-show="cancelConfirmError">
+                                <span class="errorIcon">{{cancelConfirmErrorMessage | translate}}</span>
+                                <span class="closeError" ng-click="closeCancelConfirmErrorAlert()"></span>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.cancel_page_2 -->
+        <div ng-show="cancel_page_3">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <span class="icon-custom-cancel" ng-click="cancel()"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 center text-center col-sm-6 col-xs-12"> 
+                        <a ng-click="onLogoClick()"><img ng-src="{{logoweb}}" ng-show="showlogo" ></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 center text-center col-sm-6 col-xs-12 cancel-complete-dialog"> 
+                        <h5 translate="TXT_CANCEL_ACCOUNT_MANAGE_ACCOUNT"></h5>
+                        <p style="text-align:left;padding-top: 10px;" translate="TXT_CANCEL_ACCOUNT_DESCRIPTION"></p>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.cancel_page_3 -->
+    </div>
+</div>

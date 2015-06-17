@@ -1,0 +1,84 @@
+<!-- login-controller-->
+<div class="loginModalContainer">
+    <div  class="login-modal-body">
+        <div class="col-md-12 col-sm-12 col-xs-12 informationSuccess center" ng-if="informationSuccessContainer">
+            <span class="successIcon"></span>
+            <span>{{informationSuccessMessage | translate}}</span>
+            <span class="closeInfoAlert" ng-click="closeSuccessMessageAlert()"></span>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 informationError center" ng-if="informationErrorContainer">
+            {{informationErrorMessage | translate}}
+            <span class="closeInfoAlert" ng-click="closeErrorMessageAlert()"></span>
+        </div>
+        <div class="fullWidth signupCreateAccount">
+            <div class="col-md-12 caption" ng-class="{'spacer':!enableSocialLogin}">
+                <h2 style="padding-bottom: 20px;" translate="TXT_TOP_TOOLBAR_LIVE_LOGIN_EXISTING_ACCOUNT"></h2>
+            </div>
+            <div class="createAccountForm clear col-md-3 center col-sm-8 col-xs-12 center-block package-content-box-3">
+                <div class="fullWidth box-1 signupTop" ng-class="{'social-login':!enableSocialLogin}">
+                    <span ng-show="ajaxSpinner" us-spinner class="yelloworangeloader"></span>
+                    <form  novalidate name="loginForm" role="form" class="login-form" ng-submit="submitLogin()" method="post">
+                    <div class="fullWidth parent">
+                        <div class="form-group note parent">
+                            <input name="uLoginEmail" ng-model="uLoginEmail" type="email" class="form-control" placeholder="{{'HINT_TXT_EMAIL_ADDRESS_SIGN_UP'|translate}}" required id="uLoginEmail" auto-fill-sync />
+                            <span ng-show="loginEmailCheck && loginForm.uLoginEmail.$invalid" class="icon-custom-invalid col-md-1"></span>
+                        </div>
+                        <div class="form-group note parent">
+                            <input name="uLoginPassword" type="password" class="form-control" placeholder="{{'HINT_TXT_PASSWORD_SIGN_UP'|translate}}" required ng-model="uLoginPassword" auto-fill-sync />
+                            <span ng-show="loginPasswordCheck && loginForm.uLoginPassword.$invalid" class="icon-custom-invalid col-md-1"></span>
+                        </div>
+                        <div class="fullWidth col-md-margin-bottom-2 textCenter">
+                            <span translate="FORGOT_EMAIL_PASSWORD_TXT"></span>
+                           <!--  <a ng-disabled="isLinksDisabled" ng-click="isLinksDisabled || forgotEmail()" ng-class="{loginLinkStyle:!isLinksDisabled,loginLinkStyleDisabled:isLinksDisabled}" translate="FORGOT_EMAIL__TXT">
+                            </a>  -->
+                            <!-- <span translate="FORGOT_OR_TXT"></span> -->
+                            <a ng-class="{loginLinkStyle:!isLinksDisabled,loginLinkStyleDisabled:isLinksDisabled}" ng-disabled="isLinksDisabled" ng-click="isLinksDisabled || forgotPassword()" translate="FORGOT_PASSWORD_TXT">
+                            </a>?
+                        </div>
+                        <div class="fullWidth col-md-margin-bottom-2">
+                            <button type="submit" class="btn-custom-large-orange" ng-disabled="ajaxSpinner" translate="BTN_ADMIN_LOGIN_WATCHLIST"></button>
+                        </div>
+                        <div class="fullWidth col-md-margin-bottom-2">
+                            <alert class="alert-danger" ng-show="emailError" type="danger" close="closeLoginEmailClientAlert()" class="font-size-7" id="login_email_valid_error">{{'TXT_ERROR_EMAIL_FORMAT'|translate}}</alert>
+                            <alert class="alert-danger" ng-show="login_error" type="danger" close="closeLoginAlert()" style="font-size: 0.9em;">{{errorLoginMessage | translate}}</alert>
+                        </div>
+                        <div class="fullWidth col-md-margin-bottom-2 textCenter">
+                            <span translate="DONTHAVE_ACCOUNT_TXT"></span>
+                            <a ng-click="isLinksDisabled || gotoSignUp()" ng-class="{loginLinkStyle:!isLinksDisabled,loginLinkStyleDisabled:isLinksDisabled}" translate="SIGNUP_LOGIN_TXT" ng-disabled="isLinksDisabled">
+                            </a>
+                        </div>
+                        <div class="fullWidth col-md-margin-bottom-2 loginCheckBoxContainer" style="color:#8FA2AF;">
+                            <div ng-class="{loginCheckboxChecked:uRememberme,loginCheckbox:!uRememberme}">
+                                <label style="line-height: 20px;">
+                                    <input type="checkbox" ng-model="uRememberme" ng-disabled="isLinksDisabled" style=" margin-right: 12px;"/><span translate="TXT_REMEBER_ME_SUBSCRIBER"></span>
+                                </label>
+                                <!-- <a class="alignRight" href="#" ng-click="loginNext(2, 2)" translate="TXT_FORGOT_PASSWORD_SUBSCRIBER"></a> -->
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                    <!-- <div class="col-md-12 clear text-center subscribeNow" ng-show="!enableSocialLogin">
+                        <a href="#" ng-click="subscribeNow()" translate="TXT_OR_SUBSCRIBE_NOW_SUBSCRIBER"></a>
+                    </div> -->
+                </div>
+                <div class="fullWidth" ng-if="enableSocialLogin">
+                    <div class="col-md-12 caption"><label translate="TXT_OR_CONNECT_WITH_SUBSCRIBER"></label></div>
+                    <span ng-show="ajaxSocialSpinner" us-spinner class="yelloworangeloader"></span>
+                    <div class="fullWidth col-md-margin-bottom-2" ng-if="enableFacebook">
+                        <button class="btn-custom-large-navyblue social-login" ng-click="linkAccount('facebook')"><span class="icon-facebook-small " ng-disabled="ajaxSocialSpinner"></span><span class="icon-text">{{'TXT_FACEBOOK' | translate}}</span></button>
+                    </div>
+                    <div class="fullWidth col-md-margin-bottom-2" ng-if="enableTwitter">
+                        <button class="btn-custom-large-blue social-login" ng-click="linkAccount('twitter')" ng-disabled="ajaxSocialSpinner"><span class="icon-twitter-small"></span><span class="icon-text">{{'TXT_TWITTER' | translate}}</span></button>
+                    </div>
+                    <div class="fullWidth no-padding col-md-margin-bottom-2">
+                        <alert class="alert-danger" ng-show="social_error" type="danger" close="closeSocialLoginAlert()" class="font-size-7">{{errorSocialMessage | translate}}</alert>
+                    </div>
+                    <div class="fullWidth">
+                        <a href="#" ng-click="subscribeNow()" translate="TXT_OR_SUBSCRIBE_NOW_SUBSCRIBER"></a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>

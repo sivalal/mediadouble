@@ -1,0 +1,304 @@
+@import 'index';
+
+.contBox{
+	padding: 36px;
+  	background-color: white;
+  	min-height: 200px;
+}
+.billingList{
+	border-bottom: 1px solid #d6dde0;
+}
+
+.billingHistory{
+	margin-top: 60px;
+  	padding: 36px;
+	color: #747474;
+	.billHistoryHead{
+		.billBreadcrumbs{
+			font-size: 14px;
+			color: #747474;
+		}
+		h4{
+			font-size: 36px;
+			color: #747474;
+			span.dollar{
+				font-family: 'DINWebPro-Medium';
+				font-size: 17px;
+				padding: 1px 7px;
+				padding-top: 4px;
+				margin: 3px;
+				margin-right: 12px;
+				float: left;
+				border: 2px dashed #929292;
+				border-radius: 50%;
+				color: #929292;
+				@media(max-width:767px){
+					display:none;
+				}
+			}
+		}
+		.billingDatePick{
+			color: #747474;
+			margin: 20px 0px;
+			label{
+				font-size: 20px;
+				color: #747474;
+				margin: 0px 10px;
+				line-height: 33px;
+			}
+		}
+	}
+	.billHistoryContents{
+
+	}
+	#billtab tr td, #billtab tr th{
+	  text-align: center;
+	  color: #747474;
+	  background: #FFF;
+	  padding: 20px 8px;
+	}
+	.loadMoreBtn{
+		width: 300px;
+		margin-top: 30px;
+		height: 40px;
+		@media(max-width: 360px){
+			width:100%;
+		}
+	}
+
+	/*table style*/
+	.rTable {
+		display: block;
+		width: 100%;
+	}
+	.rTableHeading, .rTableBody, .rTableFoot, .rTableRow{
+		clear: both;
+	}
+	.rTableRow{
+		border-bottom: 1px solid #dddcdc;
+		&.thead{
+			margin-bottom: 10px;
+			border-bottom: none;
+			.rTableRow{
+				border-bottom: none;
+			}
+		}
+	}
+	.rTableHead, .rTableFoot{
+		background-color: #FFF;
+		font-weight: bold;
+	}
+	.rTableCell, .rTableHead {
+		float: left;
+		min-height: 70px;
+		overflow: hidden;
+		padding: 12px 1.8%;
+		width: 22.5%;
+		background-color: #FFF;
+		text-align: center;
+		font-family: 'DINWebPro-Medium';
+		@include transBackground;
+		font-size: 16px;
+		.alignVert{
+			position: absolute;
+			left: 1.8%;
+			right: 1.8%;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
+	.rTableHead{
+		position: relative;
+		span{
+			text-align: center;
+		}
+	}
+	.dateSortArrowUp{
+		span{
+	    	padding-left: 22px;
+	    	&:before{
+	    		content:'';
+				@include verticalAlign;
+	    		background: url('/images/icon/sort_arrow_up.png') no-repeat center !important;
+	    		right: auto;
+	    		left: 0;
+	    		z-index: 1;
+	    		width: 15px;
+				height: 9px;
+				margin-top: -2px;
+	    	}
+		}
+	}
+	.dateSortArrowDown{
+		span{
+	    	padding-left: 18px;
+	    	&:before{
+	    		content:'';
+				@include verticalAlign;
+	    		background: url('/images/icon/sort_arrow_down.png') no-repeat center !important;
+	    		right: auto;
+	    		left: 0;
+	    		z-index: 1;
+	    		width: 15px;
+				height: 9px;
+				margin-top: -2px;
+	    	}
+		}
+	}
+
+	.arrowColumn{
+		width: 10%;
+	}
+	.rTable:after {
+		visibility: hidden;
+		display: block;
+		font-size: 0;
+		content: " ";
+		clear: both;
+		height: 0;
+	}
+	.billPackageDetails{
+		padding: 20px;
+		float: left;
+		width: 100%;
+		font-size: 16px;
+		background: #eeeeee;
+		.parent{
+  			width: 85% !important;
+  			@media(max-width: 767px){
+  				width: 95% !important;
+  			}
+		}
+		.alignLeft{
+			width: 100%;
+  			padding-right: 60px;
+		}
+		.alignRight{
+			position: absolute;
+  			right: 0;
+  			font-family: 'DINWebPro-Medium';
+		}
+	}
+	.billArrowDown{
+		width: 23px;
+	  	height: 38px;
+	  	margin: auto;
+	  	margin-top: 5px;
+		transition: margin .5s;
+		&:before{
+	      background: url('/images/icon/bill_detail_arrow_down.png') no-repeat center !important;
+	      @include verticalAlign;
+	      width: 23px;
+	      height: 13px;
+	      content: "";
+	      left: 0px !important;
+	      right: auto !important;
+	      transition: transform .5s;
+	      cursor: pointer;
+	    }
+	}
+	.rTableRowOpen{
+		.rTableCell{
+			background-color: #dddddd;
+		}
+		.billArrowDown{
+			margin-top: -3px;
+			&:before{
+				transform: rotate(180deg);
+		    }
+		}
+	}
+	.nextBillingRow{
+		.rTableCell{
+			color: #38ace2;
+		}
+		.billArrowDown{
+			&:before{
+				background: url('/images/icon/bill_detail_arrow_down_blue.png') no-repeat center !important;
+		    }
+		}
+	}
+	.priceTag{
+		span{
+			opacity: .6;
+			color: #cccccc;
+		}
+	}
+	.billDateCell{
+		span{
+			font-size: 13px;
+		}
+	}
+	.paymentCreditcard{
+		background: url('/images/icon/creditcard_icon.png') no-repeat center !important;
+		width: 53px;
+		height: 40px;
+		display: block;
+		margin: auto;
+	}
+	.paymentPaypal{
+		background: url('/images/icon/paypal_icon.png') no-repeat center !important;
+		width: 103px;
+		height: 27px;
+		display: block;
+		margin: auto;
+	}
+	@media(max-width: 767px){
+		padding: 20px 0px;
+		.billHistoryHead{
+			.alignLeft{
+				width: 100%;
+				h4{
+					text-align: center;
+				  	margin-bottom: 25px;
+				  	font-size: 20px;
+				  	font-family: 'DINWebPro-Medium';
+				}
+			}
+		}
+		.rTableCell, .rTableHead {
+			width: 33.33%;
+			font-size: 14px;
+		}
+		.mobHide{
+			display: none;
+		}
+		.billDateCell{
+			span{
+				font-size: 12px;
+			}
+		}
+		.arrowColumn{
+			position: absolute;
+		  	left: 0;
+		  	right: 0;
+		  	bottom: 0;
+		  	top: 0;
+		  	width: 100%;
+		  	background-color: transparent !important;
+		  	padding: 0;
+		  	.billArrowDown{
+				position: absolute;
+			  	left: 0;
+			  	right: 0;
+			  	bottom: 0;
+			  	top: 0;
+			  	width: 100%;
+			  	margin: 0;
+			  	height: auto;
+				&:before{
+			      background: none !important;
+			    }
+			}
+		}
+	}
+	@media(max-width: 360px){
+		.billDateCell{
+			span{
+				font-size: 10px;
+			}
+		}
+	}
+}
+
+

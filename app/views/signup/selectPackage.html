@@ -1,0 +1,64 @@
+<!-- header area -->
+<div ng-include="'/views/signup/header.html'" ></div>
+<!-- body -->
+<div class="fullWidth signupSelectPackage">
+	<h2 ng-bind="selectPackageDetails.page_header[CurrentLang]"></h2>
+	<span ng-show="ajaxPackageSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+	<div class="signupPackageList col-md-10 col-sm-10 col-xs-12 center-block">
+		<div ng-repeat="packageObj in packageObjList | filter:{ type : 'package' }" class="signupPackage fullWidth" ng-class="{packageCheckboxChecked:packageObj.packageSelection,packageCheckbox:!packageObj.packageSelection}">
+			<div class="fullWidth parent signupPackageCont">
+				<input type="checkbox" ng-model="packageObj.packageSelection" ng-disabled="!packageObj.is_checkbox_editable"/>
+				<div class="col-md-6">
+					<div class="titles">
+						<h4 ng-bind="packageObj.name[CurrentLang]"></h4>
+                        <h6>
+                            <span ng-bind="packageObj.billing_plan.price_start_txt[CurrentLang]"></span>
+                            <span ng-bind="packageObj.billing_plan.price_symbol"></span><span ng-bind="packageObj.billing_plan.price_amount"></span><span ng-bind="packageObj.billing_plan.price_currency"></span>
+                            <span ng-bind="packageObj.billing_plan.price_end_txt[CurrentLang]"></span>
+                        </h6>
+					</div>
+					<div class="packageTrial" ng-show="packageObj.billing_plan.is_show_description" ng-bind="packageObj.billing_plan.description[CurrentLang]"></div>
+					<p ng-bind="packageObj.description[CurrentLang]"> </p>
+				</div>
+				<div class="includedChannels">
+                    <div class="channelLogo" ng-repeat="channel_logo in packageObj.channel_logos">
+                        <img ng-src="{{appgridAssets[channel_logo.image_id]}}">
+                    </div>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+        <h3  translate="TXT_SELECT_ADDON_MAINHEADING" ng-show="showAddAddonHeader"></h3>
+		<div ng-repeat="packageObj in packageObjList | filter:{ type: 'addon'  }" class="signupPackage fullWidth" ng-class="{packageCheckboxChecked:packageObj.packageSelection,packageCheckbox:!packageObj.packageSelection}">
+			<div class="fullWidth parent signupPackageCont">
+                <input type="checkbox" ng-model="packageObj.packageSelection"  ng-disabled="!packageObj.is_checkbox_editable" ng-click="updateCheckbox(packageObj)"/>
+				<div class="col-md-6">
+					<div class="titles">
+						<h4 ng-bind="packageObj.name[CurrentLang]" ng-click="updateCheckbox(packageObj)"></h4>
+                        <h6>
+                            <span ng-bind="packageObj.billing_plan.price_start_txt[CurrentLang]"></span>
+                            <span ng-bind="packageObj.billing_plan.price_symbol"></span><span ng-bind="packageObj.billing_plan.price_amount"></span><span ng-bind="packageObj.billing_plan.price_currency"></span>
+                            <span ng-bind="packageObj.billing_plan.price_end_txt[CurrentLang]"></span>
+                        </h6>
+					</div>
+					<div class="packageTrial" ng-show="packageObj.billing_plan.is_show_description" ng-bind="packageObj.billing_plan.description[CurrentLang]">
+					</div>
+					<p ng-bind="packageObj.description[CurrentLang]"> </p>
+				</div>
+				<div class="includedChannels">
+                    <div class="channelLogo" ng-repeat="channel_logo in packageObj.channel_logos">
+                        <img ng-src="{{appgridAssets[channel_logo.image_id]}}">
+                    </div>
+
+				</div>
+			</div>
+		</div>
+		<div class="fullWidth" ng-if="buttonConfig">
+			<button class="btnOrange signupNextBtn" ng-click="packageConfirmAction()"
+		     style="color:{{buttonConfig.text_color}};background-color:{{buttonConfig.background_color}}"
+		     ng-bind="buttonConfig.name[CurrentLang]">
+			</button>
+			<div class="fullWidth packageDisclaimer" translate="PACKAGE_DISCLAIMER_TEXT"></div>
+		</div>
+	</div>
+</div>

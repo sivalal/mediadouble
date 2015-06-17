@@ -1,0 +1,29 @@
+
+<div class="fullWidth loggedinSubscriber" style="" >
+    <h2 style="">
+        <span translate="LOGGEDINSUBSCRIBER_GREET"></span>
+        <span ng-bind="firstName"></span>
+        <span>!</span>
+        <span translate="LOGGEDINSUBSCRIBER_WELCOMETO"></span>
+        <span ><image ng-src="{{appgridAssets['yaveo_image']}}" /></span>        
+    </h2>
+    
+    <p translate="LOGGEDINSUBSCRIBER_DOWNLOADAPPDESC" > </p>
+    
+    <button  class="btn btnOrange center-block" 
+               style="" 
+               ng-click="DownLoadAppLink()"
+              translate="LOGGEDINSUBSCRIBER_DOWNLOADAPPBUTTON" >
+    </button>
+    
+    <span> <image ng-src=""/> </span>
+  
+    <button class="btn btnOrange acntManageBtn center-block" 
+              style=" "  
+              ng-click="GotoManageAccount()"
+              translate="CANCELACCOUNT_GOTOMANAGEACCOUNT" >
+    </button>
+    <div class="fullWidth" style="margin-top:15px;">
+      <img  ng-src="{{appgridAssets['OnBoardingPageMobileImage']}}" alt="iphone">
+    </div> 
+</div>

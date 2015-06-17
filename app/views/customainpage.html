@@ -1,0 +1,224 @@
+<style type="text/css">
+.movieDropdownListHolder { position:relative; margin:0 auto; padding:0; padding: 15px 0px; max-height: 280px; }
+</style>
+<script>
+  jQuery(document).ready(function ($) {
+    "use strict";
+    $('#movie-genre-list').perfectScrollbar();
+    // $('#movie-filter-list').perfectScrollbar();
+  });
+</script>
+<!-- Visitor Only Section : Start -->
+
+<div ng-show="!isLoggedIn">
+
+  <!-- Sizzle Video -->
+  <div id="videoBox" style="position: relative;padding-bottom: 56.25%;height: 0;overflow: hidden;background-color: #000;">
+    <div class="sizzle-video-overlay" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;z-index:2;display: table;">
+      <div id="sizzle-message" style="width: 100%;height: 100%;display: table-cell;vertical-align: bottom;text-align: center;background-color: rgba(0,0,0,0.6);padding-bottom:50px;">
+        <div class="row" style="width:600px; margin-left: 5%;">
+          <div  class="col-md-7 col-md-offset-1 col-sm-8 col-xs-6 carousel-stat-footer-l">
+            <p>{{videoBanner.title[CurrentLang]}}</p>
+          </div>
+          <form novalidate  name="mastheadForm" role="form" class="signup-form" novalidate>
+            <div  class="col-md-6 col-sm-6 col-xs-12 carousel-stat-footer-l">
+              <div class="form-group note parent fullWidth">
+                  <span ng-if="emailCheckSpinner" us-spinner="{radius:5, width:4, length: 8}" class="yelloworangeloader"></span>
+                  <input name="userMastheadEmail" ng-model="userMastheadEmail" id="user-email" type="text" class="form-control fullWidth" placeholder="{{'HINT_TXT_EMAIL_ADDRESS_SIGN_UP'|translate}}" ng-pattern="/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/" ng-keydown="removeValidationMessage()" ng-class="{true: 'error'}[(mastheadForm.userMastheadEmail.$dirty || submitted) && mastheadForm.userMastheadEmail.$invalid]" required> 
+                  <span ng-if="mastheadForm.userMastheadEmail.$valid && mastheadForm.userMastheadEmail.$dirty" class="icon-custom-valid col-md-1 textFieldSuccess"></span>
+                  <span ng-if="submitted && mastheadForm.userMastheadEmail.$error.required" translate="ERROR3"></span>
+                  <span ng-if="(mastheadForm.userMastheadEmail.$dirty || submitted) && mastheadForm.userMastheadEmail.$error.pattern" translate="ERROR6"></span>
+                  <span ng-if="(mastheadForm.userMastheadEmail.$dirty || submitted) && mastheadForm.userMastheadEmail.$error.email">{{'ERROR7' | translate}}<a href="#" ng-click="loginModal(1)" translate="BTN_LOGIN_TXT_FORMAT2"></a>{{'TXT_OR' |  translate}}<a href="#" ng-click="loginModal(2)" translate="TXT_RECOVER_PASSWORD"></a></span>
+              </div>
+            </div>
+            <div  class="col-md-6 col-sm-6 col-xs-12 carousel-stat-footer-r" >
+              <button class="btnOrange btn-custom-orange fullWidth" ng-click="checkEmailExist()" translate="BTN_START_YOUR_FREE_MONTH" ng-disabled="emailCheckSpinner"></button>
+            </div>
+          </form>
+          <div  class="col-md-7 col-md-offset-1 col-sm-8 col-xs-6 carousel-stat-footer-l">
+            <a href="#" ng-click="playSizzleVideo()"><label translate="PLAY_VIDEO_LABEL"></label></a>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <div id='sizzle-video' style="position:absolute;top:0;left:0;width:100%;height:100%;z-index: 1;"></div>
+    <noscript><div>Please enable Javascript to watch this video</div></noscript>
+  </div>
+  <!--/ Sizzle Video -->
+
+
+
+  <!-- Banner Mastheads -->
+  <div id="showcaseID" class="showCaseBannerHome main_slider">
+    <div ng-repeat="slide in slides">
+        <div ng-if="slide.query=='stackable'" class="col-md-12 col-sm-12 col-xs-12 ng-scope">
+          <div class="col-md-4 col-md-offset-1">
+            <p class="text-large" style="font-size:16px">{{slide.title[CurrentLang].large}}</p>
+            <p class="text-small" style="font-size:10px">{{slide.title[CurrentLang].small}}</p>
+          </div>
+          <div ng-repeat="image in slide.mastheadImage[CurrentLang]"  class="{{slide.mastheadImageClass}}">
+            <img class="bannerHomeImg" ng-src="{{addbaseAndImg(slide.ShowcaseNewbase,appgridAssets[image])}}" style="margin:auto;">
+          </div>
+        </div>
+        <div ng-if="slide.query=='scrollable'" class="col-md-12 col-sm-12 col-xs-12 ng-scope">
+          <div id="owl-railsHome_{{$index}}" class="owl-carousel">
+            <div ng-repeat="image in slide.mastheadImage[CurrentLang]" on-finish-render-filters>
+              <div><img ng-src="{{addbaseAndImg(slide.ShowcaseNewbase,appgridAssets[image])}}" style="margin:auto;"></div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <!--/ Banner Mastheads -->
+
+</div>
+<!-- Visitor Only Section : End -->
+<!-- Member Only Section : Start -->
+<div ng-if="isLoggedIn">
+  <div class="row" ng-show="TopNAVmenu" id="secondaryTopMenu">
+    <div class="navbar-fixed-top movie_list " ng-style="navmenuStyle">
+      <div ng-class=" (userid) ? 'topMenuContainerLogin' : ''" class="secondaryTopMenuContainer">
+        <div class="showTvContainer">
+          <!--translate="TXT_MOVIES"-->
+          <h4 class="showTvText visible-xs" style="text-align:center;" >{{pageTitle[CurrentLang]}}</h4>
+        </div>
+        <ul>  
+          <!--Genre-->
+          <li  class="dropdown" id="genreLi" show-hide-gener ng-show="showGenre" ng-if="genre[CurrentLang]['count'] > 1">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" class="nav">{{selectedGenre|translate}}
+              <span class="caret"></span>
+            </a>
+            <!--Large genre menu-->
+            <ul  style="width:{{genreWidth}}px" class="dropdown-menu dropdown-menu_left genre" id="drop-gener" >
+              <li class="row">
+                <ul class="list-unstyled col-md-4 col-sm-4 col-xs-4 genre_list_xs" ng-repeat="col in genre[CurrentLang]  track by $index">
+                  <li ng-repeat="item in col" style="margin-left:20px;">
+                    <a ng-href="/filter?genresourceid={{pagename}}&pagetype=genre&source={{source}}&group={{item.short_label}}" ng-click="setGenre(item)" class="droplink" onclick="scrolltotop()" >{{item.label[CurrentLang]}}</a>
+                  </li>
+                </ul>
+              </li>
+              <div class="season_select_list_top"></div>
+            </ul>
+            <!--Using 'Large genre menu' for large and smaller screens-->
+            <!--Small genre menu-->
+            <!--<ul class="dropdown-menu dropdown-menu_left hidden-lg hidden-sm hidden-md">
+              <li id="movie-genre-list" class="movieDropdownListHolder" style="width:470px;">
+                <ul style="padding-left:0px;"  ng-repeat="col in genre" class="col-xs-4 dropdownfonts genre_list_xs">
+                  <li ng-repeat="item in col" style="margin-left:20px;">
+                    <a ng-href="{{item.href}}" ng-click="setGenre(item)" class="droplink">{{item.label}}</a>
+                  </li>
+                </ul>
+              </li>
+                  <div class="season_select_list_top"></div>
+            </ul>-->
+          </li>
+          <!--Genre ends here-->
+
+          <!--Bar Header For Des/Tab-->
+          <li class="licenter visible-sm visible-md visible-lg" >
+                <!--translate="TXT_MOVIES"-->
+            <span class="showTvText" >{{pageTitle[CurrentLang]}}</span>
+          </li>
+          <!--Bar Header For Des/Tab-->
+
+          <li class="dropdown" id="filterLi" ng-show="showRegionfilter">
+            <a data-toggle="dropdown" class="dropdown-toggle" translate="TXT_FILTER_SUBSCRIBER"> 
+              <span class="caret">
+              </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-top dropdown-menu_right filter">
+              <li class="filter_head">
+                <span class="col-md-8 droprightheader"  translate="TXT_QUALITY_SUBSCRIBER"></span>
+                <div class="col-md-4 droprightheader alignright">
+                    <div ng-class="{uimageCheckboxChecked:item.isFilterSelected,imageCheckbox:!item.isFilterSelected}" ng-repeat="item in QualityFilters">
+                       <label>
+                        <input type="checkbox" ng-model="item.isFilterSelected" ng-click="QualityFilterUpdated(item.key,$event)" />
+                        <span>{{item.title[CurrentLang]}}</span>
+                      </label>
+                    </div>
+                </div>
+                </br>
+               </li>
+               <li>
+                <!-- Content container to add padding -->
+               <div id="movie-filter-list" class="movieDropdownListHolder hor_line">
+                    <h6 translate="TXT_REGIONS_SUBSCRIBER"></h6>
+                  <div class="dropdownfonts" >
+                    <ul class="list-unstyled col-md-4 col-sm-4 col-xs-4" ng-repeat="column in RegionFilters">
+                      <li ng-repeat="item in column" style="margin-left:10px;">
+                          <div ng-class="{uimageCheckboxChecked:item.isFilterSelected,imageCheckbox:!item.isFilterSelected}" >
+                              <label  style="position: relative;top: 0px; line-height:14px;">
+                                  <input class="alignLeft" style="margin-top:0;" type="checkbox" ng-model="item.isFilterSelected" ng-click="RegionFilterUpdated(item.key,$event)"/>
+                                  <span class="alignLeft">{{item.title[CurrentLang]}}</span>
+                              </label>
+                          </div>
+                      </li> 
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <div class="season_select_list_top"></div>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div> 
+  <!-- end of top nav menu -->
+  <div ng-show="slides.length!=0" ng-class=" (userid) ? 'indicatorLogin' : ''" id="showcaseID" class="showCaseBannerHome main_slider"> 
+      <carousel interval="myInterval">
+        <slide ng-repeat="slide in slides" active="slide.active">
+          <a ng-class="{'bannerCkArea':CheckBannerStatus(slide)}" class="calltoaction" ng-href="{{callToAction(slide,'page')}}" ng-click="callToAction(slide,'modal')">
+            <div ng-if="slide.query=='banner'" ng-init="bannermstHeadImg = isUndefinedOrNull(slide.mastheadImage)" >
+              <img ng-if="!bannermstHeadImg" class="bannerHomeImg" ng-src="{{addbaseAndImg(slide.ShowcaseNewbase,appgridAssets[slide.mastheadImage[CurrentLang]])}}" style="margin:auto;">
+              <div class="carousel-caption center-banner-text">
+                  <h1 class="bannerTextCaption" ng-if="slide.title[CurrentLang]!='null' && slide.title[CurrentLang]!='NULL'" >{{slide.title[CurrentLang]}}</h1>
+              </div>
+            </div>
+              
+            <div ng-if="slide.query!='banner'"
+                 ng-init="mstHeadImg = isUndefinedOrNull(slide.mastheadImage)">
+              <img ng-if="!mstHeadImg" ng-src="{{addbaseAndImg(slide.ShowcaseNewbase,slide.mastheadImage)}}" style="margin:auto;">
+              <div class="carousel-caption">
+                <a ng-href="{{getSingleAssetBaseUrl(slide.TitleTypeId)}}?titleId={{slide.titleId}}">
+                  <h2 class="bannerTextCaption">{{slide.title[CurrentLang]}}</h2>
+                </a>
+                <div class="buttons" >
+                    <a href="{{getSingleAssetBaseUrl(slide.TitleTypeId)}}?titleId={{slide.titleId}}" class=" btn tvWatchNowBtn">
+                      <span translate="BTN_WATCH_NOW_LIVE"></span>
+                      <span class="glyphicon glyphicon-play"></span>
+                    </a>
+                    <div ng-if="showWatchlistButton && slide.show_type!='series'">
+                      <a href="" class="tvWatchlistBtn plus-icon" ng-hide="checkTitleIDExistInGlobalWatchlistIds(slide.titleId)" style="padding: 0px;" ng-click="addWatchList(slide.titleId, 'SLP')">
+                        <span class="glyphicon glyphicon-plus"></span>
+                      </a>
+                      <a href="" class="tvWatchlistBtn plus-icon" ng-show="checkTitleIDExistInGlobalWatchlistIds(slide.titleId)" style="padding: 0px;" ng-click="openDeleteWatchlistDialog(null,slide.titleId, null)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                      </a>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </slide>
+      </carousel>
+    <div class="carousel-stat-footer navbar-fixed-top col-md-margin-bottom-3" ng-if="subscriptionStatus && subscriptionStatus == 'new'">
+      <div class="row">
+        <div  class="col-md-3 col-md-offset-2 col-sm-4 col-xs-6 col-md-padding-left-5 carousel-stat-footer-r" >
+          <button class="btnOrange btn-custom-orange" ng-click="signupModal(1)" translate="BTN_HOME_FINISH_SIGNUP"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fullWidth noMastHead" ng-show="slides.length==0"></div>
+  <div ng-include="'/views/railtemplate_page.html'" ></div>
+
+</div>
+<!-- Member Only Section : End -->
+<style>
+body{
+  overflow-x:hidden;
+}
+</style>
+</div>

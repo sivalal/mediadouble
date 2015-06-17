@@ -1,0 +1,147 @@
+<script>
+  jQuery(document).ready(function ($) {
+    "use strict";
+    $('#movieScroll').perfectScrollbar();
+  });
+</script>
+
+<div id="movieScroll" class="contentHolderSearch">
+    <div class="st-nav-acc-container col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+             <h5 class="st-nav-adminHeader" translate="TXT_ACCOUNT_MEMBERSHIP"></h5>   
+        </div>
+        <span ng-show="ajaxUserInfoSpinner"  us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>  
+        <div ng-show="userInfoContainer">
+            <div class="col-md-12 col-sm-12 col-xs-12 ">
+                <div class="memberAvatar center-block"><img src="{{profileImageURL}}" class="img-responsive"/></div>
+                <h6 class="st-nav-adminHeader AcMemberName text-center text-capitalize" ng-bind="userName"></h6>
+            </div>
+        </div> 
+
+        <span ng-show="ajaxPackageSpinner"  us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>  
+        <div ng-show="userPackageContainer" ng-if="userSubscriptionDetails"> 
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <h6 class="st-nav-adminHeader pull-left" translate="BTN_ADMIN_YOUR_SUBSCRIPTION_WATCHLIST"></h6>
+                    <!-- <button class="btn-custom-orange st-nav-acc-btn pull-right" ng-click="manageAccount()" translate="TXT_ADMIN_MANAGE_PLANS"></button> -->
+                </div>
+            </div> 
+            <div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12 st-nav-acc-package extra-padding-3">
+                        <h2  class="text-center text-capitalize">{{userSubscriptionDetails.packageTitle[CurrentLang]}}</h2>
+                        <h5  class="text-center">{{'TXT_CURRENCY' | translate}}{{userSubscriptionDetails.subscriptionNextPricingAmount}} {{'TXT_SIGNUP_PRICE_A_MONTH' | translate}}</h5>
+                    </div>
+                </div>  
+                <div class="col-md-12 col-sm-12 col-xs-12" ng-if="userSubscriptionDetails.subscriptionNextPricingAmount > 0">
+                        <div class="col-md-12 col-sm-12 col-xs-12 st-nav-acc-monthlysub padding-0">
+                          <h6 class="st-nav-adminHeader text-center text-uppercase">{{userSubscriptionDetails.packageDescription[CurrentLang]}}</h6>  
+                        </div>    
+                </div> 
+            </div>
+        </div>
+        <!-- <div class="col-md-12 col-sm-12 col-xs-12 col-md-margin-top-4 text-center" ng-show="subscriptionPackageButton">
+            <button class="btn-custom-orange" ng-click="signupModal(1)" translate="BTN_START_YOUR_FREE_MONTH"></button>
+        </div> -->
+        <div class="col-md-12 col-sm-12 col-xs-12 col-md-margin-top-4">
+            <div class="col-sm-8 col-xs-8 col-md-8" style="padding-left: 0px;">
+            <h6 class="st-nav-acc-newslogincredns pull-left" translate="TXT_ADMIN_LOGIN_CREDENTIALS"></h6>
+            </div>
+            <button class="btn-custom-orange st-nav-acc-btnEdit pull-right" ng-click="editUserLoginCreditDetails()" ng-show="editLoginCredentialButton" translate="{{'BTN_ADMIN_EDIT_WATCHLIST'|uppercase}}"></button> 
+            <button class="btn-custom-orange st-nav-acc-btnEdit pull-right" ng-click="saveUserLoginCreditDetails(uAdminEmail, uAdminOldPassword, uAdminNewPassword, uAdminConfirmPassword)" ng-show="saveLoginCredentialButton" translate="BTN_ADMIN_SAVE" ng-disabled="!loginCredentialForm.$valid"></button>               
+        </div>   
+        <form novalidate  name="loginCredentialForm" role="form" class="login-credential-form">
+            <div class="col-md-margin-top-1" id="loginCredens">
+                <div ng-class="backgroundOverlay">
+                    <div class="col-md-12 col-sm-12 col-xs-12 ">
+                        <div class="form-group">
+                            <input name="uAdminEmail" ng-model="uAdminEmail" type="email" class="form-control" placeholder="{{'HINT_TXT_EMAIL_ADDRESS_SIGN_UP'|translate}}">
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 ">
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="uAdminOldPassword" ng-model="uAdminOldPassword" placeholder="{{'TXT_OLD_PASSWORD'|translate}}" id="uAdminOldPassword" validate-old-password required/>
+                        </div>
+                    </div>
+                    <span ng-show="ajaxLoginCredentialFormSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+                    <div class="col-md-12 col-sm-12 col-xs-12 ">
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="uAdminNewPassword" ng-model="uAdminNewPassword" placeholder="{{'TXT_NEW_PASSWORD'|translate}}" id="uAdminNewPassword" validate-new-password required/>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 ">
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="uAdminConfirmPassword" ng-model="uAdminConfirmPassword" placeholder="{{'TXT_CONFIRM_PASSWORD'|translate}}" equals="{{uAdminNewPassword}}" id="uAdminConfirmPassword" required/>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12 successMsg" ng-show="sucessCredentialEdit">
+                        <span class="successIcon" translate="TXT_SUCCESS_CREDENTIAL_EDIT"></span>
+                        <span class="closeError" ng-click="closeCredentialExistSucessAlert()"></span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 errorMsg" ng-show="errorCredentialEdit">
+                        <span class="errorIcon">{{errorCredentialEditMsg | translate}}</span>
+                        <span class="closeError" ng-click="closeCredentialExistErrorAlert()"></span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 errorMsg" ng-show="loginCredentialForm.uAdminConfirmPassword.$invalid && loginCredentialForm.uAdminConfirmPassword.$dirty">
+                        <span class="errorIcon" translate="TXT_PASSWORD_NOT_MATCH"></span>
+                    </div>
+                </div>
+
+            </div> 
+        </form>
+        <div class="col-md-12 col-sm-12 col-xs-12 " ng-if="socialInfoContainer && enableSocialLinking">
+            <div class="col-sm-8 col-xs-8 col-md-8" style="padding-left: 0px;">
+                <h6 class="st-nav-acc-newslogincredns pull-left" translate="TXT_ADMIN_LOGIN_CREDENTIALS"></h6>      
+            </div>
+            <form novalidate  name="accountLinkingForm" role="form" class="account-linking-form">
+                <div class="col-sm-5 col-xs-5 col-md-5" style="padding-left: 0;">
+                    <span ng-show="ajaxUserAccountLinkingSpinner"  us-spinner="{radius:10, width:4, length: 8}" class="yelloworangeloader"></span>  
+                    <span ng-class="{'icon-link-facebook':!facebookButtonStatus,'icon-link-active-facebook':facebookButtonStatus}"  ng-click="linkToFacebook()" ng-if="enableFacebook"></span>
+                    <span ng-class="{'icon-link-twitter':!twitterButtonStatus,'icon-link-active-twitter':twitterButtonStatus}" ng-click="linkToTwitter()" ng-if="enableTwitter"></span>
+                </div>
+
+                <div ng-show="linkingAccoutsContainer" class="col-sm-12 col-xs-12 col-md-12 confirmLinking">
+                    <h5 translate="TXT_ACCOUNT_LINK_MESSAGE"></h5>
+                    <div class="form-group">
+                        <input name="userEmail" ng-model="userEmail" type="email" class="form-control" placeholder="{{'HINT_TXT_EMAIL_ADDRESS_SIGN_UP'|translate}}" required readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="userPassword" ng-model="userPassword" placeholder="{{'HINT_TXT_PASSWORD_SIGN_UP'|translate}}" id="userPassword" required/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn-custom-large-orange"  ng-click="submitAccountLinking(userEmail, userPassword)" translate="BTN_ADMIN_SAVE" ng-disabled="!accountLinkingForm.$valid"></button>
+                    </div>
+                    <span class="topArrow"  ng-class="{'leftWidth':onDemandActiveProvider == 'twitter'}"></span>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 successMsg" ng-show="successAccountLinking">
+                    <span class="successIcon">{{successAccountLinkingMsg | translate}}</span>
+                    <span class="closeError" ng-click="closeAccountLinkingSucessAlert()"></span>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 errorMsg" ng-show="errorSocialAccountLinking">
+                    <span class="errorIcon">{{socialProvider | uppercase}}{{errorSocialAccountLinkingMsg | translate}}</span>
+                    <span class="closeError" ng-click="closeSocialAccountLinkingErrorAlert()"></span>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 errorMsg" ng-show="errorAccountLinking">
+                    <span class="errorIcon">{{errorAccountLinkingMsg | translate}}</span>
+                    <span class="closeError" ng-click="closeAccountLinkingErrorAlert()"></span>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 col-md-margin-top-4">
+            <div class="col-sm-8 col-xs-8 col-md-8" style="padding-left: 0px;">
+            <h6 class="st-nav-adminHeader pull-left" translate="TXT_SIGNUP_MONTHLY_LANGUAGE_EXISTING_ACCOUNT"></h6>
+        </div>
+        <div class="col-sm-6 col-xs-6 col-md-6" style="padding-left: 0;">
+            <button  ng-disabled="(CurrentLang=='en_US')" ng-class="(CurrentLang=='en_US') ? 'admin-acc-icon-langEng-active':'admin-acc-icon-langEng'"  ng-click="ChangeLanguage('en_US')"></button>
+            <button ng-disabled="(CurrentLang!='en_US')"  ng-class="(CurrentLang!='en_US') ? 'admin-acc-icon-langSpan-active':'admin-acc-icon-langSpan'"  ng-click="ChangeLanguage('es_ES')">                
+            </button>
+        </div>
+        <div class="col-md-margin-top-3" ng-if="userSubscriptionDetails.subscriptionStatus != 'Cancelled'">
+            <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+                <button ng-click="cancelAccount()" class="btn-custom-orange st-nav-acc-btnCancel pull-left" translate="BTN_ADMIN_CANCEL_ACCOUNT_WATCHLIST"></button>
+            </div>
+        </div>     
+    </div>    
+</div>

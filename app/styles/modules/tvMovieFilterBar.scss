@@ -1,0 +1,43 @@
+@import 'index';
+.tvFilterMiddleContainer {
+  color: $color-turkoise;
+  margin-top: 10px;
+}
+.tvFilterLeftContainer {
+  vertical-align: middle;
+  float: left; 
+  .tvFilterRightContainer {
+    float: right; 
+  }
+}
+.btn-custom-darkgrey {
+  @include btn-custom;
+  margin-top: 6px;
+  min-width: 95px;
+  border: none;
+  background-color: #2D3031;
+  font-size: 14px;
+  opacity: 1.0;
+  position:relative;
+  font-family: 'DINWebPro-Medium';
+}
+.btn-custom-darkgrey:hover {
+  color:#4AC3BC;
+  .caret {
+    border-top-color: #4AC3BC !important;
+    border-bottom-color: #4AC3BC !important;
+  }
+}
+.btngenre{
+  left:-21%;
+}
+.btnshows{
+  left:-2%;
+}
+.btnfilter{
+  left:250%;
+}
+.nav .caret {
+  border-top-color: $color-orange;
+  border-bottom-color: $color-orange;
+}

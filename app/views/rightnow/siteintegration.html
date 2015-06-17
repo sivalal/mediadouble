@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><script type="text/javascript">document.domain = 'yaveo.com'</script><script type="text/javascript" src="https://cdns.directv.com/resources/js/compressed/bundles/prototype.js"></script><script type="text/javascript">var DIRECTV = DIRECTV ? DIRECTV : {};
+        DIRECTV.SiteIntegration = DIRECTV.SiteIntegration ? DIRECTV.SiteIntegration : {};
+        DIRECTV.SiteIntegration.Comm = DIRECTV.SiteIntegration.Comm ? DIRECTV.SiteIntegration.Comm : {};
+        DIRECTV.SiteIntegration.Comm.getData = function(url, callback,RTN_Lang) {
+        var userInfo="";
+        var lang="";
+        if(getCookie("loggedin")=="true")
+        {
+            userInfo="&uid="+getCookie("userid");
+        }
+        if(RTN_Lang!="")
+        {
+            setCookie("current_language",RTN_Lang);
+            lang="?currentLang="+RTN_Lang;
+        }
+        else
+        {
+            lang="?currentLang="+getCookie("current_language");            
+        }
+        
+        console.log(lang);
+
+            var fullUrl = document.location.protocol + '//' + document.location.host + url+lang+userInfo;
+            new Ajax.Request(fullUrl, {
+                method: 'post',
+                asynchronous: true,
+                onSuccess: function(transport) {
+                    callback(transport.responseText);
+                }
+            });
+        }
+//        function setCookie(cname, cvalue) {
+//                document.cookie = cname + "=" + cvalue + ";path=/";
+//            }
+//
+//function getCookie(cname) {
+//    var name = cname + "=";
+//    var ca = document.cookie.split(';');
+//    for(var i=0; i<ca.length; i++) {
+//        var c = ca[i].trim();
+//        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+//    }
+//    return "";
+//}
+        
+     function getCookie(value){
+            var cName = "";
+            var pCOOKIES = new Array();
+            pCOOKIES = document.cookie.split('; ');
+            for(var bb = 0; bb < pCOOKIES.length; bb++){
+                var NmeVal  = new Array();
+                NmeVal  = pCOOKIES[bb].split('&*=*&');
+                if(NmeVal[0] == value){
+                    cName = NmeVal[1];
+                }
+            }
+            return cName;
+        }     
+        
+        
+        function setCookie(name, value){
+            var cookieStr = name + "&*=*&" + value + "; ";
+            document.cookie = cookieStr;
+        }        
+        
+        
+        </script><body>

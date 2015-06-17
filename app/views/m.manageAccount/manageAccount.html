@@ -1,0 +1,42 @@
+
+
+<div class="fullWidth accountMobWeb" style="">
+	<p style="padding-bottom:0; border-bottom:0;"> 
+		<span style="clear:both; display: block; font-family: 'DINWebPro-Medium';">
+            <span translate="LOGGEDINSUBSCRIBER_GREET"></span>
+            <span ng-bind="firstName"></span>
+            <span >!</span>
+        </span>
+    </p>
+    <p style="padding-top:5px;" translate="LOGGEDINSUBSCRIBERHOME_DESC"></p>        
+        
+	<div class="accountMenuMob">
+		<div class="menuItem accountInfoIcon"
+	             ng-click="GotoRoute('/m.personalInformation')" 
+	             translate="TXT_SUBHEADER_ACCOUNT_INFORMATION"
+	             >		
+		</div>
+		<div class="menuItem billingInfoIcon"
+	             ng-click="GotoRoute('/m.billingInformation')"
+	             translate="TXT_ADMIN_BILLING_INFO_BILLING_DETAILS"
+	             >		
+		</div>
+		<div class="menuItem subscriptionIcon"
+	             ng-click="GotoRoute('/m.subscriptionDetails')" 
+	             translate="TXT_ACC_MNGMNT_SUBSC_DETAILS"
+	             >		
+		</div>
+		<div class="menuItem profileSettingsIcon"
+	             ng-click="GotoRoute('/m.profileSettings')"
+	             translate="TXT_PROFILE_SETTINGS"
+	             >
+		</div>
+	</div>
+	<div class="fullWidth">
+		<button class="btn btnOrange" style="margin-top: 20px;"
+	                translate="LOGGEDINSUBSCRIBERHOME_TAKEMETOAPPBUTTON"
+	                ng-click="DownLoadAppLink()"
+	                >            
+	    </button>
+	</div>
+</div>

@@ -1,0 +1,293 @@
+@charset "UTF-8";
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {
+	margin:0;
+	padding:0;
+	border:0;
+	font-size:100%;
+	font:inherit;
+	vertical-align:baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+	display:block;
+}
+
+body {
+	line-height:1;
+}
+
+ol,ul {
+	list-style:none;
+}
+
+blockquote,q {
+	quotes:none;
+}
+
+blockquote:before,blockquote:after,q:before,q:after {
+	content:'';
+	content:none;
+}
+
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+
+body {
+	width:1400px;
+	margin:0 auto;
+	background-color: #dfe2e3;
+}
+
+h3 {
+	font-family:yaveoblack;
+	font-size:30px;
+	line-height:34px;
+}
+
+ul {
+	font-family:yaveolight;
+}
+
+#header {
+	background-color:#37ace2;
+	text-align:right;
+	padding:15px 25px;
+	font-family:yaveolight;
+}
+
+#header img {
+	float:left;
+}
+
+#headerAction {
+	float:right;
+	padding-top:7px;
+	font-size:18px;
+	color:#fff;
+	margin-right:40px;
+}
+
+#header a.customButton {
+	border-radius:4px;
+	background-color:#f47322;
+	padding:10px 30px;
+	line-height:1;
+	color:#fff;
+	text-decoration:none;
+	float:none;
+	margin-left:30px;
+}
+
+#gridWrapper {
+	display:block;
+	background-color:#37ace2;
+}
+
+#topLeft {
+	width:50%;
+	float:left;
+	background-color:#37ace2;
+	height:750px;
+	color:#fff;
+	margin:0;
+}
+
+#topLeft h3 {
+	margin:80px 0 0 96px;
+}
+
+#topLeft ul {
+	margin:35px 0 0 96px;
+	font-size:23px;
+}
+
+#topLeft ul li {
+	line-height:34px;
+	padding:0 80px 30px 55px;
+	background-image:url(../images/icon-check.png);
+	background-repeat:no-repeat;
+	background-position:0 2px;
+	margin:0;
+}
+
+#topLeft span {
+	margin:15px 0 0 0px;
+	font-size:11px;display: block;
+}
+
+
+#topRight {
+	width:50%;
+	float:left;
+	height:750px;
+	background-color:#fff;
+	text-align:center;
+	margin:0;
+}
+
+#topRight img {
+	margin:100px auto 0;
+}
+
+#bottomLeft {
+	width:50%;
+	float:left;
+	margin:0;
+	overflow:hidden;
+	background-color:#fff;
+	height:698px;
+}
+
+#bottomRight {
+	width:50%;
+	float:right;
+	background-color:#f47322;
+	height:698px;
+	color:#fff;
+	margin:0;
+	overflow:hidden;
+}
+
+#bottomRight h3 {
+	margin:90px 0 0 96px;
+}
+
+#bottomRight ul {
+	margin:55px 0 0 96px;
+	font-size:23px;
+}
+
+#bottomRight ul li {
+	line-height:28px;
+	padding:0 80px 30px 55px;
+	background-image:url(../images/icon-check.png);
+	background-repeat:no-repeat;
+	background-position:0 2px;
+	margin:0;
+}
+
+#bottomRight a {
+	font-weight:400;
+	border-radius:7px;
+	text-transform:uppercase;
+	background-color:#37ace2;
+	margin-left:96px;
+	font-family:yaveomedium;
+	padding:25px 40px;
+	color:#fff;
+	text-decoration:none;
+	font-size:27px;
+	line-height:1;
+	margin-top:30px;
+	display:inline-block;
+}
+
+#share {
+	color:#fff;
+	text-align:center;
+	font-size:31px;
+	background-color:#37ace2;
+	font-family:'yaveobold';
+	display:block;
+	width:100%;
+	clear:both;
+	padding:38px 0;
+	line-height:auto;
+}
+
+#share a {
+	display:inline-block!important;
+}
+
+.facebook {
+	background-image:url(../images/facebook.png);
+	background-repeat:no-repeat;
+	width:20px;
+	height:40px;
+	text-indent:-999999px;
+	margin:0 20px;
+}
+
+.twitter {
+	background-image:url(../images/twitter.png);
+	background-repeat:no-repeat;
+	width:50px;
+	height:40px;
+	text-indent:-999999px;
+	margin:0 20px;
+}
+
+.instagram {
+	background-image:url(../images/instagram.png);
+	background-repeat:no-repeat;
+	width:43px;
+	height:40px;
+	text-indent:-999999px;
+	margin:0 20px;
+}
+
+.followus {
+	background-image:url(../images/FollowUs.png);
+	background-repeat:no-repeat;
+	width:139px;
+	height:40px;
+	display:inline-block;
+	text-indent:-999999px;
+	margin:0 20px;
+	background-position-y:8px;
+}
+
+#credits {
+	font-family:yaveolight;
+	text-align:center;
+	padding:60px 0 44px;
+	font-size:15px;
+	color:#666;
+}
+
+#credits span {
+	color:#39c;
+}
+
+#credits a {
+	text-decoration:none;
+	color:#666;
+}
+
+#credits a:hover {
+	text-decoration:underline;
+}
+
+#footer p {
+	background-color:#ebebeb;
+	padding:60px 285px 90px;
+	font-size:11px;
+	font-family:MyriadPro-Regular,'Myriad Pro Regular',MyriadPro,'Myriad Pro',Helvetica,Arial,sans-serif;
+	line-height:21px;
+	color:#999;
+}
+
+.clrFloats {
+	clear:both;
+	height:1px;
+}
+
+#videoBox {
+	position:relative;
+	height:790px;
+	width:1400px;
+}
+
+#videoTrigger {
+	position:absolute;
+	z-index:10000;
+	cursor:pointer;
+}

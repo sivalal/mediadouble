@@ -1,0 +1,291 @@
+<style type="text/css">
+.movieDropdownListHolder { position:relative; margin:0 auto; padding:0; padding: 15px 0px; max-height: 280px; }
+.swiper-container {
+      width: 100%;
+      height: 0;
+      padding-bottom: 38%;
+      margin-top: 60px;
+    }
+    .swiper-slide {
+        font-size: 18px;
+        color:#fff;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        padding:0px;
+    }
+    .parallax-bg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        /*-webkit-background-size: cover;
+        background-size: cover;
+        background-position: center;*/
+    }
+</style>
+
+<script type="text/javascript">
+
+  jQuery(document).ready(function ($) {
+    "use strict";
+    $('#movie-genre-list').perfectScrollbar();
+    // $('#movie-filter-list').perfectScrollbar();
+
+    // get the video
+    window.addEventListener('touchstart', function videoStart() {
+      var videoObj = document.querySelector("#sizzle-video .video");
+      if(!!videoObj) videoObj.play();
+      this.removeEventListener('touchstart', videoStart);
+    });
+  });
+</script>
+
+
+<!-- Member Only Section : Start -->
+<div ng-if="!hasMasthead" ng-class="!hasMasthead ? 'drag-sixty-pixel':''"></div>
+<a name="customPageTop"></a>
+<div ng-if="isLoggedIn && subscriptionStatus">
+  <div class="row" ng-show="TopNAVmenu" id="secondaryTopMenu">
+    <div class="navbar-fixed-top movie_list " ng-style="navmenuStyle" ng-show="pageTitle[CurrentLang] !=''">
+      <div ng-class=" (userid) ? 'topMenuContainerLogin' : ''" class="secondaryTopMenuContainer">
+        <!-- <div class="showTvContainer" >
+          <h4 class="showTvText visible-xs" style="text-align:center;" >{{pageTitle[CurrentLang]}}</h4>
+        </div> -->
+        <div class="alignLeft parent secondaryTopCont">
+          <!--Bar Header For Des/Tab-->
+          <div class="alignLeft pageTitle" >
+                <!--translate="TXT_MOVIES"-->
+            <span >{{pageTitle[CurrentLang]}}</span>
+          </div>
+            <!--Bar Header For Des/Tab-->
+          <!--Genre-->
+          <div  class="dropdown alignLeft" id="genreLi" show-hide-gener ng-show="showGenre" ng-if="genre[CurrentLang]['count'] > 1">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" class="nav">{{selectedGenre|translate}}</a>
+            <!--Large genre menu-->
+            <ul  style="width:{{genreWidth}}px" class="dropdown-menu dropdown-menu_left genre" id="drop-gener" >
+              <li ng-repeat="item in genre[CurrentLang]  track by $index">
+                <a ng-href="/filter?genresourceid={{pagename}}&pagetype=genre&source={{source}}&group={{item.short_label}}"
+                   ng-click="setGenre(item)" class="droplink" onclick="scrolltotop()" >
+                    {{item.label[CurrentLang]}}
+                </a>
+              </li>
+              <div class="season_select_list_top"></div>
+            </ul>
+          </div>
+          <!--Genre ends here-->
+        </div>
+
+        <ul class="display:none;">
+          <li class="dropdown" id="filterLi" ng-show="showRegionfilter">
+            <a data-toggle="dropdown" class="dropdown-toggle" translate="TXT_FILTER_SUBSCRIBER">
+              <span class="caret">
+              </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-top dropdown-menu_right filter">
+              <li class="filter_head">
+                <span class="col-md-8 droprightheader"  translate="TXT_QUALITY_SUBSCRIBER"></span>
+                <div class="col-md-4 droprightheader alignright">
+                    <div ng-class="{uimageCheckboxChecked:item.isFilterSelected,imageCheckbox:!item.isFilterSelected}" ng-repeat="item in QualityFilters">
+                       <label>
+                        <input type="checkbox" ng-model="item.isFilterSelected" ng-click="QualityFilterUpdated(item.key,$event)" />
+                        <span>{{item.title[CurrentLang]}}</span>
+                      </label>
+                    </div>
+                </div>
+                </br>
+               </li>
+               <li>
+                <!-- Content container to add padding -->
+               <div id="movie-filter-list" class="movieDropdownListHolder hor_line">
+                    <h6 translate="TXT_REGIONS_SUBSCRIBER"></h6>
+                  <div class="dropdownfonts" >
+                    <ul class="list-unstyled col-md-4 col-sm-4 col-xs-4" ng-repeat="column in RegionFilters">
+                      <li ng-repeat="item in column" style="margin-left:10px;">
+                          <div ng-class="{uimageCheckboxChecked:item.isFilterSelected,imageCheckbox:!item.isFilterSelected}" >
+                              <label  style="position: relative;top: 0px; line-height:14px;">
+                                  <input class="alignLeft" style="margin-top:0;" type="checkbox" ng-model="item.isFilterSelected" ng-click="RegionFilterUpdated(item.key,$event)"/>
+                                  <span class="alignLeft">{{item.title[CurrentLang]}}</span>
+                              </label>
+                          </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <div class="season_select_list_top"></div>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- end of top nav menu -->
+  <div ng-show="slides.length!=0" ng-class=" (userid) ? 'indicatorLogin' : ''" id="showcaseID" class="showCaseBannerHome main_slider">
+     <!-- //removed old carousel -->
+      <!-- New carousel Swiper -->
+
+      <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" ng-repeat="slide in slides" active="slide.active" on-finish-slider-filters="ngEnd">
+          <a ng-if="slide.query=='banner' && slide.cta=='True'" ng-href="{{slide.actionid}}">
+            <img  class="parallax-bg bannerHomeImg" ng-src="{{addbaseAndImg(slide.ShowcaseNewbase,appgridAssets[slide.mastheadImage[CurrentLang]])}}" data-swiper-parallax="0%">
+          </a>
+          <img  ng-if="slide.query=='banner' && slide.cta=='False'" class="parallax-bg bannerHomeImg" ng-src="{{addbaseAndImg(slide.ShowcaseNewbase,appgridAssets[slide.mastheadImage[CurrentLang]])}}" data-swiper-parallax="0%">
+          <div class="parallax-bg-overlay" ng-if="slide.query!='banner' && slide.title[CurrentLang]!='null' && slide.title[CurrentLang]!='NULL'"></div>
+          <a ng-class="{'bannerCkArea':CheckBannerStatus(slide)}" class="calltoaction" ng-href="{{callToAction(slide,'page')}}" ng-click="callToAction(slide,'modal')">
+            <div ng-if="slide.query=='banner'" ng-init="bannermstHeadImg = isUndefinedOrNull(slide.mastheadImage)" >
+
+              <div class="carousel-caption center-banner-text" data-swiper-parallax="-200">
+
+                  <h1 class="bannerTextCaption" ng-if="slide.title[CurrentLang]!='null' && slide.title[CurrentLang]!='NULL'" >{{slide.title[CurrentLang]}}</h1>
+              </div>
+            </div>
+
+            <div ng-if="slide.query!='banner'"
+                 ng-init="mstHeadImg = isUndefinedOrNull(slide.mastheadImage)">
+              <img ng-if="!mstHeadImg" ng-src="{{addbaseAndImg(slide.ShowcaseNewbase,slide.mastheadImage)}}" style="margin:auto;">
+              <div class="carousel-caption" data-swiper-parallax="-200">
+                <div class="alignVert">
+                  <a class="playBtnBlue" ng-show="slide.hideUpgradeButton"
+                  ng-href="{{getSingleAssetBaseUrl(slide.TitleTypeId)}}?titleId={{slide.titleId}}"
+                   ng-if="slide.TitleTypeId !=2 && slide.TitleTypeId!= 'undefined'"></a>
+
+                    <h2 class="bannerTextCaption">{{slide.title[CurrentLang]}}</h2>
+
+                  <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p> -->
+                  <p class="parablue">{{slide.Year}} | {{slide.genres}}</p>
+                  <a class="btn btnOrange"
+                    ng-show="slide.hideUpgradeButton"
+                    ng-if="slide.TitleTypeId ==2 && slide.TitleTypeId!= 'undefined'"
+                    ng-href="{{getSingleAssetBaseUrl(slide.TitleTypeId)}}?titleId={{slide.titleId}}" translate="BTN_HOME_VIEW_EPISODES"></a>
+
+                  <a class="btn btnOrange"
+                    ng-hide="slide.hideUpgradeButton"
+                    ng-if="!slide.hideUpgradeButton"
+                    ng-click="RedirectAndSetReturnUrlInCookie(slide,slide.UpgradeButtonLink)"
+                    translate="TXT_UPGRADE_TO_WATCH"></a>
+                  <!-- <div class="buttons" >
+                      <a href="{{getSingleAssetBaseUrl(slide.TitleTypeId)}}?titleId={{slide.titleId}}" class=" btn tvWatchNowBtn">
+                        <span translate="BTN_WATCH_NOW_LIVE"></span>
+                        <span class="glyphicon glyphicon-play"></span>
+                      </a>
+                      <div ng-if="showWatchlistButton && slide.show_type!='series'">
+                        <a href="" class="tvWatchlistBtn plus-icon" ng-hide="checkTitleIDExistInGlobalWatchlistIds(slide.titleId)" style="padding: 0px;" ng-click="addWatchList(slide.titleId, 'SLP')">
+                          <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                        <a href="" class="tvWatchlistBtn plus-icon" ng-show="checkTitleIDExistInGlobalWatchlistIds(slide.titleId)" style="padding: 0px;" ng-click="openDeleteWatchlistDialog(null,slide.titleId, null)">
+                          <span class="glyphicon glyphicon-minus"></span>
+                        </a>
+                      </div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="swiper-pagination swiper-pagination-white"></div>
+
+      </div>
+
+       <!-- New carousel Swiper ends  -->
+
+      <button ng-if="isLoggedIn && (subscriptionStatus==false)" class="btnOrange btn-custom-orange finishSignupBtn" ng-click="cartAbandonmentFlow()" translate="BTN_HOME_FINISH_SIGNUP"></button>
+  </div>
+</div>
+<!-- Member Only Section : End -->
+<!-- Visitor Only Section : Start -->
+
+<div ng-show="!subscriptionStatus || (!isLoggedIn && hasMasthead)" class="parent visitorMainContainer">
+  <!-- Sizzle Video -->
+  <div class="videoBox">
+    <!-- Sizzle Video -->
+    <div ng-show="videoMasthead">
+      <div id="sizzle-video"></div>
+    </div>
+    <!-- Banner Mastheads -->
+    <div ng-if="!videoMasthead">
+      <img class="bannerHomeImg" ng-src="{{addbaseAndImg(videoBanner.ShowcaseNewbase,appgridAssets[videoBanner.mastheadImage[CurrentLang]])}}" style="margin:auto; top:0;">
+    </div>
+    <!--/ Banner Mastheads -->
+    <div  class="fullWidth" id="popUpPlayBtnMob" ng-if="videoMasthead">
+      <a href="#" class="playVideoBtnMobile" ng-click="playSizzleVideo(false)"><span translate="PLAY_VIDEO_LABEL"></span></a>
+    </div>
+    <a href="#watch" id="scrollAnchor" class="scrollToBottom"></a>
+  </div>
+  <!--/ Sizzle Video -->
+  <!-- Sizzle Video Overlay Content-->
+  <div class="sizzle-video-overlay">
+    <div id="sizzle-message">
+      <div class="row videoOverCont">
+        <div class="sizzleLogo" ng-if="videoMasthead">
+          <img ng-src="{{logoweb}}" ng-show="showlogo" />
+        </div>
+        <div  class="col-md-12 col-sm-12col-xs-12 no-padding sizzleTitle">
+          <h3 ng-if="videoMasthead">{{videoBanner.title[CurrentLang]}}</h3>
+        </div>
+        <div  class="col-md-12 col-sm-12col-xs-12 no-padding sizzleTitleImg">
+          <h1 ng-if="!videoMasthead">{{videoBanner.title[CurrentLang]}}</h1>
+          <h5 ng-if="!videoMasthead">{{videoBanner.small_title_text[CurrentLang]}}</h5>
+        </div>
+        <div ng-if="!isLoggedIn" ng-include="'/views/home/emailVerification.html'" ></div>
+        <button  ng-if="isLoggedIn && (subscriptionStatus==false)" class="btnOrange btn-custom-orange finishSignupBtn" ng-click="cartAbandonmentFlow()" translate="BTN_HOME_FINISH_SIGNUP"></button>
+        <div  class="fullWidth" id="popUpPlayBtn" ng-if="videoMasthead">
+          <a href="#" class="playVideoBtn" ng-click="playSizzleVideo(false)"><span translate="PLAY_VIDEO_LABEL"></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Sizzle Video Overlay Content-->
+  <div id="sizzle-video-popup-overlay" class="sizzle-video-overlay">
+    <div id="sizzle-video-popup">
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12 sizzle-video-popup-bottom">
+      <div class="col-md-8 col-sm-12 col-xs-12 sizzle-video-popup-form center-block">
+        <div  ng-if="!isLoggedIn" ng-include="'/views/home/emailVerification.html'" >
+        </div>
+       <button  ng-if="isLoggedIn && (subscriptionStatus==false)" class="btnOrange btn-custom-orange finishSignupBtn" ng-click="cartAbandonmentFlow()" translate="BTN_HOME_FINISH_SIGNUP"></button>
+      </div>
+    </div>
+
+    <div class="AssetDetailShare videoAssetDetailShare alignRight"
+          ng-show="enableTwitterSharing || enableFacebookSharing" >
+       <a ng-show="enableTwitterSharing" class="twitterShare" twitter  data-url='{{socialShareUrl}}' data-text='{{pageTitle[CurrentLang]}}' data-size="medium"  ></a>
+       <div facebook class="facebookShare" ng-show="enableFacebookSharing" data-title='{{pageTitle[CurrentLang]}}' data-url='{{socialShareUrl}}' data-shares='shares'>{{ shares }}</div>
+     </div>
+
+    <!-- <div class="videoAssetDetailShare">
+      <div id="shareButtons"></div>
+    </div> -->
+
+
+    <div class="sizzle-video-close" onclick="NewclosePopUpVideoPlayer()"></div>
+  </div>
+  <div id="watch" class="marginBottom"></div>
+</div>
+<!-- Common Rails -->
+<div ng-class="{visitorRails:!isLoggedIn || (subscriptionStatus!=true)}" class="commonRails fullWidth">
+  <div ng-include="'/views/railtemplate_page.html'" ></div>
+</div>
+<!--/ Common Rails -->
+
+
+<!-- Visitor Bottom Contents -->
+<div class="visitorHomeBottom fullWidth">
+  <div ng-include="'/views/custom_section_template.html'" ></div>
+  <div class="clear"></div>
+  <a ng-show="copyRight && !isLoggedIn" href="#customPageTop" class="scrollToTop"></a>
+   <div ng-show="!subscriptionStatus || !isLoggedIn" ng-bind-html="footerDisclaimerTxt[CurrentLang]" class="disclaimerTxt">
+  </div>
+  <div class="clear"></div>
+</div>
+<!--/ Visitor Bottom Contents -->
+
+<!-- Visitor Only Section : End -->
+<style>
+  body{
+    overflow-x:hidden;
+  }
+</style>

@@ -1,0 +1,662 @@
+@import 'index';
+.st-site{
+  height: 100%;
+}
+
+.st-nav{
+  -webkit-transition: right 0.2s cubic-bezier(0.2,0.3,0.25,0.9);
+  -moz-transition: right 0.2s cubic-bezier(0.2,0.3,0.25,0.9);
+  -o-transition: right 0.2s cubic-bezier(0.2,0.3,0.25,0.9);
+  transition: right 0.2s cubic-bezier(0.2,0.3,0.25,0.9);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: -700px;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 700px;
+  z-index: 4000;
+  background-color: #294861;
+  background-color: rgba(47, 80, 107, 0.98);
+}
+
+.st-content{
+  overflow: hidden;
+  -webkit-transition: -webkit-transform 0.2s cubic-bezier(0.2,0.3,0.25,0.9);
+    -moz-transition: -moz-transform 0.2s cubic-bezier(0.2,0.3,0.25,0.9);
+    -o-transition: -o-transform 0.2s cubic-bezier(0.2,0.3,0.25,0.9);
+    transition: transform 0.2s cubic-bezier(0.2,0.3,0.25,0.9);
+}
+
+.st-content-overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.99;
+  visibility: hidden;
+}
+
+.st-drawer-open .st-content-overlay{
+  visibility: visible;
+  z-index: 3500;
+}
+
+
+/* Open */
+
+.st-drawer-open .st-nav{
+  right: 0px;
+}
+
+/*.st-drawer-open .st-content{
+  -webkit-transform: translate3d(-250px,0,0);
+    -moz-transform: translate3d(-250px,0,0);
+    -o-transform: translate3d(-250px,0,0);
+    transform: translate3d(-250px,0,0);
+}*/
+
+$adminHeaderColor:#91A3B0;
+.st-vertical-menu-container {
+  background-color: #294861;
+  background-color: rgba(41, 72, 97, 0.9);
+  width:30%;
+  float: left;
+  padding-top: 10px;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  bottom: 0;
+}
+.st-vertical-menu-section {
+  height:30px; 
+  margin-top:10px;
+  cursor: pointer;
+  margin-left: 22px;
+  font-family: 'DINWebPro-Medium';
+  font-size: 15px;
+  a {
+    text-decoration:none;
+    color: white;
+    @include transColor;
+    &:hover{
+      color: $color-orange1; 
+    } 
+    &:focus{
+      color: $color-orange1;      
+    }
+  }
+}
+.st-vertical-content-section {
+  width:70%;
+  float: left;
+  font-family: 'DINWebPro-Medium';
+  position: absolute;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  .contentHolderSearch{ 
+    position:absolute; 
+    margin:0 auto; 
+    padding:0; 
+    top: 0;;
+    left: 0;
+    right: 0;
+    bottom:0;
+    overflow: hidden;
+  }
+  .listProgressbarContainer {
+    height: 12px;
+    background-color: $color-progressStParent;
+  }
+  .listProgressbar{
+    background-color:  $color-progressStChild;
+  }
+  a{
+    cursor: pointer;
+  }
+  .btn, .btn-custom-green, .btn-custom-orange{
+    @include roundCornerS;
+    text-transform: uppercase;
+  }
+  .btn-custom-orange{
+    margin-left: 0 !important;
+  }
+  .btn-edit{
+    margin-bottom: 5px;
+  }
+
+}
+.st-nav-adminHeader{
+  font-size: 21px;
+  color: $color-lightGrey;
+  margin-top: 5px;
+}
+h6.st-nav-adminHeader{
+    font-size: 15px;
+    line-height: 35px;
+  }
+.st-nav-acc-container{
+  padding-top:30px;
+  padding-bottom: 30px;
+}
+.st-nav-episode-list{
+  h5{
+    color: $color-lightGrey;
+    margin-bottom: 0;
+  }
+  .episodeThumbnail{
+    float: left;
+    img{
+      margin-right:10px;
+      width: 138px;
+    }
+  }
+  .episodeListTitle{
+    width:40%; 
+    float: left;
+    display:inline-block; 
+    height:50px;
+  }
+  .SeasonPlayList{
+    .trash-icon{
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin: 0;
+      width: 25px;
+      height: 25px;
+      background-size: 100%;
+    }
+    .border-top-width-1 {
+      border-top: 1px solid rgba(38, 55, 61, 0.31);
+    }
+  }
+}
+.memberAvatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 5px solid #dfe4e8;
+  overflow: hidden;
+  img{
+    min-height: 86px;
+  }
+}
+.AcMemberName{
+  font-size: 1.1em;
+  text-transform: capitalize;
+}
+.nav.st-nav{
+  -moz-box-shadow: inset 0 0 20px #888;
+  -webkit-box-shadow: inset 0 0 20px #888;
+  box-shadow: inset 0 0 20px #888;
+  background-color: #fff;
+  color: white;
+}
+
+/*Admin Account Page*/
+.st-nav-acc-btn{
+    font-size: 12px;
+    padding: 7px 18px;
+    margin: 10px auto;
+}
+.st-nav-acc-btnEdit{
+    @extend .st-nav-acc-btn;
+        padding: 8px 40px 8px 40px;
+ }
+.st-nav-acc-package{
+    color: #fff;
+    padding: 2.5% 3%;
+    min-height: 127px;
+    background-color: #dadfe2 !important;
+    h2{
+      font-size: 32px;
+      margin-bottom: 5px;
+      font-family: 'DINWebPro-Medium';
+      color: #3c5e6c;
+    }
+    h5{
+      font-size: 20px;
+      font-family: 'DINWebPro-Medium';
+      color: #3c5e6c;
+    }  
+}
+.gold-package {
+  background-color: $color-skyblue;
+}
+.silver-package {
+  background-color: $color-turkoise;
+}
+.st-nav-acc-monthlysub{
+    background-color: #CBD2D8;
+    margin-bottom: 22px;
+    h6{
+      font-size: 12px;
+      line-height: initial;
+      margin: 10px 0px;
+      text-transform: uppercase;
+      color: #333;
+    }
+}
+.st-nav-acc-newslogincredns{
+    color: #9FAFBA;
+    font-size: 18px; 
+}
+.st-nav-acc-btnCancel{
+    @extend .st-nav-acc-btn;
+    margin-top: 35px !important;
+}
+
+.acc-login-icon{
+    display: inline-block;
+    width: 55px;
+    height: 34px;
+    line-height: 14px;
+    vertical-align: text-top; 
+}
+.admin-acc-icon-facebook-round{
+    @extend .acc-login-icon;
+    background: image-url("icon/acc-facebook2.png") no-repeat 0 center;
+}
+.admin-acc-icon-facebook-round-active{
+    @extend .admin-acc-icon-facebook-round;
+    background: image-url("icon/acc-facebook.png") no-repeat 0 center;
+}
+.admin-acc-icon-twitter-round{
+     @extend .acc-login-icon;
+    background: image-url("icon/acc-twitter2.png") no-repeat 0 center;
+}
+.admin-acc-icon-twitter-round-active{
+     @extend .admin-acc-icon-twitter-round;
+     background: image-url("icon/acc-twitter.png") no-repeat 0 center;
+}
+.acc-lang-icon{
+    display: inline-block;
+    width: 89px;
+    height: 34px;
+    line-height: 14px;
+    vertical-align: text-top;
+}
+.admin-acc-icon-langEng{
+    @extend .acc-lang-icon;
+    background: image-url("icon/acc-eng.png") no-repeat 0 center;
+    float: left;
+}
+button.admin-acc-icon-langEng[disabled]{
+  opacity: 1;
+}
+button.admin-acc-icon-langSpan[disabled]{
+  opacity: 1;
+}
+.admin-acc-icon-langEng-active{
+   @extend .admin-acc-icon-langEng;
+   background: image-url("icon/acc-eng-active.png") no-repeat 0 center;
+    float: left;
+}
+.admin-acc-icon-langSpan{
+   @extend .acc-lang-icon; 
+   background: image-url("icon/acc-span.png") no-repeat 0 center;
+    float: left;
+}
+.admin-acc-icon-langSpan-active{
+   @extend .admin-acc-icon-langSpan;
+   background: image-url("icon/acc-span-active.png") no-repeat 0 center;
+    float: left;
+}
+
+
+#newsletter input[type="checkbox"] {
+  display: none;
+}
+#newsletter span {
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  margin: -1px 4px 0 0;
+  vertical-align: middle;
+  background: image-url("icon/check_box_1.png") left top no-repeat;
+  cursor: pointer;
+}
+
+#newsletter input[type="checkbox"]:checked+span {
+  background: image-url("icon/check_box_2.png") left top no-repeat;
+}
+
+/*Billing History*/
+
+.billingHeaderNav{
+  background-color: #233C51;
+  background-color: rgba(19, 44, 61, 0.49);
+  padding: 1%;
+  .icon-custom-back{
+    position: absolute;
+  }
+}
+.billingFont{
+  color: $adminHeaderColor;
+  font-size: 1.2em;
+  font-family: 'DINWebPro-Medium';
+}
+h4.billingFont{
+  font-size: 24px;
+  line-height: 34px;
+  color: $color-lightGrey;
+}
+.billing-back{
+  color:#47B6B3;
+  font-size: 0.8em;
+  font-family: 'DINWebPro-Medium';
+  float: left;
+  padding-top: 12px;
+  cursor: pointer;
+}
+.billing-back:hover{
+  color:#47B6B3; 
+  text-decoration: none;
+}
+.billingDate{
+  @extend .st-nav-acc-package;
+  height:133px;
+  border-left: 1px solid #fff;
+  h4{
+    padding: 10%;
+  }
+}
+.billingDatePicker{
+  position: relative;
+  label{
+    color: #CACACA;
+    font-size: 16px;
+    line-height: 36px;
+    float: left;
+    margin-right: 10px;
+  }
+  input.form-control{
+    width: 140px;
+    background: #FFF;
+    border: 0;
+    height: 30px;
+    color: #747474;
+    text-align: right;
+    border-radius: 2px;
+  }
+  .calenderIcon{
+    width: 18px;
+    height: 18px;
+    background: url('/images/icon/calender_icon.png') no-repeat center !important;
+    @include verticalAlign;
+    right: auto;
+    left: 7px;
+    z-index: 1;
+  }
+}
+#billtab tr th{
+  text-align: center;
+  color: #747474;
+  background: #FFF;
+  padding: 20px 8px;
+}
+#billtab tr td{
+  text-align: center;
+  color: #747474;
+  background: #FFF;
+  padding: 20px 8px;
+}
+.adminSidebarTop{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 60px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  a{
+    float: left;
+    padding: 8px 8px 8px 20px;
+  }
+}
+.watchlistList{
+  position: relative;
+  float: left;
+  width: 100%;
+  padding: 15px 0px;
+  border-bottom: 1px solid #197a9c;
+  .glyphicon-chevron-right{
+    float: right;
+    margin-top: 20px;
+    padding: 10px;
+    color: #FFF;
+    font-size: 16px;
+    font-family: 'Glyphicons Halflings' !important;
+    background: none;
+  }
+  .watchlistThumb{
+    margin-left:10px; 
+    margin-right:15px;
+    width: 138px;
+    border-bottom: 1px solid rgba(38,55,61,.31);
+    img{
+      width: 100%;
+    }
+  }
+  .billing-background-overlay{
+    opacity: .5;
+  }
+  .watchlistTitles{
+    width:30%; 
+    display:inline-block; 
+    /*height:50px;*/
+
+    float: left;
+  }
+  .expired{
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #ECD6D6;
+    background-color: #CA5454;
+    border-bottom: 1px solid #763131;
+    padding: 1px 4px;
+    padding-top: 3px;
+    border-radius: 2px;
+  }
+  .trash-icon{
+    position: absolute;
+    float: right;
+    right: 0;
+    top: 15px;
+    width: 25px;
+    height: 25px;
+    background-size: 100%;
+  }
+  .border-top-width-1 {
+    border-top: 1px solid rgba(38, 55, 61, 0.31);
+  }
+}
+.group-structure{
+  background-color: rgba(18, 41, 60, 0.45);
+  padding: 10px 0px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #197a9c;
+  .watchlistThumb{
+    position: relative;
+    &:before{
+      content: '';
+      background: image-url("group_indicator.png") right bottom no-repeat;
+      position: absolute;
+      right: -8px;
+      bottom: -8px;
+      left: 0;
+      top: 0;
+      z-index: 1;
+    }
+  }
+}
+.admin-watchlistTop{
+  li.selected{
+    a{
+      color: $color-turkoise;
+    }
+  }
+}
+.confirmLinking{
+  padding: 15px;
+  margin-top: 15px;
+  background-color: #1C3751;
+  background-color: rgba(16, 38, 56, 0.76);
+  box-shadow: 0 3px 0 rgba(12, 29, 42, 0.85);
+  position: relative;
+  button{
+    margin: 0;
+  }
+  h5{
+    font-size: 17px;
+  }
+  span.topArrow{
+    position: absolute;
+    top: -10px;
+    left: 18px;
+    display: inline-block;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid rgba(16, 38, 56, 0.76);
+    border-left: 10px solid transparent;
+    content: '';
+  }
+  .leftWidth{
+      left: 75px !important;
+  }
+}
+@media (min-width: 1600px){
+    .st-site{
+        width:1600px;
+        margin: auto;
+        background: image-url("popup_bg.png");
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.27);
+        -webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.27);
+      .header, .secondaryTopMenuContainer, .secondarySmallContainer{
+        max-width: 1600px;
+        margin-left: auto;
+        margin-right: auto;
+        right:0;
+        left:0;
+      }
+    }
+}
+.socialForm{
+  background-color: #ccc;
+  padding-top: 10px;
+}
+.ps-scrollbar-y-rail{
+  position: absolute;
+  right: 0px;
+  width: 9px;
+  transition: background-color 0.2s linear;
+  -webkit-transition: background-color 0.2s linear;
+}
+.ps-scrollbar-y{
+  width: 6px;
+  position: absolute;
+  right: 3px;
+  transition: background-color 0.2s linear;
+  -webkit-transition: background-color 0.2s linear;
+  background-color: rgb(170, 170, 170);
+  border-radius:3px;
+}
+.st-vertical-menu-container .selected-index:before{
+  margin-left: 25.5% !important;
+}
+
+.st-vertical-content-section{
+  .stateSelect{
+    padding-right: 1%;
+  }
+  .btn-custom-cancel, .btn-custom-orange{
+    min-width: 100px;
+  }
+  .icon-paypal {
+    height: 33px;
+    width: 49px;
+    display: block;
+    float: left;
+    }
+    .creditBilling{
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 3px;
+      span{
+        background-size: initial;
+        background-position: right;
+      }
+    }
+    .paypalContent{
+      float: left;
+      width: 100%;
+      button{
+        padding: 20px;
+        width: 60%;
+        display: block;
+        margin:10px auto; 
+        text-align: center;
+      }
+    }
+    .payMethodHead{
+      input[type=radio]{
+        margin-top: 10px;
+      }
+    }
+    .creditBottomRow{
+      .text-normal{
+        margin-top: 10px;
+        color: #FFF;
+      }
+      select, .form-control{
+        padding-left: 3px;
+        font-size: 14px;
+      }
+      .form-control{
+        padding-right: 3px;
+      }
+      .icon-info {
+        position: absolute;
+        right: -42px;
+        top: 2px;
+      }
+    }
+}
+#paymentAdminForm .ng-invalid-card, #paymentAdminForm .ng-invalid-cvc, #paymentAdminForm .ng-invalid-pattern, #paymentAdminForm .ng-invalid-year, #paymentAdminForm .ng-invalid-month, #paymentAdminForm .ng-invalid-type {
+  border: 1px solid #c0362c;
+  background: #FFCCC8;
+}
+#paymentAdminForm select.ng-invalid-card, #paymentAdminForm select.ng-invalid-cvc, #paymentAdminForm select.ng-invalid-pattern, #paymentAdminForm select.ng-invalid-year, #paymentAdminForm select.ng-invalid-month, #paymentAdminForm select.ng-invalid-type {
+  border: 1px solid #c0362c;
+  background: #FFCCC8 url("/images/icon/arrow_down.png") no-repeat 100% 50%;
+}
+.cancelAcntDialogue{
+  .popupMsg{
+    margin-top: 0;
+    width: 100%;
+    .popupLogo{
+      margin-top: 7%;
+    }
+    .cancelDialogue{
+      width: 400px;
+      margin-top: 100px;
+      .errorMsg{
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+@media (max-width: 480px){
+  .cancelAcntDialogue{
+    .popupMsg{
+      .cancelDialogue{
+        width: 95%;
+      }
+    }
+  }
+}

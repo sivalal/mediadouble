@@ -1,0 +1,88 @@
+<?php ob_start(); ?>
+<head>
+  <title><?php print $this->data['title'] ?></title>
+
+  <?php
+
+    // General Meta Tags
+    $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
+                     ->appendHttpEquiv('Content-Language', $this->data['language']);
+
+    // Facebook Meta Tags
+    $this->headMeta()->setProperty('og:site_name', 'Yaveo by DirecTV');
+    $this->headMeta()->setProperty('og:url', $this->data['url']);
+    $this->headMeta()->setProperty('og:type', 'video.'.$this->data['show_type']);
+    $this->headMeta()->setProperty('og:title', $this->data['title']);
+    $this->headMeta()->setProperty('og:description', $this->data['description']);
+    $this->headMeta()->setProperty('og:image', $this->data['image']);
+
+    // Twitter Meta Tags
+    $this->headMeta()->setProperty('twitter:card', 'summary_large_image');
+    $this->headMeta()->setProperty('twitter:site', '@yaveo');
+    $this->headMeta()->setProperty('twitter:title', $this->data['title']);
+    $this->headMeta()->setProperty('twitter:description', $this->data['description']);
+    $this->headMeta()->setProperty('twitter:image', $this->data['image']);
+    // Twitter Meta Tags for Mobile App
+    $this->headMeta()->setProperty('twitter:app:country', 'US');
+    // iPhone
+    $this->headMeta()->setProperty('twitter:app:name:iphone', $this->data['mobile_app_config']['ios_app_name']);
+    $this->headMeta()->setProperty('twitter:app:id:iphone', $this->data['mobile_app_config']['ios_app_id']);
+    $this->headMeta()->setProperty('twitter:app:url:iphone', $this->data['mobile_url']);
+    // iPad
+    $this->headMeta()->setProperty('twitter:app:name:ipad', $this->data['mobile_app_config']['ios_app_name']);
+    $this->headMeta()->setProperty('twitter:app:id:ipad', $this->data['mobile_app_config']['ios_app_id']);
+    $this->headMeta()->setProperty('twitter:app:url:ipad', $this->data['mobile_url']);
+    // Android
+    $this->headMeta()->setProperty('twitter:app:name:googleplay', $this->data['mobile_app_config']['android_app_name']);
+    $this->headMeta()->setProperty('twitter:app:id:googleplay', $this->data['mobile_app_config']['android_app_id']);
+    $this->headMeta()->setProperty('twitter:app:url:googleplay', $this->data['mobile_url']);
+
+    
+    echo $this->headMeta();
+
+    $mobileDetect = $this->mobileDetect();
+    $isMobile = $mobileDetect->isMobile();
+    if($isMobile) {
+      $platform = $mobileDetect->isAndroidOS() ? 'Android' : 'iOS';
+      $downloadAppText = 'Download Yaveo App';
+      $openAppText = 'Open Yaveo App';
+  ?>
+
+    <script type="text/javascript">
+      window.setTimeout(function(){
+        window.location.href = "<?php echo $this->data['mobile_url']; ?>";
+        // alert("Open App - <?php echo $this->data['mobile_url']; ?>");
+      },1000);
+      window.setTimeout(function(){
+        window.location.href = "<?php echo $platform=='iOS' ? $this->data['mobile_app_config']['ios_app_download'] : $this->data['mobile_app_config']['android_app_download']; ?>";
+        // alert("Download App - <?php echo $this->data['mobile_app_config']['ios_app_download']; ?>");
+      },2000);
+    </script>
+
+  <?php
+    } else { // this is desktop
+  ?>
+
+    <script type="text/javascript">
+      window.setTimeout(function(){
+        window.location.href = "<?php echo $this->data['web_redirect_url']; ?>";
+      },2000);
+    </script>
+
+  <?php
+    }
+  ?>
+</head>
+<body>
+  <?php
+    if($isMobile) {
+      echo '<a href="'.$this->data['mobile_app_config']['ios_app_download'].'">'.$downloadAppText.'</a>';
+      echo ' | ';
+      echo '<a href="'.$this->data['mobile_url'].'">'.$openAppText.'</a>';
+    }
+  ?>
+  <h1><?php echo $this->data['title'] ?></h1>
+  <h2><?php echo $this->data['description'] ?></h2>
+  <div><img src="<?php echo $this->data['thumb'] ?>" /></div>
+</body>
+<?php ob_end_flush(); ?>

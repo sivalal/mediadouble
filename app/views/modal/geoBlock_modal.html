@@ -1,0 +1,62 @@
+<div class="geo-location-modal-body">
+    <div class="container-fluid">
+        <div class="row">
+          <div class="geoSelectLang">
+            <label>Select Language</label>
+            <span>
+              <a href="#" ng-class="(CurrentLang == 'es_ES') ? 'selected-language' : ''" ng-click="ChangeLangSwitch('es_ES')">ES</a> | <a href="#" ng-class="(CurrentLang == 'en_US') ? 'selected-language' : ''" ng-click="ChangeLangSwitch('en_US')">EN</a>
+            </span>
+          </div>
+        </div>
+      <!-- page1 -->
+      <!-- <div class="geo_container center-block">
+          <div class="geo_logo center-block">
+            <img src="{{logoweb}}" class="img-responsive"/>
+          </div>
+          <div class="geo_info_text">
+            <h5>Unfortunately, tuvidi por DIRECTV is only available in the United States.</h5>
+          </div>
+          <div class="cancel_if">
+            Did you move outside of the United States? Cancel your account here.
+          </div>
+      </div> -->
+      <!-- page2 -->
+      <!-- <div class="geo_container center-block">
+          <div class="geo_logo center-block">
+            <img src="{{logoweb}}" class="img-responsive"/>
+          </div>
+          <div class="geo_info_text">
+            <h5>Are you sure you want to cancel your account?</h5>
+          </div>
+          <div class="geo_info_text1">
+            <p>Input your Email Address and Password for your account and select "Cancel Account" to calcel your subscriptionto tuvidi por DIRECTV<sup>TM</sup>.</p>
+          </div>
+          <form class="col-md-8 col-sm-8 col-xs-12 center-block">
+            <div class="form-group">
+              <input class="form-control" type="text" placeholder="Email Address">
+            </div>
+            <div class="form-group">
+              <input class="form-control" type="password" placeholder="Password">
+            </div>
+            <div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+              <a class="alignLeft" href="#">Forgot Password?</a>
+            </div>
+            <div class=" col-md-12 col-sm-12 col-xs-12 no-padding">
+              <button class="btn-custom-grey btn-block fullWidth">Cancel Account</button>
+            </div>
+          </form>
+      </div> -->
+      <!-- page3 -->
+      <div class="geo_container center-block">
+          <div class="geo_logo center-block">
+            <img src="{{logoweb}}" class="img-responsive"/>
+          </div>
+          <div class="geo_info_text">
+            <h5 translate="MSG_GEO_BLOCK_MSG_HEAD">Unfortunately, tuvidi por DIRECTVTM is only available in the United States.</h5>
+          </div>
+          <div class="geo_info_text1">
+              <p>{{'MSG_GEO_BLOCK_MSG_1'|translate}} <a href="" style="text-decoration: underline;">{{'MSG_GEO_BLOCK_MSG_CANCEL'|translate}}</a> {{'MSG_GEO_BLOCK_MSG_2'|translate}}</p>
+          </div>
+      </div>
+    </div>
+  </div>

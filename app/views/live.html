@@ -1,0 +1,181 @@
+
+<style type="text/javascript">
+    @media (max-width: 480px){
+        .signupMessage{
+            height: 400px;
+            width: 100px;
+        }
+    }
+    @media (min-width: 768px){
+        .signupMessage{
+            height: 800px;
+            width: 200px;
+        }
+    } 
+</style>
+<div class="container">
+  <div class="row">
+    <img ng-if="isLoggedIn" id="liveshowEmbedToken" src="{{embededUrl}}"  />
+    <div class="navbar-fixed-top " ng-style="navmenuStyle">
+      <div class="secondarySmallContainer">
+          <!-- <a href="/movieList" class="icon-custom-back" style="text-decoration:none;">BACK TO BROWSING MOVIES</a> -->
+           <a ng-click="backurl()" class="icon-custom-back" translate="NAV_ADMIN_BACK_WATCHLIST"></a>
+      </div> 
+    </div>
+  </div>
+ 
+
+  <div class="row">
+    <div class="tvShowBgBanner col-md-12">
+      <div class="col-md-offset-2 col-md-8 ">
+        <div class="containingBlock">
+            <span ng-show="ajaxLiveloader" us-spinner="{radius:10, width:4, length: 8}"></span>
+            <div  id='liveshow_playerwrapper' class="tvPlayerWrapper"  style='width:0;height:0'>
+            </div>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- new style -->
+<!--    <div class="row singleAssetDetails">
+      <div class="col-md-offset-1 col-md-10">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">     
+            <h2 class="tvShowMetaLabel" >{{movieDetails.lang.titleLong[CurrentLang]}}</h2>
+            <div class="row col-md-6 col-sm-6 col-xs-9 no-padding singleAssetButtons">
+                  <div class="col-md-6 col-sm-6 col-xs-6" >
+                    <a ng-show="isLoggedIn" class="btn tvWatchNowBtn fullWidth" ng-href="{{video_href}}" translate="BTN_WATCH_NOW_LIVE"></a>
+                  
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-6" ng-show="isLoggedIn">        
+                      <button ng-show="showWatchlistBtnBeforeAdd"  class="btn tvWatchlistBtn fullWidth" ng-click="addWatchList(movieDetails.title_id, 'SAP')">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span translate="BTN_ADD_TO_WATCHLIST_LIVE_REMINDERS"></span>
+                      </button>
+                      <button ng-show="showWatchlistBtnAfterAdd"  class="btn tvWatchlistBtn fullWidth" translate="TXT_IN_YOUR_WATCHLLIST"></button>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-6">
+                  </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                  <button ng-show="!isLoggedIn" class="btn tvWatchNowBtn fullWidth" ng-click="" translate="BTN_WATCH_TRAILER"></button>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">        
+                    <button ng-show="!isLoggedIn"  ng-click="signup()" class="btn tvWatchlistBtn fullWidth" translate="TXT_TOP_TOOLBAR_LIVE_SIGNUP_EXISTING_ACCOUNT">
+                    </button>
+                </div>
+             </div> -->
+    <!--          <div class="col-md-6 col-sm-4 AssetShare">
+                <div class="AssetDetailShare">
+                  <h6 class="tvShowMetaLabel" translate="TXT_SHARE_REMINDERS"></h6>
+                  <div id="shareButtons"></div>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-sm-12">
+          <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-12 assetCol1">
+                <h6 class="tvShowMetaLabel">{{movieDetails.genre}}</h6>
+                <div class="tvShowText col-md-margin-bottom-2">{{movieDetails.lang.detailsLong[CurrentLang]}}</div>
+                <h6 ng-show="movieDetails.duration" class="tvShowMetaLabel" >{{movieDetails.duration}} MINS</h6>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-12 assetCol2">
+                <h6 ng-show="movieDetails.releaseDate">
+                  <span class="tvShowMetaLabel alignLeft" translate="TXT_RELEASED_ON"></span>
+                  <span class="alignLeft tvShowText">{{movieDetails.releaseDate}}</span>
+                </h6>
+                <h6 ng-show="movieDetails.rating" class="tvShowMetaLabel">{{movieDetails.rating}}</h6>
+                <h6 ng-show="movieDetails.lang.staring[CurrentLang]">
+                  <span class="tvShowMetaLabel alignLeft" translate="TXT_STARRING"></span>
+                  <span class="alignLeft tvShowText">{{movieDetails.lang.staring[CurrentLang]}}</span>
+                </h6>
+                  <h6 ng-show="movieDetails.lang.director[company]">
+                    <span class="tvShowMetaLabel alignLeft">DIRECTOR</span>
+                    <span class="alignLeft tvShowText">{{movieDetails.lang.director[company]}}</span>
+                  </h6>
+                  <h6 ng-show="movieDetails.lang.company[company]">
+                    <span class="tvShowMetaLabel alignLeft">{{movieDetails.lang.company[company]}}</span>
+                  </h6>
+              </div>
+          </div>
+        </div>
+
+      </div>
+  </div> -->
+  
+
+<!-- <div ng-if="railList!='noRails'">
+  <div ng-repeat="rail in railList" ng-if="rail.usergroup=='all' || (rail.usergroup=='visitor' && accessToken=='') || (rail.usergroup=='subscribed' && accessToken!='')||(rail.usergroup!='visitor' && rail.usergroup!='all' && rail.usergroup!='subscribed')" 
+       on-finish-render-filters> -->
+   <!-- rails -->
+  <!-- <div class="row"> -->
+  <!-- <div class="col-md-12 col-sm-12 col-xs-12" ng-if="rail.query!='promotion'" >
+      <h5 class="railsHeader" style="display:none;"  >
+          
+          <a ng-if="rail.query!='similar' && rail.query!='similar_genre' && rail.query!='appgrid'" href="/filter?pageid={{pagename}}&position={{$index}}">
+              {{rail.title[CurrentLang]}}
+          <span class="railsHeaderArrow" ></span>
+          </a>
+          
+          <a ng-if="rail.query=='similar' || rail.query=='similar_genre' || rail.query=='appgrid'" >
+              {{rail.title[CurrentLang]}}
+          <span class="railsHeaderArrow" ></span>
+          </a>
+
+      </h5>
+      <div id="owl-rails_{{$index}}" class="owl-carousel">
+        
+      </div>
+  </div> -->
+  <!-- Promotion type static -->
+ <!--  <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 no-padding" ng-if="rail.query=='promotion' && rail.promotion.type=='static'">
+      <a ng-if="rail.action=='link'" ng-href="{{rail.actionID}}">             
+      <img ng-src="{{appgridAssets[rail.promotion.banner_asset_id[CurrentLang]]}}" class="fullWidth">
+      </a>
+      <a ng-if="rail.action=='custom'" ng-href="/page?pageid={{rail.actionID}}">
+      <img ng-src="{{appgridAssets[rail.promotion.banner_asset_id[CurrentLang]]}}" class="fullWidth">
+      </a>
+      <a ng-if="rail.action=='page'" ng-href="/{{rail.actionID}}">             
+      <img ng-src="{{appgridAssets[rail.promotion.banner_asset_id[CurrentLang]]}}" class="fullWidth">
+      </a>
+  </div> -->
+  <!-- </div> -->
+  <!-- Promotion type dynamic html -->
+  <!-- <div class="container anyTimeAnyWhere" ng-if="rail.query=='promotion' && rail.promotion.type=='dynamic_html'">
+    <div class="row ">
+      <div class="col-md-12 col-sm-12 col-xs-12 ">
+        <h2 class="text-center">{{rail.promotion.title[CurrentLang]}}</h2>
+      </div>
+     </div> 
+     <div class="row ">
+      <div class="col-md-12 col-sm-12 col-xs-12 packageBottomSpacing">
+        <a ng-if="!rail.promotion.call_to_action.isModal" class="img-responsive text-center glyphicon glyphicon-arrow-right" ng-href="{{rail.promotion.call_to_action.href}}" id="howitworks" target="{{rail.promotion.call_to_action.target}}">
+          <span>{{rail.promotion.call_to_action.title[CurrentLang]}}</span>
+        </a>
+        <a ng-if="rail.promotion.call_to_action.isModal" class="img-responsive text-center glyphicon glyphicon-arrow-right" id="howitworks" ng-click="signupModal(1)">
+          <span>{{rail.promotion.call_to_action.title[CurrentLang]}}</span>
+        </a>
+      </div>
+     </div>
+     <div class="row packageBottomSpacing" ng-if="rail.promotion.assets">
+     <div class="col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
+      <div class="col-md-4 col-sm-12 col-xs-12 col-md-margin-bottom-2" ng-repeat="assest in rail.promotion.assets">
+        <div ng-if="!assest.isModal" class="img-responsive text-center" ng-href="{{assest.href}}" target="{{assest.target}}"> 
+          <img  ng-src="{{assest.imgSrc}}">
+        </div>
+        <div ng-if="assest.isModal" class="img-responsive text-center" ng-click="signupModal(1)"> 
+          <img  ng-src="{{assest.imgSrc}}">
+        </div>
+        <div class="how-it-works-link-container">
+          <a ng-if="!assest.isModal" ng-href="{{assest.href}}" target="{{assest.target}}">{{assest.title[CurrentLang]}}</a>
+          <a ng-if="assest.isModal" ng-click="signupModal(1)">{{assest.title[CurrentLang]}}</a>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div> -->
+<!--  end of rails -->
+  <!-- </div> -->
+</div><!-- ngif end -->

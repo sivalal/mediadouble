@@ -1,0 +1,23 @@
+<div class="modal-content" >
+    <div class="modal-header"></div>
+    <div class="modal-body dialogModalBody ng-scope">
+        <div class="popupMsg center-block" >
+            <div class="popup-body ng-scope">
+                <h6>
+                    <span ng-if="paymentSwitchStatus == 'success'">{{'TEXT_SUCCESS_PAYMENT_SWITCH' | translate}}</span>
+                    <span ng-if="paymentSwitchStatus == 'error'">{{'TEXT_ERROR_PAYMENT_SWITCH' | translate}}</span>
+                </h6>
+            </div>   
+            <div class="popup-footer ng-scope">
+                <div class="buttons center">
+                    <button ng-if="paymentSwitchStatus == 'success'" class="btn btnOrange btnOk" ng-click="cancelAction()" translate="BTN_OK_LIVE"></button>
+                    <button ng-if="paymentSwitchStatus == 'error'" class="btn btnOrange btnOk" ng-click="paymentSwitchErrorAction()" translate="BTN_PROCEED_LIVE"></button>
+                    <button ng-if="paymentSwitchStatus == 'error'" class="btn btnGrey" ng-click="cancelAction()" translate="BTN_CANCEL_LIVE"></button>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>   
+    <div class="modal-footer ng-scope">
+    </div>
+</div>

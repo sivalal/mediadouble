@@ -1,0 +1,471 @@
+@import 'index';
+
+.SearchField{
+	float: left;
+	position: relative;
+	margin-top: 15px;
+	margin-left: 20px;
+	width: 28%;
+	@media(max-width: 1280px){
+		width: 20%;
+	}
+	@media(max-width: 1023px){
+		display:none;
+	}
+	.form-group{
+		margin-bottom: 0;
+		.form-control{
+		    text-overflow: ellipsis;
+			padding: 4px;
+			height: 30px;
+			padding-left: 35px;
+			border: 1px solid #5cc8ff;
+			background-color: #0b84bb;
+			border-radius: 8px;
+			font-family: DINWebPro;
+		  	@include transBackground;
+		  	&:focus{
+		  		background-color: #FFF;
+		  		box-shadow: none;
+		  	}
+		  	&::-moz-placeholder {
+			  color: #FFF;
+			}
+			&:-ms-input-placeholder {
+			  color: #FFF;
+			}
+			&::-webkit-input-placeholder {
+			  color: #FFF;
+			}
+		}
+	  	&:before{
+	  		content: '';
+	  		@include verticalAlign;
+	  		left: 7px;
+	  		right: auto;
+	  		background:transparent image-url('icon/search.png') left center no-repeat;
+	  		z-index: 1;
+	  		width: 20px;
+			height: 20px;
+			background-size: 86%;
+			@include transBackground;
+	  	}
+		&:hover{
+	  		.searchDropdown{
+	  		}
+	  	}
+	  	.icon-close-round-grey{
+	  		@include verticalAlign;
+	  		right: 5px;
+	  		z-index: 1;
+	  	}
+	  	.spinner1{
+	  		@include verticalAlign;
+	  		right: 24px;
+	  	}
+	}
+	.search-focus{
+	  	&:before{
+	  		background:transparent image-url('icon/search_active.png') left center no-repeat;
+	  		background-size: 86%;
+	  	}
+	  	.form-control{
+	  		text-overflow: ellipsis;
+	  		background: #FFF !important;
+		  	border: 1px solid #FFF !important;
+		  	&::-moz-placeholder {
+			  color: #747474;
+			}
+			&:-ms-input-placeholder {
+			  color: #747474;
+			}
+			&::-webkit-input-placeholder {
+			  color: #747474;
+			}
+	  	}
+	}
+	.dropdown-on{
+	  	.form-control{
+		  	border-radius: 8px 8px 0px 0px;
+	  	}
+	}
+}
+.noResults{
+	padding: 8px 12px;
+	ul{
+		padding-left: 15px;
+	}
+}
+.searchDropScroll{
+	max-height: 450px;
+	overflow: auto;
+}
+.searchDropScroll::-webkit-scrollbar {
+    width: .3em;
+}
+
+.searchDropScroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.searchDropScroll::-webkit-scrollbar-thumb {
+  background-color: #6e6e6e;
+}
+.searchNoResultsText{
+	text-align: center;
+	margin-top: 15%;
+	color:#747474;
+}
+.searchDropdown{
+	position:absolute;
+	top:30px;
+	left:0;
+	right:0;
+	background:#FFF;
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+	transition: height .5s;
+	hr{
+		margin: 10px 0px;
+	}
+	.viewAllResult{
+		position:absolute;
+		bottom:-37px;
+		left:0;
+		right:0;
+		background-color: #67c0e9;
+		color: #FFF;
+		padding: 10px 12px;
+		font-size: 12px;
+		cursor:pointer;
+		box-shadow: 0px 1px 1px rgba(1, 27, 39, 0.49);
+	}
+	.searchDropThumb{
+		float: left;
+		width: 72px;
+		height: 48px;
+		border: 1px solid #dcdcdc;
+		cursor: pointer;
+		img{
+			min-height: 48px;
+		}
+	}
+	.searchDropItem{
+		padding: 10px;
+		margin-top: -10px;
+		&:hover{
+			background-color: #04b6ea;
+			a {
+				color: #fff;
+			}
+  			.searchDropItemText{
+  				h4 {
+  					color: #fff;
+  					&.activeMenu {
+  						color: #fff;
+  					}
+  				}
+  				p {
+  					color: #fff;
+  				}
+  			}
+		}
+		.searchDropItemText{
+			width:100%;
+			padding-left:82px;
+			a {
+				text-decoration: none;
+			}
+			h4{
+				color:#002e54;
+				font-size:18px;
+				margin: 0;
+				margin-bottom: 5px;
+				font-family: 'DINWebPro';
+				&.activeMenu {
+					color: #04b6ea;
+					text-decoration: none;
+					&:hover{
+						color: #fff;
+					}
+				}
+			}
+			p{
+				color:#6e6e6e;
+				font-size:12px;
+				&.activeMenu {
+					text-decoration: none;
+				}
+			}
+		}
+	}
+	h6{
+		font-family: 'DINWebPro-Medium';
+	    font-size: 14px;
+	    color: #747474;
+	    margin-bottom: 0;
+	}
+	.searchCatHead{
+		margin-bottom: 10px;
+	}
+}
+.searchCatHead{
+	padding: 6px 12px;
+	background-color: #eeeeee;
+	font-family: 'DINWebPro-Medium';
+}
+.prevSearchTerm{
+	margin-bottom: 0 !important;
+	position: relative;
+	color: #7B7979;
+	border-bottom: 1px solid #E0E0E0;
+	.close{
+		@include verticalAlign;
+		width: 11px;
+		height: 11px;
+		background: url("/images/icon/icon-error-close.png") center no-repeat;
+		right: 10px;
+	}
+}
+.peopleList{
+	a{
+		color:#6e6e6e;
+		font-size: 16px;
+		margin-bottom: 10px;
+		text-decoration: none;
+		padding: 10px;
+		&.activeMenu{
+			cursor: default;
+			background-color: #04b6ea;
+			color: #fff;
+			&:hover{
+				color: #fff;
+			}
+		}
+		&:hover{
+			color: #04b6ea;
+		}
+	}
+
+}
+.peopleListSelectedBackground{
+	background-color:darkgrey;
+}
+.icon-close-round-grey{
+	background: image-url('icon/close_round_grey.png') left center no-repeat;
+	width: 19px;
+	height: 19px;
+}
+
+
+/*search results*/
+
+.searchContents{
+	margin-top:60px;
+	padding: 20px 85px;
+	h2{
+		font-size: 40px;
+		color: #747474;
+		margin-top: 22px;
+		font-family: 'DINWebPro-Light';
+		border-bottom: 1px solid #747474;
+		margin-bottom:30px;
+	}
+	.resultVideos{
+		min-height: 300px;
+	}
+	.searchDropItem{
+		a{
+			margin-bottom: 10px;
+		}
+	}
+	@media(max-width: 1024px){
+		padding: 20px;
+	}
+}
+.catHeadResult{
+	color: #747474;
+  	font-size: 18px;
+  	margin-bottom: 20px;
+  	.alignLeft{
+  		margin-right:20px;
+  		cursor:pointer;
+  	}
+  	.linkActive{
+  		color: #37ace2;
+  		font-family: 'DINWebPro-Medium';
+  	}
+  	.linkInvalid{
+		color:#d8d8d8;
+	}
+}
+.searchItem{
+	margin-bottom:20px;
+	float: none;
+	display: inline-block;
+	.searchThumb{
+		img.placeholder {
+		  display: none !important;
+		}
+		img.lazyThumb {
+		  display: block !important;
+		}
+	}
+	.searchThumb.loading{
+		img.placeholder {
+		  display: block !important;
+		}
+		img.lazyThumb {
+		  display: none !important;
+		}
+	}
+}
+.thumbCaption{
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	h4{
+		font-size: 16px;
+		margin: 0;
+		margin-bottom: 5px;
+		margin-top: 10px;
+  		color: #6e6e6e;
+		font-family: 'DINWebPro-Medium';
+  	}
+  	p{
+		color: #6e6e6e;
+		font-size: 14px;
+		margin: 0;
+		font-family: 'DINWebPro-Medium';
+  	}
+}
+
+.resultPeople{
+	.peopleList{
+		height: 205px;
+  		overflow: auto;
+	}
+}
+.searchBtnBack {
+	position: absolute;
+	top: 26px;
+	left: -45px;
+	width: 32px;
+	height: 32px;
+	/*border: 2px solid #ccc;*/
+	background: image-url('icon/left_arrow.png')center no-repeat;
+	border-radius: 50%;
+}
+li.search-icon{
+	display: none !important;
+}
+
+
+/* animations */
+
+.searchDropdown{
+  animation-duration: .4s;
+  -webkit-animation-duration: .4s;
+  -ms-animation-duration: .4s;
+  -webkit-animation-name: searchDropdown;
+  -ms-animation-name: searchDropdown;
+  animation-name: searchDropdown;
+}
+@-webkit-keyframes searchDropdown{
+  0%{
+    opacity: 0;
+  }
+
+  100%{
+     opacity: 1;
+  }
+}
+@keyframes searchDropdown{
+  0%{
+    opacity: 0;
+  }
+
+  100%{
+     opacity: 1;
+  }
+}
+.searchDropItem{
+  animation-duration: .4s;
+  -webkit-animation-duration: .4s;
+  -ms-animation-duration: .4s;
+  -webkit-animation-name: searchDropItem;
+  -ms-animation-name: searchDropItem;
+  animation-name: searchDropItem;
+}
+@-webkit-keyframes searchDropItem{
+  0%{
+    opacity: 0;
+  }
+
+  100%{
+     opacity: 1;
+  }
+}
+@keyframes searchDropItem{
+  0%{
+    opacity: 0;
+  }
+
+  100%{
+     opacity: 1;
+  }
+}
+.searchThumb img.placeholder{
+  animation-duration: .5s;
+  -webkit-animation-duration: .5s;
+  -ms-animation-duration: .5s;
+  -webkit-animation-name: searchPlaceholder;
+  -ms-animation-name: searchPlaceholder;
+  animation-name: searchPlaceholder;
+}
+@-webkit-keyframes searchPlaceholder{
+  0%{
+    opacity: 0;
+  }
+
+  100%{
+     opacity: 1;
+  }
+}
+@keyframes searchPlaceholder{
+  0%{
+    opacity: 0;
+  }
+
+  100%{
+     opacity: 1;
+  }
+}
+.searchThumb img.lazyThumb{
+  animation-duration: .5s;
+  -webkit-animation-duration: .5s;
+  -ms-animation-duration: .5s;
+  -webkit-animation-name: searchLazyThumb;
+  -ms-animation-name: searchLazyThumb;
+  animation-name: searchLazyThumb;
+}
+@-webkit-keyframes searchLazyThumb{
+  0%{
+    opacity: 0;
+  }
+
+  100%{
+     opacity: 1;
+  }
+}
+@keyframes searchLazyThumb{
+  0%{
+    opacity: 0;
+  }
+
+  100%{
+     opacity: 1;
+  }
+}
+a.fullWidth.ng-binding.active {
+
+}

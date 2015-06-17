@@ -1,0 +1,228 @@
+@import 'index';
+.network-banner {
+  width: 100%;
+  min-height: 200px;
+}
+.network-imagelist {
+  float:none;
+  margin: 53px auto 0;
+}
+.inner_banner_head{
+ width: 100%;
+ padding: 0px !important;
+ min-height: 200px;
+ margin: 0;
+  }
+//Override thumbnail
+.thumbnail2 {
+  background-color: #000000;
+  border: none;
+}
+.center-banner-text{ 
+   position: absolute; 
+   top: 26%;
+   left: 0; 
+   width: 100%; 
+   text-align: center;
+}
+.dropdownnetwork{
+  margin-top: 5px;
+  left: auto !important;
+  min-width: 180px;
+  right: 0;
+}
+.dropdownnetwork:after{
+  /*left:50px;*/
+}
+
+.networkImgContainer{
+  position: relative;
+}
+.networkImg{
+  color: #5c5c5c;
+  padding: 10px;
+  width: 100%;
+  opacity: .93;
+  padding-bottom: 10px;
+  z-index: 2;
+  background: rgba(255,255,255,.48);
+  box-shadow: 0 1px 1px rgba(51,51,51,.15);
+  margin-bottom: 2px;
+  height: auto;
+  display: block;
+  h5{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    color: #5c5c5c;
+  }
+}
+.networks{
+  margin-top: 6%;
+  margin-bottom: 6%;
+  .channelThumb{
+    margin-bottom: 30px;
+  }
+}
+.carousel-inner{
+ /*min-height: 300px;
+ img{
+ min-height: 300px;
+ width: 100%;
+ } */
+}
+.row.fivecolumns{
+  margin-right: 0;
+}
+.row.fivecolumns > div {
+  float: none;
+  display: inline-block;
+}
+.CatSelectList{
+  position: relative;
+  button{
+    font-family: 'DINWebPro-Medium';
+    margin: 20px 0px 10px 0px;
+    min-width: 135px;
+    text-align: left;
+    font-size: 15px;
+    padding: 4px 20px;
+    padding-right: 30px;
+    @include roundCornerS;
+    &:before{
+      position: absolute;
+      top: 16px;
+      right: 10px;
+      display: inline-block;
+      border-right: 5px solid transparent;
+      border-top: 5px solid #FFF;
+      border-left: 5px solid transparent;
+      content: '';
+    }
+    .caret{
+      float: right;
+      margin: 14px 0px;
+      width: 9px;
+      margin-left: 10px;
+      display: none;
+    }
+  }
+    li{
+      text-transform: capitalize !important;
+      font-family: 'DINWebPro';
+      line-height: 30px;
+      a{
+        white-space: nowrap;
+        padding-right: 10px;
+        margin-right: 18px;
+      }
+    }
+}
+.genreDetailHeader{
+  margin-top: 105px;
+  h2{
+    text-align: center;
+    color: #3c5e6c;
+  }
+}
+.removeSecondContainer{
+  .genreDetailHeader{
+    margin-top: 60px;
+  }
+}
+@media (min-width: 960px){
+  .carousel-inner{
+   img{
+    /*min-height: 300px;*/
+   } 
+  }
+}
+@media (min-width: 992px){
+  .fivecolumns .col-xs-6, .fivecolumns .col-sm-4, .fivecolumns .col-md-3, .fivecolumns .col-lg-2 {
+        padding-bottom: 2% !important;
+        padding-right: 0;
+    }
+}
+@media (min-width: 1600px){
+  .carousel-stat-footer-r{
+    padding-top: 0;
+  }
+}
+@media (min-width: 1200px) {
+    .fivecolumns .col-md-2, .fivecolumns .col-lg-2 {
+        /*width: 20%;
+        *width: 20%;*/
+        padding-bottom: 2%;
+        padding-right: 0;
+    }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+    .main_slider{
+      .carousel-inner{
+        /* min-height: 450px;
+         img{
+         min-height: 450px;
+         } */
+        }
+      } 
+    
+    .fivecolumns .col-sm-4, .fivecolumns .col-md-2 {
+        /*width: 33.33333%;
+        *width: 33.33333%;*/
+        padding-bottom: 2%;
+        padding-right: 0;
+    }
+}
+@media (max-width: 768px){
+     .fivecolumns .col-xs-6 {
+        /*width: 50%;
+        *width: 50%;*/
+        padding-bottom: 2%;
+        padding-right: 0;
+    }
+}
+@media (max-width: 767px){
+  .genreDetailHeader{
+    margin-top: 230px;
+  }
+  .removeSecondContainer{
+    .genreDetailHeader{
+      margin-top: 126px;
+    }
+  }
+}
+@media (max-width: 640px){
+  .genreDetailHeader{
+    h2{
+      font-size: 28px;
+      line-height: inherit;
+    }
+  }
+}
+@media (max-width: 480px){
+  .genreDetailHeader{
+    h2{
+      font-size: 22px;
+      margin: 10px 0px;
+    }
+  }
+  .CatSelectList{
+    button{
+    margin-top: 0px;
+    }
+  }
+}
+@media (max-width: 360px){
+  .genreDetailHeader{
+    .header_l, .header_r{
+      width: 100%;
+    }
+  }
+  .CatSelectList{
+    button{
+    }
+  }
+}

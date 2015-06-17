@@ -1,0 +1,183 @@
+<script>
+  jQuery(document).ready(function ($) {
+    "use strict";
+    $('#movieScroll').perfectScrollbar();
+  });
+</script>
+<!-- Billing Details -->
+	<div id="movieScroll" class="container-fluid billing-default-style contentHolderSearch">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<form novalidate  name="paymentAdminForm" role="form" id="paymentAdminForm" method="POST">
+				<div class="col-md-12 col-sm-12 col-xs-12 col-md-padding-top-5">
+						<div class="fullWidth">
+							<h5 class="st-nav-adminHeader alignLeft" translate="ADMIN_SIDE_BAR_BILLING_DETAILS"></h5>
+							<span ng-show="ajaxBillingInfoSpinner"  us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>	
+						</div>
+						<div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+						  <hr class="border-top-width-1">
+						</div>
+						<div class="col-md-12 col-sm-12 col-xs-12 col-md-padding-top-2 no-padding col-md-margin-bottom-2">
+							<span class="font-weight-bold" translate="TXT_ADMIN_PAYMENT_METHOD_BILLING_HISTORY"></span>
+						</div>
+						<div class="col-md-12 col-sm-12 col-xs-12 no-padding pay_method">
+			                <div class="col-md-12 col-sm-12 col-xs-12 no-padding payMethodHead">
+			                    <div class="col-md-8 col-sm-8 col-xs-8 no-padding">
+									<input class="alignLeft" type="radio" ng-model="paymentMethod" value="credit_card" ng-change="switchPaymentMethod('credit_card')" ng-disabled="ajaxBillingInfoSpinner">
+									<div class="col-md-11 col-sm-11 col-xs-11 col-md-padding-left-1 no-padding col-md-margin-bottom-2 payment_method">
+										<span class="icon-visa"></span>
+										<span class="icon-master"></span>
+										<span class="icon-amex"></span> 
+										<span class="icon-discover"></span> 
+			                       </div>
+			                    </div>
+			                    <div class="col-md-4 col-sm-4 col-xs-4 paypalIcon">
+			                        <input class="alignLeft" type="radio" ng-model="paymentMethod" value="paypal" ng-change="switchPaymentMethod('paypal')" ng-disabled="ajaxBillingInfoSpinner">
+			                        <span class="icon-paypal"></span>
+			                    </div>
+			                </div>
+			                <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+							  <hr class="border-top-width-1">
+							</div>
+							<div class="alignRight" ng-if="!paymentMethodList.type && paymentMethod">
+								<button class="btn-custom-orange col-md-4 pull-right" ng-click="saveUserPaymentInfo(paymentMethod)" translate="BTN_NEXT_MANAGE_ACCOUNT" ng-disabled="!paymentAdminForm.$valid"></button>
+							</div>
+							<div class="alignRight" ng-if="paymentMethodList.type == paymentMethod">
+								<button class="btn-custom-orange col-md-4 pull-right" ng-click="editUserPaymentInfo()" ng-show="editPaymentInfoButton" translate="{{'BTN_ADMIN_EDIT_WATCHLIST'|uppercase}}"></button>
+								<button class="btn-custom-orange col-md-4 pull-right" ng-click="saveUserPaymentInfo(paymentMethod)" ng-show="savePaymentInfoButton" translate="BTN_ADMIN_SAVE" ng-disabled="!paymentAdminForm.$valid"></button>
+					            <button style="margin-right: 10px;" class="btn btn-custom-cancel col-md-4 col-md-margin-right-2 pull-right" ng-click="cancelUserPaymentInfo()" ng-show="cancelPaymentInfoButton" translate="BTN_CANCEL_LIVE"></button>
+							</div>
+			                <div class="creditCardPayment" ng-if="paymentMethod == 'credit_card'">
+								<div class="col-md-12 col-sm-12 col-xs-12 no-padding col-md-padding-top-2" ng-class="paymentMethodBackgroundOverlay" >
+		                            <input type="hidden" name="vin_WebSession_vid" id="transSessionId">
+		                            <input type="hidden" name="vin_Account_emailAddress" id="accountEmail">
+                                    <input type="hidden" name="vin_Account_name" id="paymentAccountName">
+		                            <input type="hidden" name="vin_PaymentMethod_billingAddress_name" value="{{paymentMethodList.account_holder_name}}">
+									<div class="font-size-9 col-md-padding-top-2 ">
+										<span class="font-weight-bold" translate="TXT_ADMIN_CREDIT_CARD_BILLING_DETAILS"></span>
+									</div>
+			                        <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+										<div class="col-md-12 col-sm-12 col-xs-12 parent no-padding col-md-margin-bottom-2" ng-if="paymentMethodList[paymentMethod].card_number && editPaymentInfoButton">
+											<input type="text" class="form-control" ng-model="paymentMethodList[paymentMethod].card_number" placeholder="{{'BTN_CARD_NUMBER_MANAGE_ACCOUNT'|translate}}" id="vin_PaymentMethod_creditCard_account_1" credit-card-type data-ng-minlength="15" maxlength="19" required/>
+											<div class="selected_cards" ng-class="ccinfo"></div>
+										</div>
+										<div class="col-md-11 col-sm-11 col-xs-11 no-padding col-md-margin-bottom-2 creditBottomRow" ng-if="paymentMethodList[paymentMethod].card_number && editPaymentInfoButton">
+											<div class="col-md-3 col-sm-3 col-xs-3 no-padding text-normal" translate="TXT_ADMIN_EXPIRATION_DATE_WATCHLIST">
+				                            </div>                                                 
+				                            <div class="col-md-3 col-sm-3 col-xs-3 no-padding col-md-padding-right-1">
+				                                <input type="text" class="form-control" value="XX"/>
+				                            </div>
+				                            <div class="col-md-3 col-sm-3 col-xs-3 no-padding col-md-padding-left-1">
+				                                <input type="text" class="form-control" value="XX"/>
+				                            </div>
+				                            <div class="col-md-3 col-sm-4 col-xs-5 no-padding col-md-margin-bottom-3 cvvNumber" style="padding-left:10px;">
+				                                <input type="text" class="form-control" value="XXX"/>
+				                            </div>
+				                        </div>
+				                        <span ng-if="!paymentMethodList.type || (savePaymentInfoButton && cancelPaymentInfoButton)">
+											<div class="col-md-12 col-sm-12 col-xs-12 parent no-padding col-md-margin-bottom-2">
+												<input type="text" class="form-control" name="vin_PaymentMethod_creditCard_account" ng-model="vin_PaymentMethod_creditCard_account" placeholder="{{'BTN_CARD_NUMBER_MANAGE_ACCOUNT'|translate}}" id="vin_PaymentMethod_creditCard_account_2" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="paymentAdminForm.vin_PaymentMethod_creditCard_account.$card.type" card-number-type-check="{{paymentAdminForm.vin_PaymentMethod_creditCard_account.$card.type}}" data-ng-minlength="15" maxlength="19" required/>
+												<div class="selected_cards" ng-class="paymentAdminForm.vin_PaymentMethod_creditCard_account.$card.type"></div>
+											</div>
+											<div class="col-md-11 col-sm-11 col-xs-11 no-padding col-md-margin-bottom-2 creditBottomRow">
+					                            <div class="col-md-3 col-sm-3 col-xs-3 no-padding text-normal" translate="TXT_ADMIN_EXPIRATION_DATE_WATCHLIST">
+					                            </div>                                                 
+					                            <div class="col-md-3 col-sm-3 col-xs-3 no-padding col-md-padding-right-1">
+					                            	<div class="selectHolder">
+					                            		<select name="vin_PaymentMethod_creditCard_expirationDate_Month" ng-model="vin_PaymentMethod_creditCard_expirationDate_Month" class="form-control styled-select" ng-options="k as v for (k,v) in genericFields.month_range[CurrentLang]" id="vin_PaymentMethod_creditCard_expirationDate_Month" expiry-month required>
+		                                                    <option style="display:none;" selected value="">{{'BTN_MONTH_MANAGE_ACCOUNT'|translate}}</option>
+		                                                </select>
+	                                                </div>
+					                            </div>
+					                            <div class="col-md-3 col-sm-3 col-xs-3 no-padding col-md-padding-left-1">
+					                            	<div class="selectHolder">
+						                                <select name="vin_PaymentMethod_creditCard_expirationDate_Year" ng-model="vin_PaymentMethod_creditCard_expirationDate_Year" class="form-control styled-select" ng-options="k as v for (k,v) in expiryYearValue" id="vin_PaymentMethod_creditCard_expirationDate_Year" expiry-year required>
+		                                                    <option style="display:none;" selected value="">{{'BTN_YEAR_MANAGE_ACCOUNT'|translate}}</option>
+		                                                </select>
+					                            	</div>
+					                            </div>
+					                            <div class="col-md-3 col-sm-4 col-xs-5 no-padding col-md-margin-bottom-3 cvvNumber" style="padding-left:10px;">
+					                                <input type="text" class="form-control" name="vin_PaymentMethod_nameValues_cvn" ng-model="vin_PaymentMethod_nameValues_cvn" payments-validate="cvc" payments-format="cvc" payments-type-model="type" placeholder="{{'BTN_CVV_NUMBER_MANAGE_ACCOUNT'|translate}}" required/>
+	                                                <span class="icon-info">
+	                                                    <span class="securityInfo" translate="TXT_SECURITY_CODE_SIGNUP_BILLING">
+	                                                    </span>
+	                                                </span>
+					                            </div>
+					                        </div>
+				                        </span>
+			                        </div>
+								</div>
+			                </div>
+			                <div class="col-md-12 col-sm-12 col-xs-12 no-padding col-md-padding-top-2 col-md-margin-bottom-3" ng-if="paymentMethod == 'paypal' && paymentMethodList[paymentMethod] && editPaymentInfoButton" ng-class="paymentMethodBackgroundOverlay">
+								<div>
+									<span class="font-weight-bold" translate="TXT_PAYPAL_MANAGE_ACCOUNT"></span>
+									<input ng-model="paymentMethodList[paymentMethod].email" type="text" class="form-control" placeholder="{{'HINT_TXT_EMAIL_ADDRESS_SIGN_UP'|translate}}" ng-pattern="/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/"> 	
+								</div>
+							</div>
+			            </div>
+			            <div class="alignRight" ng-if="paymentMethodList.type">
+							<button class="btn-custom-orange col-md-4 pull-right" ng-click="editUserBillingInfo()" ng-show="editBillingInfoButton" translate="{{'BTN_ADMIN_EDIT_WATCHLIST'|uppercase}}"></button>
+							<button class="btn-custom-orange col-md-4 pull-right" ng-click="saveUserBillingInfo()" ng-show="saveBillingInfoButton" translate="BTN_ADMIN_SAVE" ng-disabled="!paymentAdminForm.$valid"></button>
+				            <button style="margin-right: 10px;" class="btn btn-custom-cancel col-md-4 col-md-margin-right-2 pull-right" ng-click="cancelUserBillingInfo()" ng-show="cancelBillingInfoButton" translate="BTN_CANCEL_LIVE"></button>
+						</div>
+						<div class="col-md-12 col-sm-12 col-xs-12 no-padding col-md-padding-top-2" ng-class="billingBackgroundOverlay" ng-if="paymentMethod">
+							<span class="font-weight-bold" translate="HINT_TXT_BILLING_INFO_MANAGE_ACCOUNT"></span>
+							<div class="row">
+		                        <div class="col-md-12 col-md-margin-bottom-2">
+		                            <input type="text" name="vin_PaymentMethod_accountHolderName" id="vin_PaymentMethod_accountHolderName" class="form-control col-md-padding-bottom-2" placeholder="{{'HINT_TXT_FULL_NAME_MANAGE_ACCOUNT'|translate}}" ng-model="paymentMethodList.account_holder_name" ng-maxlength="25" ng-pattern="/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/" required>
+		                        </div>  
+		                        <div class="col-md-12 col-md-margin-bottom-2">
+		                            <input type="text" name="vin_PaymentMethod_billingAddress_addr1" id="vin_PaymentMethod_billingAddress_addr1" class="form-control col-md-padding-bottom-2" placeholder="{{'HINT_TXT_ADDRESS_MANAGE_ACCOUNT'|translate}}" ng-model="paymentMethodList.billing_address.addr1" required>
+		                        </div>
+		                        <div class="col-md-12 col-md-margin-bottom-2">
+		                            <input type="text"  name="vin_PaymentMethod_billingAddress_addr2" id="vin_PaymentMethod_billingAddress_addr2" class="form-control col-md-padding-bottom-2" placeholder="{{'HINT_TXT_ADDRESS_TWO_MANAGE_ACCOUNT'|translate}}" ng-model="paymentMethodList.billing_address.addr2">
+		                        </div>
+		                        <div class="col-md-4 col-sm-4 col-xs-4 col-md-padding-right-1 col-md-margin-bottom-2">
+		                        	<div class="selectHolder">
+			                            <select ng-model="paymentMethodList.billing_address.country" class="form-control styled-select" ng-options="country.code as country.name for country in countryList" ng-change="getStates(paymentMethodList.billing_address.country)" select-first-class required>
+		                                    <option style="display:none;" selected value="">{{'HINT_TXT_COUNTRY_MANAGE_ACCOUNT'|translate}}</option>
+		                                </select>
+		                            </div>
+	                                <input type="hidden" name="vin_PaymentMethod_billingAddress_country" id="vin_PaymentMethod_billingAddress_country" value="{{paymentMethodList.billing_address.country}}">
+		                        </div>  
+		                        <div class="col-md-4 col-sm-4 col-xs-4 col-md-padding-left-1 col-md-margin-bottom-2 stateSelect" ng-show="getStates(paymentMethodList.billing_address.country)">
+		                        	<div class="selectHolder">
+			                            <select ng-model="paymentMethodList.billing_address.district" class="form-control styled-select" ng-options="state.code as state.name for state in stateList" select-first-class required>
+		                                    <option style="display:none;" selected value="">{{'HINT_TXT_STATE_MANAGE_ACCOUNT'|translate}}</option>
+		                                </select>
+		                            </div>
+	                                <input type="hidden" name="vin_PaymentMethod_billingAddress_district" id="vin_PaymentMethod_billingAddress_district" value="{{paymentMethodList.billing_address.district}}">
+		                        </div>
+		                        <div class="col-md-4 col-sm-4 col-xs-4 col-md-padding-left-1 col-md-margin-bottom-2 fullMob">
+		                            <input type="text" name="vin_PaymentMethod_billingAddress_city" id="vin_PaymentMethod_billingAddress_city" class="form-control col-md-padding-bottom-2" placeholder="{{'HINT_TXT_CITY_MANAGE_ACCOUNT'|translate}}" ng-model="paymentMethodList.billing_address.city" required>
+		                        </div>        
+		                        <div class="col-md-4 col-sm-4 col-xs-4 col-md-padding-right-1 col-md-margin-bottom-3">
+		                            <input type="text" name="vin_PaymentMethod_billingAddress_postalCode" id="vin_PaymentMethod_billingAddress_postalCode" class="form-control" placeholder="{{'HINT_TXT_ZIP_CODE_MANAGE_ACCOUNT'|translate}}" ng-model="paymentMethodList.billing_address.postal_code_string" ng-pattern="validateZipCodeBasedOnCountry(paymentMethodList.billing_address.country)" re-apply required>
+		                        </div>
+		                        <div class="col-md-8 col-sm-8 col-xs-8 col-md-padding-left-1 col-md-margin-bottom-3">
+		                            <input type="text" name="vin_PaymentMethod_billingAddress_phone" id="vin_PaymentMethod_billingAddress_phone" class="form-control" placeholder="{{'HINT_TXT_PHONE_NUMBER_MANAGE_ACCOUNT'|translate}}" ng-model="paymentMethodList.billing_address.phone" ng-pattern="/^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/" required>
+		                        </div>
+		                    </div>
+						</div>
+						<div class="col-md-12 col-sm-12 col-xs-12">
+	                        <div class="fullWidth errorMsg" ng-show="billingEditError">
+		                        <span class="errorIcon">{{billingEditErrorMessage | translate}}</span>
+		                        <span class="closeError" ng-click="closeBillingEditErrorAlert()"></span>
+		                    </div>
+		                </div>
+	                    <div class="col-md-12 col-sm-12 col-xs-12">
+		                    <div class="fullWidth successMsg" ng-show="billingEditSuccess">
+		                        <span class="successIcon" translate="BILLING_INFORMATION_EDIT_SUCCESS_MSG"></span>
+		                        <span class="closeError" ng-click="closeBillingEditSucessAlert()"></span>
+		                    </div>
+		                </div>
+						<div class="col-md-12 col-sm-12 col-xs-12 no-padding col-md-margin-top-4 col-md-margin-bottom-3" ng-if="paymentMethod">
+							<button class="btn-custom-orange col-md-margin-bottom-3" ng-click="billingHistoryPage('views/admin/billingDetails.html')" translate="BTN_ADMIN_BILLING_HISTORY_SEE_BILLING_DETAILS"></button>
+						</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+		
+

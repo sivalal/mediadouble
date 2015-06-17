@@ -1,0 +1,27 @@
+@import 'index';
+.extras-top
+{
+	padding-top: 5%;
+	padding-bottom: 3%;
+	background-color:$color-extrastop;
+}
+
+.extras-bottom
+{
+	padding-top: 3%;
+	background-color:white;
+}
+
+.grey-hr
+{
+	margin-top: 10px;
+ margin-bottom: 10px;
+ border: 0; 
+border-top: 1px solid #090909;
+}
+
+.extras-menu-div
+{
+	@extend .extras-top;
+	padding-top: 2%;
+}

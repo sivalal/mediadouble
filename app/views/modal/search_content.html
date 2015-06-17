@@ -1,0 +1,252 @@
+ <style>
+.contentHolderSearch { position:relative; margin:0 auto; padding:0; height: 455px; overflow: hidden; }
+.contentHolderSearchDetail { position:relative; margin:0 auto; padding:0; height: 418px; overflow: hidden; }
+span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;      
+}
+</style>
+<script>
+  jQuery(document).ready(function ($) {
+    "use strict";
+    $('#movieScroll1').perfectScrollbar();
+    $('#tvScroll').perfectScrollbar();
+    $('#peopleScroll').perfectScrollbar();
+    $('#filterDetailScroll').perfectScrollbar();
+  });
+</script>
+
+<script type="text/javascript">
+//code to escape new line in search textbox
+      var keynum, lines = 1;
+      function limitLines(obj, e) {
+        // IE
+        if(window.event) {
+          keynum = e.keyCode;
+        // Netscape/Firefox/Opera
+        } else if(e.which) {
+          keynum = e.which;
+        }
+        if(keynum == 13) {
+          if(lines == obj.rows) {
+            return false;
+          }else{
+            lines++;
+          }
+        }
+      }
+</script>
+
+<!--  Search modal -->
+<!-- Header -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 searchClose">
+      <span class="icon-custom-cancel" ng-click="cancelWithUrlParams()"></span>
+    </div>
+  </div>
+</div>
+<!--    Complete body -->
+<div class="search-Contents" ng-controller="SearchCtrl" style="height:100%;"> 
+  <!-- Search Area -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 center" style="padding:0">
+        <div class="col-md-12 searchBoxContainer">
+          <textarea rows="1" ng-model="searchText" placeholder="{{ 'TXT_SEARCH_PLACE_HOLDER' | translate }}" ng-change="SearchTextUpdated(searchText)" maxlength="37" class="search-textbox"  style=" resize:none;" onkeydown="return limitLines(this, event)">
+          </textarea>
+          <hr class="modal-hr" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--   Display 1 - Initial search page -->
+  <div class="modal-body" ng-show="isfilterArea">
+
+    <!-- Column Headers -->
+       <div class="container">
+          <div class="row">
+             <div class="col-md-10 center">
+                <div class="row"> 
+                <!--   Movies section start -->
+                  <div  class="col-md-8 col-sm-6 col-xs-12 pad-bottom no-padding-r">
+                   <div class="row search-result-out-div" ng-show="vodHeading">
+                     <div class="col-md-6 col-sm-6 col-xs-6 search-result-head-title ">  
+                     <label translate="TXT_SEARCH_MOVIES_TV"></label>
+                     </div>
+                     <div class="col-md-6 col-sm-6 col-xs-6  no-padding right-txt" ng-show="searchReady" ng-if="data.movies">
+                         <button class="btn-custom-green-srch" ng-click="ClickSeeAll('MOVIES & TV SHOWS')"translate="BTN_SEE_RESULTS_SEARCH"></button>
+                      </div>
+                  </div> 
+                  <div id="movieScroll1" class="contentHolderSearch">
+                  <span ng-show="ajaxSearchSpinner_Movie" us-spinner="{radius:5, width:4, length: 10}" class="yelloworangeloader"></span>
+                    <div  ng-repeat="movie in data.movies" ng-hide="movie.hide" class="search-result-cell-tv alternative_cls  clickable col-md-6 col-sm-6 col-xs-12">
+                         <a href="/{{movie.source}}?titleId={{movie.id}}" ng-click="cancelAll()" ng-if="movie.titleType != 4 && (movie.source_path != '' && movie.source_path !=undefined)"> </a>
+                         <a href="#" ng-if="(movie.source_path == '' || movie.source_path ==undefined)" ng-disabled="true"> </a>
+                      <div class="row">
+                         <div  class="col-md-4 col-sm-4 col-xs-4 no-padding-l">
+                            <img ng-src="{{updateSmallImagePath(movie.imagePath)}}" width="100%" style="max-width:114px;max-height:55px" fallback-src="{{fallbackImageURL}}"/>
+                          </div>
+                        <div class="col-md-8 col-sm-8 col-xs-8 search-result-cell-title no-padding-l">
+                          <span >
+                            <p ng-bind-html="movie.title | highlight:searchText:caseSensitive"></p>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div ng-show="vodNoContent">
+                        <div colspan="4" class="emptyContent" translate="TXT_CONTENT_NOT_AVAILABLE"></div>
+                    </div> -->
+                  </div>
+                  </div>
+    <!--   Movies section end -->
+    <!--  Live section start -->
+                <!--  <div  class="col-md-5 col-sm-6 col-xs-12 pad-bottom no-padding-r" >
+                   <div class="row search-result-out-div" ng-show="liveHeading">
+                      <div class="col-md-6 col-sm-6 col-xs-6 search-result-head-title">  
+                        <label translate="LIVE"></label>
+                      </div>
+                        <div  class="col-md-6 col-sm-6 col-xs-6  no-padding right-txt " ng-show="searchReady" ng-if="data.live">
+                          <button class="btn-custom-green-srch" ng-click="ClickSeeAll('LIVE')" translate="BTN_SEE_RESULTS_SEARCH"></button>
+                        </div>
+                      </div>
+                      <div id="tvScroll" class="contentHolderSearch">
+                       <span ng-show="ajaxSearchSpinner_Live" us-spinner="{radius:5, width:4, length: 10}" class="yelloworangeloader"></span>
+                        <div ng-repeat="liveItem in data.live" class="search-result-cell-tv alternative_cls clickable">
+                          <a href="/liveShow?titleId={{liveItem.id}}" ng-click="cancelAll()"> </a>
+                          <div class="row" >
+                            <div class="col-md-4 col-sm-4 col-xs-4 ">
+                              <img ng-src="{{liveItem.imagePath}}" width="100%" style="max-width:114px;max-height:55px" />
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 search-result-cell-title" >
+                              <span >
+                             <p ng-bind-html="liveItem.title | highlight:searchText:caseSensitive"
+                             ></p></span>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-2 no-padding ">
+                              <label class="live">. Live </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div ng-show="liveNoContent">
+                            <div colspan="4" class="emptyContent" translate="TXT_CONTENT_NOT_AVAILABLE"></div>
+                        </div>
+                      </div>
+                  </div> -->
+   <!--  Live section end -->
+   <!--  People section start -->             
+                  <div  class="col-md-4 col-sm-6 col-xs-12 pad-bottom" >
+                    <div class="row search-result-out-div" ng-show="peopleHeading">
+                      <div class="col-md-4 col-sm-4 col-xs-4  search-result-head-title"> 
+                          <label translate="TXT_PEOPLE_SEARCH"></label>
+                      </div>
+                      <!-- <div class="col-md-8 col-sm-8 col-xs-8 right-txt no-padding" ng-show="searchReady"> -->
+                        <!-- <button class="btn-custom-green-srch" ng-click="ClickSeeAll('PEOPLE')" translate="BTN_SEE_RESULTS_SEARCH"></button> -->
+                      <!-- </div> -->
+                    </div>
+                    <div id="peopleScroll" class="contentHolderSearch">
+                     <span ng-show="ajaxSearchSpinner_People" us-spinner="{radius:5, width:4, length: 10}" class="yelloworangeloader"></span>
+                      <div ng-repeat="people in peopleList" class="search-result-cell-people clickable search-result-cell-title no-padding-l">  
+                         <a ng-click="singlePeopleSearch(people.title)"></a> 
+                          <span >                    
+                         <p ng-bind-html="people.title | highlight:searchText:caseSensitive"></p>        
+                      </div>
+                      <!-- <div ng-show="peopleNoContent">
+                        <div colspan="4" class="emptyContent" translate="TXT_CONTENT_NOT_AVAILABLE"></div>
+                      </div> -->
+                    </div>
+                  </div>
+               </div>
+              </div>
+            </div>
+         </div>
+      </div>
+
+    <!--  This is the filter details page -->
+     <div id="search_details" class="modal-body" ng-show="!isfilterArea">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-10 col-sm-12 col-xs-12 center">
+              <div class="row search-detail-head">
+                <div  class="col-md-5 col-sm-6 col-xs-6">
+                   <a href="#" ng-click="ShowMainFilter()"> </a>
+                   <a href="#" class="icon-custom-back" ng-click="ShowMainFilter()" translate="NAV_ADMIN_BACK_WATCHLIST"></a>
+                </div>
+                <div  class="col-md-6 col-sm-6 col-xs-6" style="padding-top:7px"> {{SrchDetailHead}}
+               </div>
+             </div>
+              <div class="row search-detail-sub-head">
+                <div  class="col-md-12 col-sm-12 col-xs-12 left-txt">
+                  <label translate="TXT_RESULTS_FOR_SEARCH">  </label> 
+                  <label>: </label> 
+                  <label class="blue-bold">{{searchText | uppercase}}</label>
+                  <label class="blue-bold" ng-show="peopleContent"> - {{clickedPeopleName}}</label>
+                </div>
+             </div>
+            <div id="filterDetailScroll" class="contentHolderSearchDetail">
+                <div ng-if="detailList.length==0">
+                    <div colspan="4" class="emptyContent" translate="TXT_CONTENT_NOT_AVAILABLE"></div>
+                </div>
+              <div class="row" >    
+                <div class="col-md-6 col-sm-6 col-xs-12 search-detail-cell" ng-repeat="content in detailList" ng-show="!peopleContent" ng-hide="content.hide"> 
+                  <!--  <div class="row ">  -->
+                        <div class="col-md-6 col-sm-6 col-xs-6 clickable">
+                            <a href="/{{content.source}}?titleId={{content.id}}" ng-click="cancelAll()"> </a>
+                            <img ng-src="{{updateimagePath(content.imagePath)}}" class="srch-detail-img" fallback-src="{{fallbackImageURL}}"/>
+                        </div>
+                        <div class="col-md-6  col-sm-6 col-xs-6 live"> 
+                          <div class="header-large-blue clickable">
+                          <a href="/{{content.source}}?titleId={{content.id}}" ng-click="cancelAll()"> </a>
+                          {{content.title|limitTo:27}}</div>
+                          <div class="search-result-category" style="padding:5px 0 5px 0">
+                            {{content.content_type}}
+                          </div>
+                          <div class="search-result-desc">
+                          <!-- <a href="/{{content.source}}?titleId={{content.id}}"> -->
+                          <span >
+                            <!--  <p ng-bind-html="movie.desc |show_more:1"/> -->
+                            <label compile="content.desc+'::'+content.source+'::'+content.id"></label>
+                             </span>
+                             <!-- </a> -->
+                          </div>
+                        </div>
+                   <!-- </div> -->
+                </div>
+              </div>
+
+              <span ng-show="ajaxPeopleDetailsSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>   
+               <div class="row" ng-show="peopleContent">  
+                <div class="col-md-6 col-sm-6 col-xs-12 search-detail-cell" ng-repeat="content in detailPeopleList"> 
+                    <div class="row ">
+                        <div class="col-md-6 col-sm-6 col-xs-6 clickable">
+                            <a href="/{{content.source}}?titleId={{content.id}}" ng-click="cancelAll()"> </a>
+                            <img ng-src="{{updateimagePath(content.imagePath)}}" class="srch-detail-img" fallback-src="{{fallbackImageURL}}"/>
+                        </div>
+                        <div class="col-md-6  col-sm-6 col-xs-6 live"> 
+                          <div class="header-large-blue clickable">
+                          <a href="/{{content.source}}?titleId={{content.id}}" ng-click="cancelAll()"> </a>
+                          {{content.title_medium[CurrentLang]|limitTo:27}}</div>
+                          <div class="search-result-category" style="padding:5px 0 5px 0">
+                            {{content.showtype}}
+                          </div>
+                          <div class="search-result-desc">
+                          <!-- <a href="/{{content.source}}?titleId={{content.id}}"> -->
+                          <span >
+                            <!--  <p ng-bind-html="movie.desc |show_more:1"/> -->
+                            <label compile="content.summary_short[CurrentLang]+'::'+content.source+'::'+content.id"></label>
+                             </span>
+                             <!-- </a> -->
+                          </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

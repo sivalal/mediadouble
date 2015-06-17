@@ -1,0 +1,16 @@
+<div class="cancelAccount confirmCancelPage" >
+
+<div class="fullWidth">
+    <div class="emoLargeCry emo hidden-md hidden-lg"></div>
+    <div class="emo hidden-sm hidden-xs" style="width:400px;"> <image ng-src="{{appgridAssets[cancelled_account_confirmationObj.img_asset]}}" /> </div>
+  </div>
+  <h2 ng-bind="cancelled_account_confirmationObj.cancelled_account_confirmation_title[CurrentLang]"></h2>
+  <p ng-bind="cancelled_account_confirmationObj.cancelled_account_confirmation_desc[CurrentLang]"></p>
+
+      <button class="btn btnOrange center-block" style="margin-right:auto; margin-top:40px;"  ng-click="GotoManageAccount()"
+              translate="CANCELACCOUNT_GOTOMANAGEACCOUNT"
+              >
+      </button>
+    <div class="clear"></div>
+  
+</div>

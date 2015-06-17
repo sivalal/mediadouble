@@ -1,0 +1,867 @@
+@import 'index';
+
+.no-padding-left{
+  padding-left: 0;
+}
+/* signup page header */
+.signupHeader{
+  width: 100%;
+  float: left;
+  height: 63px;
+  border: none;
+  margin-bottom: 0;
+  background-color:$color-header-bg;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 11111;
+  .login{
+    background-color: #0372ae;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 6px 24px;
+    margin: 13px;
+    @media (max-width: 767px){
+      display:none;
+    }
+  }
+  .signupMenu{
+    position: absolute;
+    left: 180px;
+    right: 180px;
+    text-align: center;
+    a{
+      font-size: 18px;
+      color: #0372ae;
+      line-height: 32px;
+      margin: 14px 12px;
+      display: inline-block;
+      @include transColor;
+      text-decoration: none;
+      cursor: pointer;
+      span.count{
+        background-color: #0372ae;
+        color: #34ace0;
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        border-radius: 50%;
+        @include transBackground;
+      }
+      span.text{
+        @media(max-width: 992px){
+          display:none;
+        }
+      }
+    }
+    span.text.activeSignup{
+      color: white;
+    }
+    span.count.activeSignup{
+        background-color: white;
+    }
+    @media (max-width: 767px){
+      padding: 0;
+      left: auto;
+      right:0;
+    }
+    .inactiveLink {
+       pointer-events: none;
+       cursor: default;
+    }
+  }
+}
+
+/* package select */
+.signupSelectPackage{
+  margin-top: 60px;
+  h2{
+    @include signupHeading;
+    @media(max-width:600px){
+        font-size:30px;
+        padding: 20px 15px;
+    }
+    @media(max-width:480px){
+        font-size:24px;
+        font-family: 'DINWebPro';
+    }
+    @media(max-width:360px){
+        font-size:22px;
+        padding: 20px 10px;
+    }
+  }
+  h3{
+    color: #747474;
+    font-size: 30px;
+    font-family: 'DINWebPro-Light';
+    text-align: center;
+    padding-bottom: 10px;
+    margin-top: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    @media(max-width:600px){
+        font-size:26px;
+    }
+    @media(max-width:480px){
+        font-size:22px;
+        font-family: 'DINWebPro';
+    }
+    @media(max-width:360px){
+        font-size:20px;
+    }
+  }
+  .signupPackageList{
+    float: none;
+    max-width: 1024px;
+    .signupPackage{
+      background-color: white;
+      padding: 36px;
+      margin-bottom: 20px;
+      position: relative;
+      @media(max-width:480px){
+          padding:15px 5px;
+      }
+      .signupPackageCont{
+        padding-left: 32px;
+      }
+      .titles{
+        float: left;
+        margin-right: 10px;
+        h4{
+          color: #747474;
+          font-size: 20px;
+          font-family: 'DINWebPro-Medium';
+          cursor: pointer;
+          @media(max-width:480px){
+              font-size:17px;
+          }
+        }
+        h6{
+          color: #37ace2;
+          font-size: 20px;
+          @media(max-width:480px){
+              font-size:17px;
+          }
+        }
+      }
+      p{
+        clear: both;
+        font-size: 18px;
+      }
+      .packageTrial{
+        background-color: #37ace2;
+        padding: 5px 10px;
+        color: white;
+        float: left;
+        font-family: 'DINWebPro-Medium';
+        font-size: 18px;
+        text-transform: none;
+        margin-top: 4px;
+        line-height: 23px;
+        padding-bottom: 2px;
+        margin-bottom: 10px;
+        @media(max-width:480px){
+            font-size:17px;
+        }
+      }
+      .includedChannels{
+          max-width:50%;
+          display:inline-block;
+          float: right;
+          @media (max-width: 992px){
+            max-width:100%;
+            width:100%;
+            float:left;
+            text-align:center;
+          }
+        .channelLogo{
+          float: left;
+          display: inline-block;
+          @media (max-width: 992px){
+            float:none;
+          }
+          @media (max-width: 640px){
+            img{
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+    .signupNextBtn{
+      font-size: 18px;
+      padding: 12px 5px;
+      color: white;
+      font-family: 'DINWebPro' !important;
+      margin-bottom: 20px;
+      display: block;
+      width: 390px;
+      margin: auto;
+      @media (max-width: 480px){
+        width:100%;
+      }
+    }
+    .packageDisclaimer{
+      text-align: center;
+      padding: 15px 0px;
+      color: #A8A8A8;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+  }
+  /*checkbox*/
+  input[type=checkbox]{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    opacity: 0;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    margin: 0;
+    @media(max-width:480px){
+        left: 10px;
+        width: 25px;
+        height: 25px;
+        margin-top: 3px;
+    }
+  }
+  .packageCheckboxChecked{
+    &:before{
+      content:'';
+      position: absolute;
+      left: 36px;
+      top: 36px;
+      width: 32px;
+      height: 32px;
+      background:transparent image-url('icon/selected_channel_tick.png') left top no-repeat;
+      @media(max-width:480px){
+          left:15px;
+          top:18px;
+          width:24px;
+          height:24px;
+          background-size:100%;
+      }
+    }
+  }
+  .packageCheckbox {
+    &:before{
+      content:'';
+      position: absolute;
+      left: 36px;
+      top: 36px;
+      width: 32px;
+      height: 32px;
+      background:transparent image-url('icon/add_package_plus.png') left top no-repeat;
+        @media(max-width:480px){
+          left:15px;
+          top:18px;
+          width:24px;
+          height:24px;
+          background-size:100%;
+        }
+    }
+  }
+}
+
+/* create account */
+.signupCreateAccount{
+  margin-top: 60px;
+  h2{
+    @include signupHeading;
+    @media(max-width:600px){
+        font-size:30px;
+        padding: 20px 15px;
+    }
+    @media(max-width:480px){
+        font-size:24px;
+        padding: 20px 15px;
+        margin-bottom: 0;
+        margin-top: 0;
+        font-family: 'DINWebPro';
+    }
+    @media(max-width:360px){
+        font-size:22px;
+        padding: 20px 10px;
+    }
+  }
+  .createAccountForm{
+    padding: 36px;
+    background-color: white;
+    width: 464px;
+    a{
+      text-decoration: underline;
+    }
+    @media (max-width: 480px){
+      width:100%;
+      background: none;
+      padding: 0;
+      .signupTop{
+        padding:0px 36px;
+      }
+      .signupBottom{
+        padding:20px 36px;
+        background: rgba(0, 0, 0, 0.08);
+      }
+    }
+    button{
+      font-size: 18px;
+      padding: 12px 5px;
+      color: white;
+      font-family: 'DINWebPro' !important;
+      margin-bottom: 10px;
+      display: block;
+      height: 48px;
+      width: 100%;
+      &.close{
+        width: auto;
+        height: auto;
+        padding: 0;
+        color: #9B3B3B;
+        text-shadow: none;
+        opacity: 0.5;
+      }
+      @media (max-width: 480px){
+        font-size: 22px;
+      }
+    }
+    .ifAcExits{
+      text-align: center;
+      color: #747474;
+      font-size: 18px;
+      margin-bottom: 15px;
+      @media (max-width: 320px){
+        font-size:15px;
+      }
+    }
+    .signup-form input.error  {
+      border: 1px solid #ff4744;
+    }
+  }
+  .form-control{
+    font-size: 18px;
+    font-family: 'DINWebPro';
+    background-color: #fafafa;
+    @media (max-width: 800px){
+      width: 100% !important;
+      margin: 0 !important;
+      height: auto;
+    }
+    @media (max-width: 480px){
+      height: 45px;
+    }
+  }
+  
+  .form-group{
+    margin-bottom: 20px;
+    .icon-custom-valid {
+      background:  image-url("icon/icon_valid_tick.png") no-repeat center;
+      position: absolute;
+      right: 3px;
+      top: 50%;
+      width: 25px;
+      height: 25px;
+      background-size: 25px;
+      transform: translateY(-50%);
+    }
+    .icon-custom-invalid{
+      position: absolute;
+      right: 3px;
+      top: 50%;
+      width: 25px;
+      height: 25px;
+      background-size: 25px;
+      transform: translateY(-50%);
+      padding: 0;
+      background-position: center;
+    }
+    .textFieldError{
+      font-family: 'DINWebPro-Medium';
+      color: #eb212e;
+      font-size: 12px;
+      clear: both;
+      display: block;
+    }
+  }
+  .getUpdates{
+    color: #9e9e9e;
+    padding-left: 25px;
+    font-size: 13px;
+    position: relative;
+    @media (max-width: 480px){
+      font-size: 15px;
+    }
+    label{
+      input{
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 0;
+        opacity: 0;
+      }
+    }
+  }
+  .signupText{
+    color: #9e9e9e;
+    font-size: 13px;
+    @media (max-width: 480px){
+      font-size: 15px;
+    }
+  }
+  .newsletterCheckbox{
+    &:before{
+      @include bottomCheckbox;
+    }
+  }
+  .newsletterCheckboxChecked{
+    &:before{
+      @include bottomCheckboxChecked;
+    }
+  }
+}
+.signupError{
+  margin-top: 60px;
+  position: fixed !important;
+  text-align: center;
+  z-index: 1;
+  position: relative;
+  .closeErrorSignup{
+    background:  image-url("icon/error_close.png") no-repeat center;
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+}
+.crossError{
+  background:  image-url("icon/error_close.png") no-repeat center;
+  width: 19px;
+  height: 19px;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+
+/* final checkout */
+.signupFinalCheckout{
+  margin-top: 60px;
+  .selectHolder{
+    background: #fafafa url('/images/icon/select_arrow.png') no-repeat 100% 50%;
+    border: 1px solid #d6dde0;
+    @include roundCornerS;
+    select.styled-select{
+      padding-right: 40px;
+      border: 0;
+      background: none;
+      @media(max-width: 800px){
+        padding-right: 28px;
+      }
+    }
+    &.error{
+      border: 1px solid #ff4744;
+    }
+  }
+  @media(max-width:480px){
+    .selectHolder{
+        background-color: #dbdbdb;
+    }
+  }
+  h2{
+    @include signupHeading;
+    @media(max-width:600px){
+        font-size:30px;
+        padding: 20px 15px;
+    }
+    @media(max-width:480px){
+        font-size:24px;
+        padding: 20px 15px;
+        margin-bottom: 0;
+        margin-top: 0;
+        font-family: 'DINWebPro';
+    }
+    @media(max-width:360px){
+        font-size:22px;
+        padding: 20px 10px;
+    }
+  }
+  .finalCheckoutForm{
+    width: 464px;
+    .formHolder{
+      width: 100%;
+      padding: 36px;
+      background-color: white;
+      margin-bottom: 20px;
+      @media (max-width: 480px){
+        background-color:transparent;
+        padding: 30px 20px;
+        margin-bottom: 0;
+        position: relative;
+        &:before{
+          content:'';
+          position: absolute;
+          top: 0;
+          height: 1px;
+          left: 15px;
+          right: 15px;
+          background-color: #d5dde0;
+        }
+      }
+    }
+    .formHolder.profileSettings, .formHolder.subscriptionDetails{
+      @media (max-width: 480px){
+        &:before{
+          display:none;
+        }
+      }
+    }
+    h5{
+      color: #747474;
+      font-size: 24px;
+      text-align: center;
+      font-family: 'DINWebPro';
+      margin-top: 0;
+      margin-bottom: 30px;
+    }
+    h6{
+      font-size: 18px;
+      color: #747474;
+      font-family: 'DINWebPro';
+    }
+    a{
+      text-decoration: underline;
+    }
+    .checkoutPackageSelect{
+      font-size: 18px;
+      color: #747474;
+      padding: 20px 0px;
+      border-top: 1px solid #d6dde0;
+      input[type=checkbox]{
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        margin: 0;
+        z-index: 4;
+        opacity: 0;
+      }
+      label{
+        padding-left: 30px;
+      }
+    }
+    .addPremiumChannel{
+      color: #747474;
+      padding: 8px;
+      background-color: #e3e3e3;
+      position: relative;
+      margin-bottom: 15px;
+      min-height: 48px;
+      @include roundCornerS;
+      button.btnOrange{
+        float: left;
+        font-size: 35px;
+        width: 32px;
+        height: 32px;
+        line-height: 30px;
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        max-width: 32px;
+        padding: 0;
+      }
+      label{
+        padding-left: 45px;
+        padding-right: 60px;
+        font-size: 14px;
+        line-height: 16px;
+        margin-bottom: 0;
+        span{
+          clear: both;
+          display: block;
+        }
+        @media(max-width: 480px){
+          padding-left: 38px;
+          padding-right: 50px;
+          font-size: 13px;
+        }
+      }
+      .packagePrice{
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        font-size: 18px;
+        line-height: 36px;
+      }
+      @media(max-width: 480px){
+        background-color: rgba(107, 106, 106, 0.21);
+      }
+    }
+    a.couponLink{
+      clear: both;
+      display: block;
+      text-align: center;
+      padding: 15px 5px;
+      padding-top: 0px;
+      font-size: 18px;
+    }
+    .couponCode{
+      button{
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 1;
+        background-color: #e3e3e3;
+        color: #747474;
+        font-size: 18px;
+        padding: 0px 10px;
+        font-family: 'DINWebPro' !important;
+        border-radius: 0px 5px 5px 0px;
+        -webkit-border-radius: 0px 5px 5px 0px;
+        -moz-border-radius: 0px 5px 5px 0px;
+        &:focus{
+          background-color: #D7D7D7;
+        }
+      }
+    }
+    .totalPrice{
+      font-size: 18px;
+      font-family: 'DINWebPro-Medium';
+      padding: 10px 0px;
+      border-top: 1px solid #d6dde0;
+      border-bottom: 1px solid #d6dde0;
+      color: #747474;
+      @media (max-width: 480px){
+        border-top: 0;
+      }
+    }
+    .priceInfo{
+      color: #9e9e9e;
+      font-size: 12px;
+      padding: 10px 0px;
+    }
+    @media (max-width: 480px){
+      width:100%;
+      background: none;
+      padding: 0;
+    }
+    .signup-form input.ng-dirty.ng-invalid.ng-invalid-required, .signup-form input.ng-dirty.ng-invalid.ng-invalid-pattern, .signup-form input.ng-dirty.ng-invalid.ng-invalid-email, .signup-form input.ng-dirty.ng-invalid.ng-invalid-equals, .signup-form input.ng-dirty.ng-invalid.ng-invalid-minlength, .signup-form input.ng-dirty.ng-invalid.ng-invalid-maxlength  {
+      border: 1px solid #ff4744;
+    }
+    .billingAddress{
+      .selectCountryHead{
+        @include tabHead;
+        @include roundCornerS;
+        input[type=radio]{
+          visibility: hidden;
+        }
+        .icon_flag{
+          width: 24px;
+          height: 15px;
+          @include iconCountry;
+        }
+        .icon_globe{
+          width: 20px;
+          height: 20px;
+          @include iconCountry;
+        }
+        .selectCountry{
+          @include tabDeactive;
+          @include transBackground;
+          .icon_flag{
+            background:  image-url("icon/us_flag.png") no-repeat center;
+          }
+          .icon_globe{
+            background:  image-url("icon/globe_deactive.png") no-repeat center;
+          }
+          @media(max-width: 480px){
+            height:43px;
+          }
+        }
+        .activeCountry{
+          @include tabActive;
+          @include roundCornerS;
+          .icon_flag{
+            background:  image-url("icon/us_flag_active.png") no-repeat center;
+          }
+          .icon_globe{
+            background:  image-url("icon/globe_blue_active.png") no-repeat center;
+          }
+          @media(max-width: 480px){
+            height:43px;
+          }
+        }
+        @media(max-width: 480px){
+          line-height:45px;
+        }
+      }
+      .zip{
+        padding-left: 0;
+      }
+      .fullWidthWithPadding{
+        width: 100%;
+        padding-left: 15px !important;
+      }
+    }
+    /*payment method*/
+    .paymentMethod{
+      .selectPaymentHead{
+        @include tabHead;
+        @include roundCornerS;
+        input[type=radio]{
+          visibility: hidden;
+        }
+        .selectPayment{
+          @include tabDeactive;
+          @include transBackground;
+          @media(max-width: 480px){
+            height:43px;
+          }
+        }
+        .activePayment{
+          @include tabActive;
+          @include roundCornerS;
+          @media(max-width: 480px){
+            height:43px;
+          }
+        }
+        @media(max-width: 480px){
+          line-height:45px;
+        }
+      }
+      .icon_creditCard{
+        background:  image-url("icon/creditcard_types.png") no-repeat center;
+        @include iconPayment;
+        @media(max-width: 360px){
+          background-size:90%;
+        }
+      }
+      .icon_payPal{
+        background:  image-url("icon/paypal_logo.png") no-repeat center;
+        @include iconPayment;
+      }
+      .payPalInfo{
+        color: #747474;
+        font-size: 18px;
+        text-align: center;
+        font-family: 'DINWebPro';
+        margin-bottom: 20px;
+      }
+      button{
+        @include nextButton;
+      }
+      .paymentCondition{
+        position: relative;
+        label{
+          padding-left: 25px;
+          font-size: 12px;
+          color: #9e9e9e;
+          input[type=checkbox]{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            margin: 0;
+            width: 18px;
+            height: 18px;
+            opacity: 0;
+          }
+        }
+      }
+      .paymentCheckbox{
+        &:before{
+          @include bottomCheckbox;
+        }
+      }
+      .paymentCheckboxChecked{
+        &:before{
+          @include bottomCheckboxChecked;
+        }
+      }
+    }
+  }
+  .form-control{
+    font-size: 18px;
+    font-family: 'DINWebPro';
+    background-color: #fafafa;
+    @media (max-width: 800px){
+      width: 100% !important;
+      margin: 0 !important;
+      height: auto;
+    }
+    @media (max-width: 480px){
+      height: 45px;
+    }
+  }
+  .form-group{
+    margin-bottom: 20px;
+    .icon-custom-valid {
+      background:  image-url("icon/icon_valid_tick.png") no-repeat center;
+      position: absolute;
+      right: 3px;
+      top: 50%;
+      width: 25px;
+      height: 25px;
+      background-size: 25px;
+      transform: translateY(-50%);
+    }
+    .textFieldError{
+      font-family: 'DINWebPro-Medium';
+      color: #eb212e;
+      font-size: 12px;
+      clear: both;
+      display: block;
+    }
+  }
+  .checkoutPackageCheckbox{
+    position: relative;
+    &:before{
+      content:'';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 18px;
+      height: 18px;
+      background:  image-url("icon/checkbox_new.png") no-repeat center;
+    }
+  }
+  .checkoutPackageCheckboxChecked{
+    position: relative;
+    &:before{
+      content:'';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 18px;
+      height: 18px;
+      background:  image-url("icon/checkbox_checked_new.png") no-repeat center;
+    }
+  }
+}
+
+.trustE{
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  @media(max-width: 768px){
+    position:static;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.multiple-error-container {
+  .form-group{
+    margin-bottom: 0px;
+  }
+}
+
+
+/* DIRECTVYAVEO-1459 Hiding country select temporarily */
+.selectCountryHead {
+  display: none;
+}

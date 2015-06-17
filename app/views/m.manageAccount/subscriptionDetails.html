@@ -1,0 +1,124 @@
+<div class="manageAccount">
+    <div class="fullWidth signupFinalCheckout">
+        <div class="col-md-12 col-sm-12 col-xs-12 informationSuccess center" ng-if="informationSuccessContainer">
+            <span class="successIcon"></span>
+            <span>{{informationSuccessMessage | translate}}<span ng-if="packageAddSuccessTxt" ng-bind="addonsNamesList"></span>
+            <span class="closeInfoAlert" ng-click="closeSuccessMessageAlert()"></span>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 informationError center" ng-if="informationErrorContainer">
+            {{informationErrorMessage | translate}}<span ng-if="packageAddErrorTxt" ng-bind="unAddedAddonsNamesList">
+            </span>
+            <span class="closeInfoAlert" ng-click="closeErrorMessageAlert()"></span>
+        </div>
+
+        <div class="manageAccountHeaderMob" style="">
+            <a href="/m.manageAccount" class="backBtnAcMob"></a>
+            <!-- <h3 translate="TXT_HEADER_ACCOUNT_MANAGEMENT" class="center-block"></h3> -->
+            <h3 translate="TXT_ACC_MNGMNT_SUBSC_DETAILS" class="center-block"></h3>
+        </div>
+
+        <h2 translate="TXT_HEADER_ACCOUNT_MANAGEMENT" class="center-block"></h2>
+        <div class="manageAccountForms">
+            <!-- account information -->
+            <div class="finalCheckoutForm col-md-6 col-sm-8 col-xs-12 center-block">
+              <div class="fullWidth formHolder subscriptionDetails parent" ng-controller="subscriptionDetailsCtrl">
+                <span ng-if="accountManagementBillingFormSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+                <div ng-if="showOverlay" class="subscriptionOverlay">
+                  <div class="OverlayCont">
+                      <span translate="TXT_MANAGE_SUBSC_OVERLAY_WARNING"></span>
+                      <div ng-repeat="packageObj in removedObjects" class="channelName" ng-bind="packageObj.name[CurrentLang]">
+                      </div>
+                      <button translate="TXT_MANAGE_SUBSC_OVERLAY_YES" ng-click="removeExistingPackage()"></button>
+                      <button translate="TXT_MANAGE_SUBSC_OVERLAY_NO" ng-click="clearOverlay()"></button>
+                  </div>
+                </div>
+                <h5 translate="TXT_ACC_MNGMNT_SUBSC_DETAILS"></h5>
+                <div class="fullWidth parent mobPadding">
+                  <h6 translate="TXT_ACC_MNGMNT_PACK_ADDONS"></h6>
+                  <span translate="TXT_ACC_MNGMNT_MANAGE_SUBSC_MOB" ng-if="userSubscriptionStatus=='Active'&&showManageAddonBtn" ng-click="showContainer()" class="alignRight managebtn" style="cursor: pointer; position: absolute; right: 10px; top: 10px;" ></span>
+                  <div class="editControls">
+                    <div ng-hide="hideCancelSaveBtn">
+                      <button class="btn btnEdit" translate="TXT_ACC_MNGMNT_CANCEL" ng-class=
+                      "{saveCancelBtnClicked:cancelBtnActive,saveCancelBtn:!cancelBtnActive}" ng-click="boltOnsCancel()" style="cursor: pointer;"></button>
+                      <button class="btn btnOrange" translate="TXT_ACC_MNGMNT_SAVE" ng-class=
+                      "{saveCancelBtnClicked:saveBtnActive,saveCancelBtn:!saveBtnActive}" ng-click="boltOnsSave()" style="cursor: pointer;"></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="fullWidth checkoutPackageSelect mobPadding" style="border-top: none;" id="packageCont" ng-show="packageObjList">
+                  <div ng-repeat="packageObj in packageObjList | filter:{ newPackageSelection : true  }"
+                      class="fullWidth parent" ng-class="(packageObj.type == 'package')?'':{checkoutPackageCheckboxChecked:(packageObj.packageSelection && ((removePackageMode && packageObj.showExpiration == undefined) || (packageObj.type != 'package'))),AddNewlistIcon: (packageObj.showExpiration == true || (!removePackageMode && packageObj.isSubscribed == true)),checkoutPackageCheckbox:!(packageObj.packageSelection && ((removePackageMode && packageObj.showExpiration == undefined) || (packageObj.type != 'package'))),multipleAddons:'true',navAddedDivColor:packageObj.isNavClick == true}">
+                    <label>
+                      <input type="checkbox" ng-model="packageObj.packageSelection" ng-disabled="!(removePackageMode
+                      || (packageObj.type != 'package'))" ng-click="(packageObj.type == 'package' || packageObj.showExpiration == true ||(!removePackageMode && packageObj.isSubscribed == true)) || isCheckboxPaymentChange(packageObj)"/>
+                        <span ng-bind="packageObj.name[CurrentLang]" ng-class="{navAddedSpanColor:packageObj.isNavClick == true}"></span>
+                        <!-- <span ng-if="packageObj.showExpiration == true && packageObj.type == 'package'" class="basicPackageTrialSpan" ><span ng-bind="packageObj.expirationDuration" style="font-size:10px;line-height: 18px;"></span><span translate="DAYS_FREETRIAL_TXT" style="font-size:10px;line-height: 18px;"></span>
+                        </span> -->
+                        <span ng-if="userSubscriptionStatus=='Active'&&(packageObj.showExpiration == true && packageObj.type != 'package')" class="addonPackageDurationSpan" ><span ng-bind="packageObj.expirationDuration" style="font-size:10px;line-height: 18px;"></span><span style="font-size:10px;line-height: 18px;" translate="DAYS_REMAINING_TXT"></span>
+                        </span>
+                        <span ng-if="userSubscriptionStatus=='Cancelled'&&(packageObj.type == 'package')" class="addonPackageDurationSpan" ><span ng-bind="basicPackDaysRemaining" style="font-size:10px;line-height: 18px;"></span><span style="font-size:10px;line-height: 18px;" translate="DAYS_REMAINING_TXT"></span>
+                        </span>
+                        <span ng-if="userSubscriptionStatus=='Active'&&packageObj.billing_plan.is_show_description == true" class="basicPackageTrialSpan" ng-bind="packageObj.billing_plan.description[CurrentLang]"></span>
+                    </label>
+                    <span class="pull-right" style="padding-right: 14px;" ng-if="userSubscriptionStatus=='Active'">
+                      <span ng-bind="packageObj.billing_plan.price_symbol"></span><span ng-bind="packageObj.billing_plan.price_amount"></span><span ng-bind="packageObj.billing_plan.price_currency"></span>
+                    </span>
+                  </div>
+                   <div ng-bind="currSelectedNavBolton.description[CurrentLang]" class="boltonDescription" ng-if="currNavSelected">
+                  </div>
+                </div>
+                <div class="fullWidth"  style=" text-align: center;margin-bottom: 12px;cursor:pointer;" ng-if="userSubscriptionStatus=='Active'&&showMoreUpgradesLabel" translate="TXT_VIEW_MORE_UPGRADES" ng-click="getMoreUpgrades()"></div>
+                <div id="addPremChannel" class="fullWidth" ng-hide="userSubscriptionStatus=='Cancelled'||hideAddonContainer" >
+                  <div class="fullWidth"  style=" text-align: center;margin-bottom: 12px;" ng-hide="userSubscriptionStatus=='Cancelled'||hideAddonContainer" translate="TXT_UPGRADE_TO"></div>
+                  <div class="fullWidth addPremiumChannelHolder">
+                    <div class="fullWidth addBoltons addPremiumChannel" title="Add to List" ng-repeat="packageObj in packageObjList | filter:{ type: 'addon', isSubscribed: false  }" ng-click="addAdditionalPackage(packageObj)" ng-hide="packageVal[packageObj.id]">
+                      <button class="glyphicon glyphicon-plus btnOrange pull-left"></button>
+                      <label>
+                          <span ng-bind="packageObj.description[CurrentLang]"></span>
+                          <span ng-if="packageObj.billing_plan.is_show_description" ng-bind="packageObj.billing_plan.description[CurrentLang]"></span>
+                      </label>
+                      <span class="pull-right packagePrice">
+                          <span ng-bind="packageObj.billing_plan.price_symbol"></span><span ng-bind="packageObj.billing_plan.price_amount"></span><span ng-bind="packageObj.billing_plan.price_currency"></span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <a href="#" class="couponLink" ng-if="isCouponCode" ng-click="showCouponCodeContainer()" translate="TXT_SIGNUP_COUPON_CODE"></a>
+                <div class="fullWidth totalPrice mobPadding" style="border-top:none;" ng-if="userSubscriptionStatus=='Active'">
+                  <span class="pull-left" translate="TXT_SIGNUP_GRAND_TOTAL"></span>
+                  <span class="pull-right">{{currencySymbol}} {{grandTotal}}/{{'TXT_CURRENCY' | translate}}</span>
+                </div>
+                <form name="passwordForm" class="fullWidth mobPadding" ng-init="setFormScope(this)" novalidate>
+                  <div id="addOnForm" ng-show="showForm" class="form-group fullWidth note parent couponCode" ng-if="!isCouponCode" ng-class="{true: 'error'}[submitted && (passwordForm.password.$dirty && passwordForm.password.$invalid)]">
+                    <input style="font-size: 17px;" name="password" type="password" class="form-control" id="passwordId" placeholder="{{'TXT_CONF_PASSWORD'|translate}}" ng-model="CCpassword" required ng-disabled="addOnSubscrptnSpinner" focus-me="focusInput" ng-class="{true: 'error'}[(passwordForm.password.$dirty || submitted) && passwordForm.password.$invalid]">
+                    <span translate="INCRCT_PSWRD_TXT" ng-if="showIncorrectPasswordError" class="IncrctPaswrd"></span>
+                    <button translate="TXT_ACC_MNGMNT_CANCEL" ng-click="addOnSubscrptnSpinner||purchaseCancel()" class="addonCancelBtn"></button>
+                    <button type="submit" translate="TXT_ADDON_PURCHASE" ng-click="addOnSubscrptnSpinner||CheckPasswordAndConfirm()" class="addonPurchaseBtn"></button>
+                  </div>
+                </form>
+                <div class="fullWidth mobPadding" ng-hide="hideTextBelow">
+                  <div class="fullWidth priceInfo"  style=" border-bottom: 1px solid #d6dde0;">
+                      <!-- <div class="fullWidth" style="font-weight: bold;" ng-if="showTrialText==true">
+                      {{'SUBSCRPN_PRICE_INFO_START_TXT' | translate}}{{basicPackDaysRemaining}}{{'SUBSCRPN_PRICE_INFO_MIDDLE_TXT1' | translate}}{{freeTrialDays}}{{'SUBSCRPN_PRICE_INFO_MIDDLE_TXT2' | translate}}
+                      </div> -->
+                      <div class="fullWidth" ng-if="userSubscriptionStatus=='Active'">
+                      {{'SUBSCRPN_PRICE_INFO_FINAL_START_TXT' | translate}}{{nextBillingDate}},{{'SUBSCRPN_PRICE_INFO_FINAL_END_TXT' | translate}}{{basicPackAmount}}
+                      </div>
+                       <div class="fullWidth" ng-if="userSubscriptionStatus=='Cancelled'">
+                      {{'EXPIRY_TEXT_START' | translate}}{{basicExpDate}}{{'EXPIRY_TEXT_END' | translate}}
+                      </div>
+                  </div>
+                  <div class="fullWidth" style=" text-align: center; padding-top: 14px;">
+                    <span style="cursor:pointer" ng-click="billngHistory()">{{'TXT_BILL_HISTORY' | translate}}</span> <span ng-if="userSubscriptionStatus=='Active'">|</span> <span style="cursor:pointer" ng-click="cancelAccount()" ng-if="userSubscriptionStatus=='Active'">{{'TXT_CANCEL_SUBSC' | translate}}</span>
+                  </div>
+                </div>
+                <div id="addonSpinner" class="fullWidth mobPadding" ng-show="addOnSubscrptnSpinner" style="text-align:center;">
+                  <span us-spinner="{radius:5, width:5, length: 3}" style="  position: relative; top: -13px;"></span>
+                  <span style="font-size: 19px;" translate="TXT_MANAGE_SUBSC_PURCHASELOAD"></span>
+                  <h6 translate="TXT_MANAGE_SUBSC_PURCHASELOAD_BELOWTEXT"></h6>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

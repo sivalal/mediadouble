@@ -1,0 +1,248 @@
+<div class="manageAccount" ng-controller="billingInformationCtrl">
+    <div class="fullWidth signupFinalCheckout">
+        <div class="col-md-12 col-sm-12 col-xs-12 informationSuccess center" ng-if="informationSuccessContainer">
+            <span class="successIcon"></span>
+            <span>{{informationSuccessMessage | translate}}<span ng-if="packageAddSuccessTxt" ng-bind="addonsNamesList"></span>
+            <span class="closeInfoAlert" ng-click="closeSuccessMessageAlert()"></span>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 informationError center" ng-if="informationErrorContainer">
+            {{informationErrorMessage | translate}}<span ng-if="packageAddErrorTxt" ng-bind="unAddedAddonsNamesList">
+            </span>
+            <span class="closeInfoAlert" ng-click="closeErrorMessageAlert()"></span>
+        </div>
+        <div class="manageAccountHeaderMob" style="">
+            <a href="/m.manageAccount" class="backBtnAcMob"></a>
+            <h3 class="center-block" translate="TXT_ADMIN_BILLING_INFO_BILLING_DETAILS"></h3>
+            <button class="btnEdit" ng-if="displayBillingDetails && paymentMethods.billing_address" ng-click="editUserBillingInfo()" translate="TXT_EDIT_ACCOUNT_MANAGEMENT"></button>
+            <button class="btnEdit" ng-if="!displayPaymentDetails" ng-click="cancelUserPaymentInfo()" translate="TXT_CANCEL_ACCOUNT_MANAGEMENT"></button>
+        </div>
+        <span ng-if="accountManagementBillingFormSpinner || editBillingInformationSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+        <div class="manageAccountForms">
+            <!-- account information -->
+            <div class="finalCheckoutForm col-md-6 col-sm-8 col-xs-12 center-block">
+                <div class="accountInformation">
+                    <div class="billingAddress fullWidth formHolder">
+                        <div class="billingInformation fullWidth">
+                            <div class="fullWidth parent">
+                                <div class="editControls">
+                                    <button class="btn btnEdit" ng-if="!displayBillingDetails && displayPaymentDetails" ng-click="cancelUserBillingInfo()" translate="TXT_CANCEL_ACCOUNT_MANAGEMENT"></button>
+                                    <button class="btn btnOrange" ng-if="!displayBillingDetails && displayPaymentDetails" ng-click="saveUserBillingInfo()" translate="TXT_SAVE_ACCOUNT_MANAGEMENT"></button>
+                                </div>
+                            </div>
+                            <div ng-if="displayBillingDetails && paymentMethods">
+                                <div class="form-group note parent fullWidth" ng-show="paymentMethods.billing_address">
+                                    <div class="fullWidth parent">
+                                        <div class="form-control" ng-bind="paymentMethods.billing_address.addr1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group note parent fullWidth" ng-show="paymentMethods.billing_address">
+                                    <div class="fullWidth parent">
+                                        <div class="form-control" ng-bind="paymentMethods.billing_address.addr2"></div>
+                                    </div>
+                                </div>
+                                <div class="selectCountryHead fullWidth" ng-show="paymentMethods.billing_address.country">
+                                    <div class="col-md-6 col-sm-6 col-xs-6 no-padding selectCountry" ng-class="{'activeCountry': paymentMethods.billing_address.country == USDetails.code}">
+                                        <span ng-bind="USDetails.name" style="margin-left: 10px;"></span>
+                                        <span class="icon_flag"></span>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6 no-padding selectCountry" ng-class="{'activeCountry': paymentMethods.billing_address.country == OTHERDetails.code}">
+                                        <span ng-bind="OTHERDetails.name" style="margin-left: 10px;"></span>
+                                        <span class="icon_globe"></span>
+                                    </div>
+                                </div>
+                                <div class="fullWidth multiple-error-container form-group" ng-show="paymentMethods.billing_address.country && paymentMethods.billing_address.district">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4 col-xs-4 form-group note parent" ng-show="paymentMethods.billing_address.country == USDetails.code">
+                                            <div class="form-control" ng-bind="paymentMethods.billing_address.city"></div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4 form-group note parent no-padding-left" ng-show="paymentMethods.billing_address.country == USDetails.code">
+                                            <div class="selectHolder">
+                                                <select name="billingAddressDistrict" ng-model="paymentMethods.billing_address.district" class="form-control styled-select" id="billingAddressDistrict" style="color: #9e9e9e;  background-color: #dbdbdb;" disabled>
+                                                    <option ng-selected="{{state.code == paymentMethods.billing_address.district}}" ng-repeat="state in USDetails.states" value="{{state.code}}">{{state.name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4 form-group note parent zip" ng-class="(paymentMethods.billing_address.country == OTHERDetails.code) ? 'fullWidthWithPadding' : ''">
+                                            <div class="form-control" ng-bind="paymentMethods.billing_address.postal_code_string"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <form novalidate  name="billingForm" role="form" id="billingForm" method="POST">
+                                <div ng-hide="displayBillingDetails" class="parent">
+                                    <span ng-show="ajaxBillingInfoSpinner"  us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>    
+                                    <input type="hidden" name="vin_PaymentMethod_accountHolderName" id="vin_PaymentMethod_accountHolderName" value="{{username}}" required>
+                                    <input type="hidden" name="vin_PaymentMethod_billingAddress_name" id="vin_PaymentMethod_billingAddress_name" value="{{username}}" required>
+                                    <input type="hidden" name="vin_WebSession_vid" id="vin_WebSession_vid" required>
+                                    <input type="hidden" name="vin_Account_emailAddress" id="vin_Account_emailAddress" value="{{emailId}}" required>
+                                    <input type="hidden" name="vin_Account_name" id="vin_Account_name" value="{{username}}" required>
+                                    <div class="form-group note parent fullWidth">
+                                        <label translate="TXT_ADDRESS_1_ACCOUNT_MANAGEMENT"></label>
+                                        <input type="text" class="form-control" name="vin_PaymentMethod_billingAddress_addr1" ng-model="paymentMethods.billing_address.addr1"   id="billingAddress1" ng-class="{true: 'error'}[(submitted || billingForm.vin_PaymentMethod_billingAddress_addr1.$dirty) && billingForm.vin_PaymentMethod_billingAddress_addr1.$invalid && !billingForm.vin_PaymentMethod_billingAddress_addr1.$focused]" restrict="[^a-zA-Z0-9\.\,\/\#\(\)\-\s]" ng-focus required>
+                                        <span class="textFieldError" ng-if="(submitted || billingForm.vin_PaymentMethod_billingAddress_addr1.$dirty) && !billingForm.vin_PaymentMethod_billingAddress_addr1.$focused && billingForm.vin_PaymentMethod_billingAddress_addr1.$error.required" translate="ERROR13"></span>
+                                        <span class="textFieldError" ng-if="(submitted || billingForm.vin_PaymentMethod_billingAddress_addr1.$dirty) && !billingForm.vin_PaymentMethod_billingAddress_addr1.$focused && billingForm.vin_PaymentMethod_billingAddress_addr1.$error.pattern" translate="ERROR26"></span>
+                                    </div>
+                                    <div class="form-group note parent fullWidth">
+                                        <label translate="TXT_ADDRESS_2_ACCOUNT_MANAGEMENT"></label>
+                                        <input type="text" class="form-control" name="vin_PaymentMethod_billingAddress_addr2" ng-model="paymentMethods.billing_address.addr2" id="billingAddress2" ng-value="paymentMethods.billing_address.addr2" restrict="[^a-zA-Z0-9\.\,\/\#\(\)\-\s]" ng-class="{true: 'error'}[(submitted || billingForm.vin_PaymentMethod_billingAddress_addr2.$dirty) && billingForm.vin_PaymentMethod_billingAddress_addr2.$invalid && !billingForm.vin_PaymentMethod_billingAddress_addr2.$focused]" ng-focus>
+                                        <span class="textFieldError" ng-if="(submitted || billingForm.vin_PaymentMethod_billingAddress_addr2.$dirty) && !billingForm.vin_PaymentMethod_billingAddress_addr2.$focused && billingForm.vin_PaymentMethod_billingAddress_addr2.$error.pattern" translate="ERROR26"></span>
+                                    </div>
+                                    <div class="selectCountryHead fullWidth" ng-show="paymentMethods.billing_address.country">
+                                        <div class="col-md-6 col-sm-6 col-xs-6 no-padding selectCountry" ng-click="updateCountryTab(USDetails.code)" ng-class="{'activeCountry': paymentMethods.billing_address.country == USDetails.code}">
+                                            <input name="vin_PaymentMethod_billingAddress_country" class="alignLeft" type="radio" ng-model="paymentMethods.billing_address.country" value="{{USDetails.code}}">
+                                            <span ng-bind="USDetails.name"></span>
+                                            <span class="icon_flag"></span>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6 no-padding selectCountry" ng-click="updateCountryTab(OTHERDetails.code)" ng-class="{'activeCountry': paymentMethods.billing_address.country == OTHERDetails.code}">
+                                            <input name="vin_PaymentMethod_billingAddress_country" class="alignLeft" type="radio" ng-model="paymentMethods.billing_address.country" value="{{OTHERDetails.code}}">
+                                            <span ng-bind="OTHERDetails.name"></span>
+                                            <span class="icon_globe"></span>
+                                        </div>
+                                    </div>
+                                    <div class="fullWidth multiple-error-container form-group" ng-show="paymentMethods.billing_address.country">
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-4 col-xs-4 form-group note parent" ng-class="(paymentMethods.billing_address.country == OTHERDetails.code) ? 'fullWidthWithPadding' : ''">
+                                                <label translate="HINT_TXT_CITY_MANAGE_ACCOUNT"></label>
+                                                <input type="text" class="form-control" name="vin_PaymentMethod_billingAddress_city" ng-model="paymentMethods.billing_address.city" placeholder="{{'HINT_TXT_CITY_MANAGE_ACCOUNT'|translate}}" id="billingCity" ng-class="{true: 'error'}[(submitted || billingForm.vin_PaymentMethod_billingAddress_city.$dirty) && billingForm.vin_PaymentMethod_billingAddress_city.$invalid && !billingForm.vin_PaymentMethod_billingAddress_city.$focused]" restrict="[^a-zA-Z0-9\.\,\/\#\(\)\-\s]" ng-required="billing_address.country == USDetails.code" ng-focus>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4 col-xs-4 form-group note parent no-padding-left" ng-show="paymentMethods.billing_address.country == USDetails.code">
+                                                <label translate="HINT_TXT_STATE_MANAGE_ACCOUNT"></label>
+                                                <div class="selectHolder" ng-class="{true: 'error'}[(submitted || billingForm.vin_PaymentMethod_billingAddress_district.$dirty) && billingForm.vin_PaymentMethod_billingAddress_district.$invalid && !billingForm.vin_PaymentMethod_billingAddress_district.$focused]" >
+                                                    <select name="vin_PaymentMethod_billingAddress_district" ng-model="paymentMethods.billing_address.district" class="form-control styled-select" id="vin_PaymentMethod_billingAddress_district" ng-required="paymentMethods.billing_address.country == USDetails.code" ng-focus>
+                                                        <option ng-selected="{{state.code == paymentMethods.billing_address.district}}" ng-repeat="state in USDetails.states" value="{{state.code}}">{{state.name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4 col-xs-4 form-group note parent zip" ng-show="paymentMethods.billing_address.country == USDetails.code">
+                                                <label translate="HINT_TXT_ZIP_CODE_MANAGE_ACCOUNT"></label>
+                                                <input type="text" name="vin_PaymentMethod_billingAddress_postalCode" class="form-control" placeholder="{{'HINT_TXT_ZIP_CODE_MANAGE_ACCOUNT'|translate}}" id="USbillingPostalCode" ng-model="paymentMethods.billing_address.postal_code_string" ng-class="{true: 'error'}[(submitted || billingForm.vin_PaymentMethod_billingAddress_postalCode.$dirty) && billingForm.vin_PaymentMethod_billingAddress_postalCode.$invalid && !billingForm.vin_PaymentMethod_billingAddress_postalCode.$focused]" ng-pattern="/(^\d{5}$)|(^\d{5}-\d{4}$)/" ng-focus limit-to="6">
+                                            </div>
+                                            <div class="col-md-12 clear" ng-show="billing_address.country == USDetails.code">
+                                                <span class="textFieldError" ng-if="(submitted || billingForm.vin_PaymentMethod_billingAddress_city.$dirty) && !billingForm.vin_PaymentMethod_billingAddress_city.$focused && billingForm.vin_PaymentMethod_billingAddress_city.$error.required" translate="ERROR14"></span>
+                                                <span class="textFieldError" ng-if="(submitted || billingForm.vin_PaymentMethod_billingAddress_district.$dirty) && !billingForm.vin_PaymentMethod_billingAddress_district.$focused && billingForm.vin_PaymentMethod_billingAddress_district.$error.required" translate="ERROR17"></span>
+                                                <span class="textFieldError" ng-if="(submitted || billingForm.vin_PaymentMethod_billingAddress_postalCode.$dirty) && !billingForm.vin_PaymentMethod_billingAddress_postalCode.$focused && billingForm.vin_PaymentMethod_billingAddress_postalCode.$error.required" translate="ERROR15"></span>
+                                                <span class="textFieldError" ng-if="(submitted || billingForm.vin_PaymentMethod_billingAddress_postalCode.$dirty) && !billingForm.vin_PaymentMethod_billingAddress_postalCode.$focused && billingForm.vin_PaymentMethod_billingAddress_postalCode.$error.pattern" translate="ERROR16"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fullWidth parent" ng-if="displayPaymentDetails && paymentMethods" style="min-height: 40px;">
+                                    <div class="pull-right">
+                                        <button class="btn btnEdit editBtn" ng-click="editUserPaymentInfo()" translate="TXT_EDIT_ACCOUNT_MANAGEMENT"></button>
+                                    </div>
+                                </div>
+                                <div ng-hide="displayPaymentDetails">
+                                    <hr/>
+                                    <div class="selectPaymentHead fullWidth">
+                                        <div class="col-md-6 col-sm-6 col-xs-6 no-padding selectPayment" ng-click="updatePaymentTab('credit_card')" ng-class="{true: 'activePayment'}[paymentName == 'credit_card']">
+                                            <input class="alignLeft" type="radio" ng-model="paymentName" ng-value="credit_card">
+                                            <span class="icon_creditCard"></span>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6 no-padding selectPayment" ng-click="updatePaymentTab('paypal')" ng-class="{true: 'activePayment'}[paymentName == 'paypal']">
+                                            <input class="alignLeft" type="radio" ng-model="paymentName" ng-value="paypal">
+                                            <span class="icon_payPal"></span>
+                                        </div>
+                                    </div>
+                                    <div class="fullWidth" ng-show="paymentName == 'credit_card'">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group note parent">
+                                                <label translate="BTN_CARD_NUMBER_MANAGE_ACCOUNT"></label>
+                                                <div class="fullWidth parent">
+                                                    <input type="text" class="form-control" name="vin_PaymentMethod_creditCard_account" ng-model="vin_PaymentMethod_creditCard_account" payments-validate="card" payments-format="card" payments-type-model="type" id="credit_card" ng-change="checkCreditcardType(billingForm.vin_PaymentMethod_creditCard_account.$card.type)" card-number-type-check="{{billingForm.vin_PaymentMethod_creditCard_account.$card.type}}" ng-class="{true: 'error'}[(submitted || billingForm.vin_PaymentMethod_creditCard_account.$dirty) && billingForm.vin_PaymentMethod_creditCard_account.$invalid && !billingForm.vin_PaymentMethod_creditCard_account.$focused]" only-digits ng-focus required/>
+                                                    <div class="selected_cards rightAlign" ng-class="billingForm.vin_PaymentMethod_creditCard_account.$card.type"></div>
+                                                    <span class="textFieldError" ng-if="(submitted || billingForm.vin_PaymentMethod_creditCard_account.$dirty) && !billingForm.vin_PaymentMethod_creditCard_account.$focused && billingForm.vin_PaymentMethod_creditCard_account.$error.required" translate="ERROR24"></span>
+                                                    <span class="textFieldError" ng-if="(submitted || billingForm.vin_PaymentMethod_creditCard_account.$dirty) && !billingForm.vin_PaymentMethod_creditCard_account.$focused && billingForm.vin_PaymentMethod_creditCard_account.$error.card" translate="ERROR18"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-4 col-xs-4 form-group note parent">
+                                                <label translate="BTN_MONTH_MANAGE_ACCOUNT"></label>
+                                                <div class="selectHolder"  ng-class="{true: 'error'}[(submitted || billingForm.vin_PaymentMethod_creditCard_expirationDate_Month.$dirty) && billingForm.vin_PaymentMethod_creditCard_expirationDate_Month.$invalid && !billingForm.vin_PaymentMethod_creditCard_expirationDate_Month.$focused]">
+                                                    <select name="vin_PaymentMethod_creditCard_expirationDate_Month" ng-model="vin_PaymentMethod_creditCard_expirationDate_Month" class="form-control styled-select" ng-options="k as v for (k,v) in genericFields.month_range[CurrentLang]" id="vin_PaymentMethod_creditCard_expirationDate_Month" data-card-expiration ng-focus required>
+                                                        <option style="display:none;" selected value=""></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4 col-xs-4 form-group note parent no-padding-left">
+                                                <label translate="BTN_YEAR_MANAGE_ACCOUNT"></label>
+                                                <div class="selectHolder" ng-class="{true: 'error'}[(submitted || billingForm.vin_PaymentMethod_creditCard_expirationDate_Year.$dirty) && billingForm.vin_PaymentMethod_creditCard_expirationDate_Year.$invalid && !billingForm.vin_PaymentMethod_creditCard_expirationDate_Year.$focused]">
+                                                    <select name="vin_PaymentMethod_creditCard_expirationDate_Year" ng-model="vin_PaymentMethod_creditCard_expirationDate_Year" class="form-control styled-select" ng-options="k as v for (k,v) in expiryYearValue" id="vin_PaymentMethod_creditCard_expirationDate_Year" data-card-expiration ng-focus required>
+                                                        <option style="display:none;" selected value=""></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4 col-xs-4 form-group note parent no-padding-left">
+                                                <label translate="BTN_CVV_NUMBER_MANAGE_ACCOUNT"></label>
+                                                <div class="fullWidth parent">
+                                                    <input type="text" class="form-control" name="vin_PaymentMethod_nameValues_cvn" ng-model="vin_PaymentMethod_nameValues_cvn" payments-validate="cvc" payments-type-model="type" ng-class="{true: 'error'}[(submitted || billingForm.vin_PaymentMethod_nameValues_cvn.$dirty) && billingForm.vin_PaymentMethod_nameValues_cvn.$invalid && !billingForm.vin_PaymentMethod_nameValues_cvn.$focused]" limit-to="5" ng-focus required/>
+                                                    <span class="icon-info">
+                                                        <span class="securityInfo" translate="TXT_SECURITY_CODE_SIGNUP_BILLING">
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" style="margin-top: -15px;">
+                                                <span class="textFieldError" ng-if="(submitted || (billingForm.vin_PaymentMethod_creditCard_expirationDate_Year.$dirty && billingForm.vin_PaymentMethod_creditCard_expirationDate_Month.$dirty)) && (!billingForm.vin_PaymentMethod_creditCard_expirationDate_Year.$focused || !billingForm.vin_PaymentMethod_creditCard_expirationDate_Month.$focused) && (billingForm.vin_PaymentMethod_creditCard_expirationDate_Year.$error.required || billingForm.vin_PaymentMethod_creditCard_expirationDate_Month.$error.required)" translate="ERROR19"></span>
+                                                <span class="textFieldError" ng-if="(submitted || billingForm.vin_PaymentMethod_creditCard_expirationDate_Year.$dirty || billingForm.vin_PaymentMethod_creditCard_expirationDate_Month.$dirty) && (!billingForm.vin_PaymentMethod_creditCard_expirationDate_Year.$focused || !billingForm.vin_PaymentMethod_creditCard_expirationDate_Month.$focused) && (billingForm.vin_PaymentMethod_creditCard_expirationDate_Year.$error.invalid || billingForm.vin_PaymentMethod_creditCard_expirationDate_Month.$error.invalid)"  translate="ERROR23"></span>
+                                                <span class="textFieldError" ng-if="(submitted || billingForm.vin_PaymentMethod_nameValues_cvn.$dirty) && !billingForm.vin_PaymentMethod_nameValues_cvn.$focused && billingForm.vin_PaymentMethod_nameValues_cvn.$error.required" translate="ERROR20"></span>
+                                                <span class="textFieldError" ng-if="(submitted || billingForm.vin_PaymentMethod_nameValues_cvn.$dirty) && !billingForm.vin_PaymentMethod_nameValues_cvn.$focused && billingForm.vin_PaymentMethod_nameValues_cvn.$error.cvc" translate="ERROR21"></span>
+                                            </div>
+                                        </div>
+                                        <button class="btnOrange" ng-click="paymentCreditCardMethod()" ng-disabled="accountManagementBillingFormSpinner" translate="BTN_CC_ACCOUNT_MANAGEMENT"></button>
+                                        <span class="textFieldError" ng-if="(submitted || billingForm.tcCreditcardCheck.$dirty) && !billingForm.tcCreditcardCheck.$focused && billingForm.tcCreditcardCheck.$error.required" translate="ERROR45"></span>
+                                        <div ng-class="{paymentCheckboxChecked:tcCreditcardCheck,paymentCheckbox:!tcCreditcardCheck}" class="paymentCondition">
+                                            <label>
+                                                <input name="tcCreditcardCheck" type="checkbox" ng-model="tcCreditcardCheck" ng-change="isCheckboxChange()" ng-required="paymentName == 'credit_card'"/>
+                                                <span translate="TXT_READ_AND_AGREE_TERMS_OF_USE_CREDITCARD"></span>
+                                            </label>
+                                            <label>
+                                                <span class="alignLeft">{{'TXT_FINAL_CHECKOUT_TERMS_PRIVACY_POLICY' | translate}}<a ng-href="{{toc[0].mpath}}" target="_blank" ng-bind="'TXT_TERMS_OF_USE' | translate"></a>{{'TXT_AND' |  translate}}<a ng-href="{{privacyPolicy[0].mpath}}" target="_blank" ng-bind="'TXT_PRIVACT_POLICY' | translate"></a></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="fullWidth" ng-show="paymentName == 'paypal'">
+                                        <div class="payPalInfo fullWidth" translate="TXT_SIGNUP_CONTINUE_TO_PAYPAL"></div>
+                                        <button class="btnOrange" ng-click="paymentPaypalMethod()" ng-disabled="accountManagementBillingFormSpinner" translate="BTN_PAYPAL_ACCOUNT_MANAGEMENT"></button>
+                                        <span class="textFieldError" ng-if="(submitted || billingForm.tcPaypalcheck.$dirty) && !billingForm.tcPaypalcheck.$focused && billingForm.tcPaypalcheck.$error.required" translate="ERROR45"></span>
+                                        <div ng-class="{paymentCheckboxChecked:tcPaypalcheck,paymentCheckbox:!tcPaypalcheck}" class="paymentCondition">
+                                            <label>
+                                                <input name="tcPaypalcheck" type="checkbox" ng-model="tcPaypalcheck" ng-click="isCheckboxChange()" ng-required="paymentName == 'paypal'"/>
+                                                <span translate="TXT_READ_AND_AGREE_TERMS_OF_USE_PAYPAL"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <hr ng-if="displayPaymentDetails && paymentMethods"/>
+                            <div class="fullWidth" ng-if="displayPaymentDetails && paymentMethods.credit_card">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group note parent">
+                                        <input type="text" class="form-control" ng-model="paymentMethods.credit_card.card_number"  credit-card-type disabled="disabled" style="color: #9e9e9e;"/>
+                                        <div class="selected_cards" ng-class="ccinfo"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-4 form-group note parent">
+                                        <div class="form-control">XX</div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-4 form-group note parent no-padding-left">
+                                        <div class="form-control">XX</div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-4 form-group note parent no-padding-left">
+                                        <div class="form-control">XXXX</div>   
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group note parent fullWidth" ng-if="displayPaymentDetails && paymentMethods.paypal" style="margin-bottom: 195px;">
+                                <div class="fullWidth parent">
+                                    <div class="form-control" ng-bind="paymentMethods.paypal.email"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

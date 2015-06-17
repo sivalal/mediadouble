@@ -1,0 +1,92 @@
+
+
+<div id="menu" class="navbar navbar-inverse navbar-fixed-top clearfix navbar-custom" ng-style="navmenuStyle">  
+      <div id="logo" class="navbar-header navbar-left">   
+        <!-- LOGO IMAGE -->
+        <a href="/"><img ng-src="{{logoweb}}" ng-show="showlogo" ></a>
+      </div>
+      <button class="btn menu-toggle-btn btn-primary navbar-toggle navbar-left" ng-click="collapsingMenu()">
+        <span>Menu</span>
+      </button> 
+      <!--navbarheader -->
+      <div class="navbar-collapse navbar-left navbarMenu collapse" id="collasible" collapse="isCollapsed" style="height: 0;">
+          <ul class="nav navbar-nav">
+                <!-- ngIf: menu.dropdown !=undefined -->
+            <li class="ng-scope">
+                <a class="nav ng-scope" show-sub-menu="" translate="TV" active-link="menu-font-color" href="/tvList">TV</a>
+
+                <!-- ngIf: menu.dropdown !=undefined -->
+            </li><!-- end ngRepeat: menu in menus track by $index -->
+            <li class="ng-scope">
+                <a class="nav ng-scope"  show-sub-menu="" translate="MOVIES" active-link="menu-font-color" href="/movieList">MOVIES</a>
+
+                <!-- ngIf: menu.dropdown !=undefined -->
+            </li><!-- end ngRepeat: menu in menus track by $index -->
+            <li class="ng-scope">
+                <a  class="nav ng-scope"  show-sub-menu="" translate="LIVE"  active-link="menu-font-color" href="/liveList">LIVE</a>
+
+                <!-- ngIf: menu.dropdown !=undefined -->
+            </li><!-- end ngRepeat: menu in menus track by $index -->
+            <li ng-repeat="menu in menus track by $index" ng-class="{'dropdown': menu.dropdown !=undefined}" class="ng-scope">
+                <a  class="nav ng-scope"  show-sub-menu="" translate="NETWORK"  active-link="menu-font-color" href="/networkList">NETWORK</a>
+
+                <!-- ngIf: menu.dropdown !=undefined -->
+            </li><!-- end ngRepeat: menu in menus track by $index -->
+            <li ng-repeat="menu in menus track by $index" ng-class="{'dropdown': menu.dropdown !=undefined}" class="ng-scope">
+                <a  class="nav ng-scope"  show-sub-menu="" translate="MORE"  active-link="menu-font-color" href="#">MORE</a>
+
+                <!-- ngIf: menu.dropdown !=undefined -->
+            </li><!-- end ngRepeat: menu in menus track by $index --> 
+            <li class="search-icon"><a href="#" ><span class="icon-custom-search"></span></a></li>         
+          </ul>
+          <div class="navbar-right visible-xs">
+              <button class="btn btnOrange btn-default navbar-btn signup" id="signupERT">SIGN UP</button>
+          </div>  
+      </div>        
+      <div class="navbar-header pull-right">
+          <ul class="nav navbar-nav pull-left navBarIcons">
+             <li class="dropdown">
+                  <a href="#"  class="dropdown-toggle" data-toggle="dropdown"><span class="icon-custom-globe"></span></a>
+                  <ul class="dropdown-menu" id="languageSubmenu" mousable="">
+                    <span class="navlink"></span>                   
+                    <li class="select-lang">Select Language</li>
+                    <li class="divider"></li>
+                    <li><a href="#" class="active">English</a></li>
+                    <li><a href="#" >Spanish</a></li>
+                  </ul>
+                </li>
+          </ul>
+          <ul class="nav navbar-nav pull-left navBarIcons" style="display:none">
+             <li><a ><span class="icon-custom-help"></span></a></li> 
+          </ul>
+
+          <ul class="nav navbar-nav pull-left navBarIcons">
+                <li id="selectable" class="dropdown">
+                  <a style="display:none" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <span class="icon-custom-user"></span>
+                  <label style="padding-left:10px" class="ng-binding"></label>
+                  </a>
+                  <ul class="dropdown-menu" id="logoutmenu" style="display:none">
+                    <span class="navlink"></span>                   
+                    <li><a href="#" >Logout</a></li>
+                  </ul>
+                </li>
+          </ul>
+
+
+          <ul style="display:none" class="nav navbar-nav pull-left navBarIcons hidden-xs" style="background-color:#2E332F">
+              <li style=" display: inline; border-left: 2px solid;border-color:#4D5459; padding-left: 0.3em;">
+                <a href="#" >
+                  <span class="icon-custom-admin"></span>
+                </a>
+              </li>
+
+          </ul>
+          <div class="nav navbar-nav pull-left visible-md visible-lg visible-sm">
+              <button style="display:none" class="btn btnGrey btn-default navbar-btn login" id="login">LOGIN</button>
+              <button class="btn btnOrange btn-default navbar-btn signup" id="signup">SIGN UP</button>
+            <!--   <button  ng-click="logOut()" ng-show="isLoggedIn" class="btn btn-default navbar-btn signup" id="logout">LOG OUT</button> -->
+          </div>
+              
+      </div>     
+    </div>

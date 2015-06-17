@@ -1,0 +1,47 @@
+<script>
+  jQuery(document).ready(function ($) {
+    "use strict";
+    $('#movieScroll').perfectScrollbar();
+  });
+</script>
+
+<div id="movieScroll" class="contentHolderSearch">
+
+	<div style="width:100%; height:40px; background-color:#E2E6EA; margin-top:-20px;">
+	  <button ng-click="backToMenu('views/admin/watchlist.html')" class="icon-custom-back" style="text-decoration:none; width:110px;"><div style="color:#47B6B3; white-space:nowrap; font-weight:bold;">BACK</div></button>
+		<h2 style="font-weight: bold; color: #90A2AF; margin-left:40%;">{{selectedWatchlistSeries.title}}</h2>
+	</div>
+	<div>
+		<div style="width:100%;" class="col-md-12 col-sm-12 col-xs-12">
+			<hr class="border-top-width-1" />
+		</div>
+		<div style="width:100%; display:inline-block;">
+			<button  class="btn turkoiseBtn" style="float: left; margin-left:10px; width:45%;">PLAY ALL</button>
+			<button class="btn turkoiseBtn" style="float: right; margin-right:10px; width:45%;" ng-click="removeAllSeries()">CLEAR ALL</button>
+		</div>
+		<div style="width:100%;" class="col-md-12 col-sm-12 col-xs-12">
+			<hr class="border-top-width-1" />
+		</div>
+		<div style="width:100%;" data-ng-repeat="season in watchlistSeriesList">
+			<h3 style="font-weight: bold; color: #90A2AF; margin-left:10px;">{{season.season}}</h3>
+			<div style="width:100%;" data-ng-repeat="watching in season.episodes">
+				<img style="margin-left:10px; margin-right:5px;" ng-src="{{watching.img}}"/>
+				<div style="width:40%; display:inline-block; height:50px;">
+					<div class="admin-watchlist-primary-title">
+						Expiration Date {{selectedWatchlistSeries.expiration}} days left
+					</div>
+					<div class="admin-watchlist-secondary-title">
+						<b>{{watching.title}}</b>
+					</div>
+				</div>
+				<div style="width:25%; display:inline-block; color:red; font-weight:bold; font-size:.7em;">
+				<div ng-show="watching.expired">EXPIRED</div>
+				</div>
+				<a class="trash-icon" ng-click="remove($index, season.episodes)"></a>
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<hr class="border-top-width-1" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

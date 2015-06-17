@@ -1,0 +1,119 @@
+<script>
+  jQuery(document).ready(function ($) {
+    "use strict";
+    $('#movieScroll').perfectScrollbar();
+  });
+</script>
+
+ <div id="movieScroll" class="contentHolderSearch">
+ 	<div class="col-md-12 col-sm-12 col-xs-12 col-md-padding-top-4">
+ 		<div class="col-md-12 col-sm-12 col-xs-12">
+			<h5 class="st-nav-adminHeader" translate="ADMIN_SIDE_BAR_WATCHLIST"></h5>
+			<div class="admin-watchlistTop">
+			    <form novalidate  name="playlistForm">
+	                <ul class="nav navbar" style="display:inline-block;">            
+					    <li class="dropdown">
+					        <a class="dropdown-toggle" data-toggle="dropdown">{{selectedFilterValue.label | translate}} <b class="caret"></b></a>
+					        <ul class="dropdown-menu">
+					          <span class="navlink"></span>
+					            <li ng-model="playlistMainFilter" ng-repeat="submenu in watchlistFilterCombo" ng-class="{selected: submenu === selectedFilterValue}" ng-click="isPlaylistSelectFilterChange(playlistFilter, $index)">
+					            	<a href="#">{{submenu.label | translate}}</a>
+					            </li>
+					        </ul>
+					    </li>
+				    </ul>
+				    <div class="admin-watchlist-checkbox-container">
+				    	<div class="checkboxBg" ng-class="{checked: playlistFilter == 'all'}">
+			                <label>
+			                	<input type="radio" ng-model="playlistFilter" value="all" ng-change="isPlaylistCheckboxFilterChange(playlistFilter, selectedFilterValue.value)"/>
+			                    {{'BTN_ADMIN_ALL_WATCHLIST'|translate}}
+			                </label>
+			            </div>
+			            <div class="checkboxBg" ng-class="{checked: playlistFilter == 'available'}">
+			                <label>
+			                    <input type="radio" ng-model="playlistFilter" value="available" ng-change="isPlaylistCheckboxFilterChange(playlistFilter, selectedFilterValue.value)"/>{{'CHKBOX_ADMIN_AVAILABLE_WATCHLIST'|translate}}
+			                </label>
+			            </div>
+			            <div class="checkboxBg" ng-class="{checked: playlistFilter == 'expired'}">
+			                <label>
+			                    <input type="radio" ng-model="playlistFilter" value="expired" ng-change="isPlaylistCheckboxFilterChange(playlistFilter, selectedFilterValue.value)"/>{{'TXT_ADMIN_EXPIRED_EMAIL_NOTIFICATION'|translate}}
+			                </label>
+			            </div>    	
+				    </div>
+			    </form>
+
+			</div>
+			<div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+				<hr class="border-top-width-1" />
+			</div>
+			<div class="col-md-12 col-sm-12 col-xs-12 no-padding" ng-if="watchlistList">
+                <button ng-disabled="ajaxWatchlistSpinner" class="btn btnOrange" style="float: left; width:45%;" translate="BTN_ADMIN_PLAY_ALL_WATCHLIST" ng-click="adminWatchListPlayAll('all')"></button>
+				<button ng-disabled="ajaxWatchlistSpinner" class="btn btnRed" style="float: right; width:45%;" ng-click="removeAllWatchListItems()"
+				translate="BTN_ADMIN_CLEAR_CONTINUE_WATCHING"></button>
+			</div>
+			<div ng-if="watchlistList" class="col-md-12 col-sm-12 col-xs-12 no-padding">
+				<hr class="border-top-width-1" />
+			</div>
+			<span ng-show="ajaxWatchlistSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+
+			<!-- TV SHOW (SEASON/EPISODE)-->
+			<div ng-repeat="(key, watching) in tvShowList | customFilter:playlistFilter"  class="watchlistList" ng-show="displayTvshowList" ng-class="{'group-structure': (watching.showtype== 'Series' || watching.showtype== 'Season') || ((watching.episodeIdsList.length > 1) && (watching.showtype== 'Episode'))}">
+                <a ng-href="tvShow?titleId={{watching.id}}" style="color:#4BC5BE;text-decoration: none;" ng-click="close()">
+					<div class="alignLeft parent watchlistThumb">
+						<img ng-src="{{updateimagePath(watching.imagePath)}}" ng-class="{'billing-background-overlay': (watching.isExpired == 'expired')}"/>
+					</div>
+					<div  class="watchlistTitles" ng-class="{'billing-background-overlay': (watching.isExpired == 'expired')}">
+						<div class="admin-watchlist-secondary-title" ng-if="watching.expiration_days_left && watching.expiration_days_left < 100">
+							{{'TXT_ADMIN_EXPIRATION_DATE_WATCHLIST' | translate}} {{watching.expiration_days_left}} {{'TXT_ADMIN_DAYS_LEFT_WATCHLIST' | translate}}
+						</div>
+						<div class="admin-watchlist-primary-title" ng-if="(watching.episode.length > 1) || (watching.showtype== 'Season') || (watching.showtype== 'Series') || (watching.showtype== 'Episode')">
+		                    <span ng-if="watching.title_medium[CurrentLang]">{{watching.title_medium[CurrentLang]}}</span>
+						</div>
+						<div class="admin-watchlist-primary-title" ng-if="watching.episode.length == 1">
+		                    <span ng-if="watching.title_medium[CurrentLang]">{{watching.title_medium[CurrentLang]}}</span><span ng-if="watching.seasonId || watching.episodeId">. </span><span ng-if="watching.seasonId">S{{watching.seasonId}}</span><span ng-if="watching.seasonId && watching.episodeId">, </span><span ng-if="watching.episodeId">EP{{watching.episodeId}}</span>
+						</div>
+					</div>
+                </a>
+				<span ng-show="ajaxWatchlistDeleteSpinner" us-spinner class="yelloworangeloader"></span>
+				<div style="display: inline-block; margin-left: 5%;">
+					<div class="expired" ng-if="watching.isExpired == 'expired'"><label translate="TXT_ADMIN_EXPIRED_EMAIL_NOTIFICATION"></label></div>
+				</div>																									
+				<button ng-if="(watching.showtype== 'Series' || watching.showtype== 'Season')" class="glyphicon glyphicon-chevron-right" ng-click="seasonListPage('views/admin/seasonlist.html', watching, $index)"></button>
+				<button ng-if="(watching.episodeIdsList.length > 1) && (watching.showtype== 'Episode')" class="glyphicon glyphicon-chevron-right" ng-click="seasonListPage('views/admin/seasonlist.html', watching, $index)"></button>
+				<a ng-if="(watching.episodeIdsList.length == 1) && (watching.showtype== 'Episode')" class="trash-icon" style="float: right;" ng-click="removeWatchList($index, watching.id, tvShowList)">
+				</a>
+				<div class="clear"></div>
+			</div>
+
+
+
+			<!-- MOVIE -->
+			<div data-ng-repeat="watching in movieList | customFilter:playlistFilter" class="watchlistList" ng-show="displayMovieList">
+                <a ng-href="movie?titleId={{watching.id}}" style="color:#4BC5BE;text-decoration: none;" ng-click="close()">
+					<div class="alignLeft parent watchlistThumb">
+						<img ng-src="{{updateimagePath(watching.imagePath)}}" ng-class="{'billing-background-overlay': (watching.isExpired == 'expired')}"/>
+					</div>
+					<div  class="watchlistTitles" ng-class="{'billing-background-overlay': (watching.isExpired == 'expired')}">
+						<div class="admin-watchlist-secondary-title" ng-if="watching.expiration_days_left < 100">
+							{{'TXT_ADMIN_EXPIRATION_DATE_WATCHLIST' | translate}} {{watching.expiration_days_left}} {{'TXT_ADMIN_DAYS_LEFT_WATCHLIST' | translate}}
+						</div>
+						<div class="admin-watchlist-primary-title">
+		                    <span ng-if="watching.title_medium[CurrentLang]">{{watching.title_medium[CurrentLang]}}</span>
+						</div>
+					</div>
+                </a>
+				<span ng-show="ajaxWatchlistDeleteSpinner" us-spinner class="yelloworangeloader"></span>
+				<div style="display: inline-block; margin-left: 2%;">
+				<div class="expired" ng-if="watching.isExpired == 'expired'"><label translate="TXT_ADMIN_EXPIRED_EMAIL_NOTIFICATION"></label></div>
+				</div>
+				<a class="trash-icon" style="float: right;" ng-click="removeWatchList($index,watching.id,movieList)">
+				</a>
+				<div class="clear"></div>
+			</div>
+
+
+
+
+		</div>
+	</div>
+</div>

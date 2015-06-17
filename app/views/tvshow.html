@@ -1,0 +1,347 @@
+<style type="text/css">
+/* SERIES BANNER STYLE */
+  #svg-image-blur{ 
+    height: 100%; 
+    width: 100%; 
+  }
+  #svg-image { 
+    filter:url(#blur-effect-1); 
+  }
+  #svgcont{
+    position: absolute; 
+    right: 0;
+    bottom:0;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    z-index: -1;
+  }
+  #svgcont:before{
+    content:'';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  .seriesBanner .carousel-inner .item img{
+    width: 800px;
+  }
+  @media (max-width: 800px){
+    .seriesBanner .carousel-inner .item img{
+      width: 100%;
+    }
+  }
+/*SERIES BANNER STYLE ENDS HERE*/
+</style>
+
+<div class="container">
+  <!-- SECONDARY SMALL CONTAINER -->
+  <div class="row">
+    <div class="navbar-fixed-top " ng-style="navmenuStyle">
+      <div class="secondarySmallContainer">
+        <a ng-click="backurl()" class="icon-custom-back" translate="NAV_ADMIN_BACK_WATCHLIST"></a>
+      </div> 
+    </div>
+  </div>
+  <!-- SECONDARY SMALL CONTAINER END -->
+
+  <div class="row">
+    <!-- PLAYER SECTION -->
+    <div class="tvShowBgBanner col-mkd-12" ng-hide="showBanner">
+      <div class="col-md-offset-2 col-md-8">
+        <div class="containingBlock">
+          <span ng-show="ajaxTVloader" us-spinner="{radius:10, width:4, length: 8}"></span>
+          <div id='tv_playerwrapper' class="tvPlayerWrapper"  >
+          </div>
+
+          <div ng-if="upNextWidget">
+            <div id="up-next-widget">
+              <div class="wdgt-wrap">
+                <div class="wdgt">
+                  <div class="wdgt-top"></div>
+                  <div class="wdgt-left"></div>
+                  <div class="wdgt-right">
+                    <img id="thumb" ng-src="{{upNextEpisode.image}}" />
+                    <div id="up-next-title">{{upNextEpisode.title}}</div>
+                    <div id="up-next-info">{{upNextEpisode.episodeInfo}}</div>
+                    <div id="play-icon" ng-click="loadNextEpisode(upNextEpisode.embed_code, upNextEpisode.titleId)"><img src="/images/upnext-playicon.png" /></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- PLAYER SECTION END -->
+    <!-- SERIES BANNER -->
+    <div ng-show="showBanner" class="backtoList_banner">
+      <div id="showcaseID" class="parent seriesBanner">
+        <carousel interval="myInterval">
+          <slide active="true">
+            <img id="serialsrcimg"  ng-src="{{actualSeriesBanner}}" style="margin:auto;">
+            <div id="svgcont">
+            </div>
+            <div class="carousel-caption center-banner-text">
+<!--                <h1 ng-bind="assetData[CurrentLang]['title_medium']"></h1>-->
+            </div>
+          </slide>
+        </carousel>
+      </div>
+    </div>
+    <!-- SERIES BANNER END-->
+  </div>
+
+  <!-- SINGLE ASSET DETAILS -->
+  <div class="row singleAssetDetails">
+    <div class="col-md-offset-1 col-md-10">
+      <div class="row">
+        <div class="col-md-12 col-sm-12" ng-class="{assetSeriesHead: isLoggedIn && showBanner} ">
+            <h2 class="tvShowMetaLabel" ng-bind="assetData[CurrentLang]['show_name']"></h2>
+   
+            <h6 ng-if="assetData.show_type === 'Episode'" class="fullWidth">
+              <span class="tvShowMetaLabel alignLeft" translate="TXT_ADMIN_SEASON_WATCHLIST" ng-show="assetData.season_id"></span>
+              <span class="tvShowMetaLabel alignLeft" ng-show="assetData.season_id">{{assetData.season_id}}-</span>
+              <span class="tvShowMetaLabel alignLeft" translate="TXT_EPISODE_LIVE" ng-show="assetData.episode_id"></span>
+              <span class="tvShowMetaLabel alignLeft" ng-show="assetData.episode_id">{{assetData.episode_id}}</span>
+              </h6>
+          <div class="row col-md-6 col-sm-6 col-xs-9 no-padding singleAssetButtons">
+            <div class="alignLeft SABtnHolder" ng-show="isLoggedIn && !showBanner">
+              <a class="btn tvWatchNowBtn" ng-href="{{currentUrl}}&isTrailer=false">
+                <span translate="BTN_WATCH_NOW_LIVE"></span>
+                <span class="glyphicon glyphicon-play"></span>
+              </a> 
+              <button ng-show="showWatchlistAddBtn"  class="btn tvWatchlistBtn" ng-click="addWatchList(assetData.titleId, 'SAP')">
+                <span translate="BTN_ADD_TO_WATCHLIST_LIVE_REMINDERS"></span>
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+              <button ng-show="showWatchlistRemoveBtn"  class="btn tvWatchlistBtn" ng-click="DeleteRelatedEpisodeToWatchList(assetData.titleId)">
+                <span translate="BTN_REMOVE_FROM_PLAYLIST"></span>
+                <span class="glyphicon glyphicon-minus"></span>
+              </button>
+            </div>
+            <div class="alignLeft SABtnHolder">
+              <a class="btn tvWatchNowBtn" ng-disabled="noPreview" ng-show="!isLoggedIn"  ng-href="{{currentUrl}}&isTrailer=true" >
+                <span translate="TXT_WATCh_CLIP_VISITORS"></span>
+                <span class="glyphicon glyphicon-play"></span>
+              </a>
+              <button ng-show="!isLoggedIn" ng-click="signup()" class="btn  tvWatchlistBtn" translate="TXT_TOP_TOOLBAR_LIVE_SIGNUP_EXISTING_ACCOUNT"></button>
+            </div>
+          </div>
+         
+        
+      <div class="AssetDetailShare alignRight">
+        <h6 class="tvShowMetaLabel" translate="TXT_SHARE_REMINDERS"
+         ng-show="enableTwitterSharing || enableFacebookSharing"
+        >
+        </h6>
+
+       <a ng-show="enableTwitterSharing" class="twitterShare" twitter  data-url='{{socialShareUrl}}' ng-if="assetData.episode_id" data-text="Watch {{programTitleMedium}} - Season {{assetData.season_id}} and Episode {{assetData.episode_id}} on http://yaveo.com" data-size="medium" data-via='Yaveo'></a>
+
+       <a ng-show="enableTwitterSharing" class="twitterShare" twitter  data-url='{{socialShareUrl}}'  ng-if="!assetData.episode_id" data-text="Watch {{programTitleMedium}} on http://yaveo.com" data-size="medium" data-via='Yaveo'></a>
+
+       <div facebook class="facebookShare" ng-show="enableFacebookSharing" data-title='{{programTitleMedium}}' data-url='{{socialShareUrl}}' data-shares='shares'>{{ shares }}</div>
+     </div>
+     
+<!-- 
+          <div class="col-md-6 col-sm-4 AssetShare" ng-show="enableTwitterSharing || enableFacebookSharing">
+            <div class="AssetDetailShare">
+              <h6 class="tvShowMetaLabel" translate="TXT_SHARE_REMINDERS"></h6>
+              <div id="shareButtons"></div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-12 assetCol1">
+            <h6 ng-if="assetData.show_type === 'Series'">
+<!--                <span class=" alignLeft tvShowText"> {{SeasonCount}}
+              <span translate="TXT_ADMIN_SEASON_WATCHLIST" ng-show="SeasonCount"></span>        
+              </span>-->
+            </h6>
+            
+<!--              <div class="tvShowText col-md-margin-bottom-2 " ng-bind="assetData[CurrentLang]['title_medium']"></div>-->
+              
+              <div class="tvShowText col-md-margin-bottom-2" ng-bind="assetData[CurrentLang]['summary_medium']"></div>
+ 
+              <h6 ng-show="assetData.programer_studioname[CurrentLang]">
+              <span class="tvShowMetaLabel alignLeft" ng-bind="assetData.programer_studioname[CurrentLang]"></span>
+              </h6>
+              
+            
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 assetCol2">
+            <h6 ng-show="assetData.airedon">
+              <span class="tvShowMetaLabel alignLeft" translate="TXT_RELEASED_ON"></span>
+              <span class=" alignLeft tvShowText" ng-bind="assetData.airedon"></span>
+            </h6>
+            <h6 ng-show="assetData.genres">
+              <span class="tvShowMetaLabel alignLeft" translate="TXT_GENRE"></span>
+              <span class=" alignLeft tvShowText" ng-bind="assetData.genres"></span>
+            </h6>
+            <h6 ng-show="assetData.ratings" class="tvShowMetaLabel" >
+                <span class="tvShowMetaLabel alignLeft" translate="TXT_RATING"></span>
+                <span class="alignLeft tvShowText" ng-bind="assetData.ratings"></span>
+            </h6>
+              <h6 ng-if="assetData.show_type !== 'Series'">
+<!--                <span ng-show="assetData.display_run_time" class="tvShowMetaLabel alignLeft">{{assetData.display_run_time}} {{'TXT_MINS_LIVE' | translate}}</span>
+                -->
+                  <span class="tvShowMetaLabel alignLeft" translate="TXT_RUNTIME" ng-show="assetData.display_run_time"></span>
+                  <span class="alignLeft tvShowText" ng-bind="assetData.display_run_time"></span>
+                  <span class="alignLeft tvShowText" translate="TXT_MINS_LIVE" ng-show="assetData.display_run_time"></span>   
+              
+              </h6>
+            <h6 ng-show="assetData[CurrentLang]['actors_display']">
+              <span class="tvShowMetaLabel alignLeft"  translate="TXT_STARRING"></span>
+              <span class="alignLeft tvShowText" ng-bind="assetData[CurrentLang]['actors_display']"></span>
+            </h6>
+<!--            <h6 ng-show="assetData[CurrentLang]['directors_display']">
+              <span class="tvShowMetaLabel alignLeft" translate="TXT_CREATOR"></span>
+              <span class="alignLeft tvShowText" ng-bind="assetData[CurrentLang]['directors_display']"></span>
+            </h6>
+            <h6 ng-show="assetData.programer_studioname[CurrentLang]">
+              <span class="tvShowMetaLabel alignLeft" translate="TXT_PROGRAMMER_STUDIO_NAME"></span>
+              <span class="alignLeft tvShowText" ng-bind="assetData.programer_studioname[CurrentLang]"></span>
+            </h6>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- SINGLE ASSET DETAILS END-->
+
+  <div class="row" ng-if="allEpisodes">
+    <div class="navbar navbar-inverse col-md-12 tvTopBottomMargin season_select_row" style="z-index:10;">
+      <div class="col-md-offset-1 col-md-10">
+        <div class="col-md-6 col-sm-6 col-xs-6 video_title_bottom"  style="display:inline-block;">
+          <!-- <h5 class="tvShowMetaTitle" style="display:inline-block;white-space: nowrap;">{{tvHeader}}</h5>
+          <h5 class="tvShowText" style="display:inline-block;">&nbsp;&nbsp;{{selectedSeason.label | translate}} {{selectedSeason.number}}</h5> -->
+        </div>
+        <!-- SEASON SELECT --> 
+        <div class="row" ng-if="seasonList">
+          <div class="dropdown alignRight tvShowText season_select">
+            <div class=" alignRight parent">
+              <!-- SEASON SELECT BUTTON-->  
+              <a data-toggle="dropdown" class="dropdown-toggle btnshows season_select_click parent"> {{selectedSeason.label | translate}} {{selectedSeason.number}}<span><b class="caret"></b></span>
+              <!-- SEASON SELECT BUTTON END -->  
+
+              <span ng-show="ajaxSeasonSpinner" us-spinner="{radius:4, width:4, length: 8}" class=""></span></a>
+
+              <!-- SEASON SELECT DROPDOWN -->  
+              <ul class="dropdown-menu dropdown-menu_right unstyled season_select_click_list" style="margin-top:10px;">
+                <li>
+                  <ul  class="col-md-offset-1 col-md-10 list-unstyled">
+                    <li ng-repeat="season in seasons"><b><a class="droplink" ng-click="SeasonSelected(season)"> {{season.label | translate}} {{season.number}}</a></b></li>
+                    <div style="top:-20px;" class="season_select_list_top"></div>
+                  </ul>
+                </li>
+              </ul>
+              <!-- SEASON SELECT DROPDOWN END -->  
+            </div>
+          </div>
+        </div>
+        <!-- SEASON SELECT END--> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EPISODES -->
+<div class="container" ng-if="episodes">
+  <!-- TOGGLE BUTTON -->  
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12 tvTopBottomMargin no-padding-r">
+        <div ng-class="{showGridToggleButton: showGrid, showListToggleButton: !showGrid}"ng-click="showGrid = !showGrid">
+        </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 no-padding alignRight" style="display: none;">
+          <button class="btn btn-custom-orange col-md-4 hidden-sm hidden-xs btnRound alignRight" translate="BTN_ADD_COMPLETE_SEASON_TO_WATCHLIST_LIVE_REMINDERS" ng-show="!selectedSeason.added_to_watchlist && isLoggedIn && selectedSeason.isShow" ng-click="AddEntireSeasonWatchList()"></button> 
+          <button class="btn btn-custom-orange col-md-4 hidden-sm hidden-xs btnRound alignRight" translate="BTN_REMOVE_COMPLETE_SEASON_TO_WATCHLIST_LIVE_REMINDERS" ng-show="selectedSeason.added_to_watchlist && isLoggedIn && selectedSeason.isShow" ng-click="removeEntireSeasonWatchList()"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-offset-1 col-md-10 tvTopBottomMargin tvTopBottomMargin_listTop" ng-show="isLoggedIn">
+      <button class="btn pull-right turkoiseBtn col-md-4  hidden-sm hidden-xs" translate="BTN_ADMIN_PLAY_ALL_WATCHLIST" ng-click="tvEpisodesPlayAll()" ng-disabled="allEpisodes==undefined" style="display: none;"></button>
+    </div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div ng-hide="showGrid" class="col-md-offset-1 col-md-10 tvTopBottomMargin tvTopBottomMargin_list">
+    <div class="alternative_cls">
+      <div ng-repeat="episode in episodes" class="tvTopBottomMargin alternative_cls tvTopBottomMargin_list_row row">
+        <div class="listLabel tvShowText col-md-4 col-sm-4 col-xs-4">
+          <a style="display: block;"  ng-click="setResumePlayheadPosition(episode.titleId, episode.playhead_seconds)" ng-show="isLoggedIn">
+<!--            <span ng-if="episode[CurrentLang]['title_medium']">{{episode[CurrentLang]['show_name']}}
+            <span ng-if="episode[CurrentLang]['season_episode_name']">-</span>{{episode[CurrentLang]['season_episode_name']}} -->
+            <span >{{'TXT_SEASON_LIVE' | translate}} {{episode.season_id}} - {{'TXT_EPISODE_LIVE' | translate}} {{episode.episode_id}}</span>
+          </a>
+          <a style="display: block;"  ng-href="/tvShow?titleId={{episode.titleId}}" ng-show="!isLoggedIn">
+<!--            <span ng-if="episode[CurrentLang]['title_medium']">{{episode[CurrentLang]['show_name']}}
+                  <span ng-if="episode[CurrentLang]['season_episode_name']">-</span>{{episode[CurrentLang]['season_episode_name']}}
+              </span>-->
+            <span >{{'TXT_SEASON_LIVE' | translate}} {{episode.season_id}} - {{'TXT_EPISODE_LIVE' | translate}} {{episode.episode_id}}</span>
+          </a>
+        </div>
+        <div class="listProgressbarContainer tvRightLeftMargin col-md-6 col-sm-4 col-xs-3">
+          <div class="listProgressbar" ng-style="{width: getElapsedPercentage($index)}">
+          </div>
+        </div>
+        <div class="listButtonset">
+          <button ng-show="isLoggedIn && episode.added_to_watchlist" ng-click="AddRelatedEpisodeToWatchList(episode.titleId)" class="btn tvWatchlistBtn"><span class="glyphicon glyphicon-plus"></span></button>
+          <button ng-show="isLoggedIn && episode.removed_to_watchlist" ng-click="DeleteRelatedEpisodeToWatchList(episode.titleId)" class="btn tvWatchlistBtn"><span class="glyphicon glyphicon-minus"></span></button>
+          <a ng-click="setResumePlayheadPosition(episode.titleId, episode.playhead_seconds)" ng-show="isLoggedIn" class="btn tvWatchNowBtn"><span class="glyphicon glyphicon-play" ></span></a>
+          <a ng-href="/tvShow?titleId={{episode.titleId}}" ng-show="!isLoggedIn" class="btn tvWatchNowBtn"><span class="glyphicon glyphicon-play" ></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRID VIEW -->
+  <div class="row">
+    <div ng-show="showGrid" class="col-md-offset-1 col-md-10 tvTopBottomMargin tvTopBottomMargin_grid">
+      <div ng-repeat="episode in episodes" ng-init="episode.showFallback=true">
+        <div class="tvTopBottomMargin col-lg-3 col-md-3 col-sm-4 col-xs-6 gridImgHolder" ng-class="{ 'gridImgLoading' : episode.showFallback}">
+          <div class="gridProgressbarContainer gridImg">  
+            <a style="display: block;"  >
+            <img class="img-responsive gridPlaceholder" ng-if="episode.showFallback" ng-src="{{fallbackImageURL}}" />
+            <img ng-src="{{episode.image}}" class="gridProgressbarContainer" imageonload="episode.showFallback=false"/>
+            <div class="listButtonset">
+              <button ng-show="isLoggedIn && episode.added_to_watchlist" ng-click="AddRelatedEpisodeToWatchList(episode.titleId)" class="btn tvWatchlistBtn"><span class="glyphicon glyphicon-plus"></span></button>
+              <button ng-show="isLoggedIn && episode.removed_to_watchlist" ng-click="DeleteRelatedEpisodeToWatchList(episode.titleId)" class="btn tvWatchlistBtn"><span class="glyphicon glyphicon-minus"></span></button>
+              <a ng-click="setResumePlayheadPosition(episode.titleId, episode.playhead_seconds)" ng-show="isLoggedIn" class="btn tvWatchNowBtn"><span class="glyphicon glyphicon-play" ></span></a>
+              <a ng-href="/tvShow?titleId={{episode.titleId}}" ng-show="!isLoggedIn" class="btn tvWatchNowBtn"><span class="glyphicon glyphicon-play" ></span></a>
+            </div>
+            <div class="piccaption">
+              <div ng-if="episode[CurrentLang]['title_medium']">
+<!--                <h6 class="customthumbnail_imagepara">{{episode[CurrentLang]['show_name']}}</h6>  
+                <p class="customthumbnail_imagepara">{{episode[CurrentLang]['season_episode_name']}}</p>-->
+                <h6 >{{'TXT_SEASON_LIVE' | translate}} {{episode.season_id}} - {{'TXT_EPISODE_LIVE' | translate}} {{episode.episode_id}}</h6>
+              </div>
+              <div ng-if="!episode[CurrentLang]['title_medium']">
+<!--                <h6 class="customthumbnail_imagepara">{{episode[CurrentLang]['show_name']}}</h6>  
+                <p class="customthumbnail_imagepara">{{episode[CurrentLang]['season_episode_name']}}</p>-->
+                <h6 >{{'TXT_SEASON_LIVE' | translate}} {{episode.season_id}} - {{'TXT_EPISODE_LIVE' | translate}} {{episode.episode_id}}</h6>
+              </div>
+            </div>
+            <div class="gradientOverlay"></div>
+            <div class="listProgressbarContainer tvRightLeftMargin col-md-6 col-sm-4 col-xs-3">
+              <div class="listProgressbar" ng-style="{width: getElapsedPercentage($index)}"></div>
+            </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>      
+</div> 
+<!-- EPISODES END -->
+
+<!-- RAILS/ngif SECTION -->
+<div ng-include="'/views/railtemplate_page.html'" ></div>
+<!-- RAILS/ngif SECTION END-->

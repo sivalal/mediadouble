@@ -1,0 +1,137 @@
+<style type="text/css">
+  .error_page_contents{
+    width: 400px;
+    margin:20px auto;
+    margin-top: 150px;
+  }
+  .error_page_contents h1, .error_page_contents p{
+    text-align: center; 
+    color: #9B9B9B;
+  }
+  .error_page_contents li{
+    color: #9B9B9B;
+  }
+
+</style>
+<div class="container">
+  <div class="cookiePage">
+    <!-- <h1 translate="TXT_COOKIE"><span>:(</span></h1>
+    <p translate="TXT_COOKIE_MSG"></p> -->
+    <div class="page-content">
+      <h1 style="margin-bottom: 20px;" translate="COOKIE_HEADER"></h1>
+
+      <h4 class="sect_head" translate="COOKIE_QUESTION"></h4>
+
+      <p class="copy" translate="COOKIE_QUESTION_ANS"></p>
+
+      <p class="copy" ng-if="path == '/notcookie'"><b translate="COOKIE_LOGIN_INFO_TXT"></b></p>
+
+      <form action="#" method="get">
+      <!-- Button --> <span ng-show="cookieSpinner" us-spinner="{radius:25, width:8, length: 16}" class="blackloader"></span>
+      <div class="button" style="margin-bottom: 30px;cursor:pointer">
+        <a ng-if="path == '/notcookie'" ng-click="cookieLogOut()" class="button-link"><b translate="COOKIE_BTN_TXT"></b></a>
+        <a ng-if="path == '/requireCookie'" ng-click="onLogoClick()" class="button-link"><b translate="COOKIE_BTN_TXT"></b></a>
+      </div>
+      <!-- End of Button -->
+    </form>
+
+
+    <div class="clearboth"></div>
+    <ul>
+      <li class="descriptionbox">
+        <h4 class="sect_head" ><b translate="COOKIE_SUBHEAD_IE"></b></h4>
+        <ol>
+          <li translate="COOKIE_IE_STEP1">.</li>
+          <li translate="COOKIE_IE_STEP2"></li>
+          <li translate="COOKIE_IE_STEP3"></li>
+          <li translate="COOKIE_IE_STEP4"></li>
+          <li translate="COOKIE_IE_STEP5"></li>
+          <li translate="COOKIE_IE_STEP6"></li>
+          <li translate="COOKIE_IE_STEP7"></li>
+        </ol>
+      </li>
+      <li class="descriptionbox">
+        <h4 class="sect_head"><b translate="COOKIE_SUBHEAD_FF"></b></h4>
+        <ol>
+          <li translate="COOKIE_FF_STEP1"></li>
+          <li translate="COOKIE_FF_STEP2"></li>
+          <li translate="COOKIE_FF_STEP3"></li>
+          <li translate="COOKIE_FF_STEP4"></li>
+        </ol>
+      </li>
+      <div class="clearboth"></div>
+      <li class="descriptionbox">
+        <h4 class="sect_head"><b translate="COOKIE_SUBHEAD_FF_MAC"></b></h4>
+        <ol>
+          <li translate="COOKIE_FF_MAC_STEP1"></li>
+          <li translate="COOKIE_FF_MAC_STEP2"></li>
+          <li translate="COOKIE_FF_MAC_STEP3"></li>
+          <li translate="COOKIE_FF_MAC_STEP4"></li>
+        </ol>
+      </li>
+      <li class="descriptionbox">
+        <h4 class="sect_head"><b translate="COOKIE_SUBHEAD_SAFARI"></b></h4>
+        <ol>
+          <li translate="COOKIE_SAFARI_STEP1"></li>
+          <li translate="COOKIE_SAFARI_STEP2"></li>
+          <li translate="COOKIE_SAFARI_STEP3"></li>
+          <li translate="COOKIE_SAFARI_STEP4"></li>
+        </ol>
+      </li>
+      <div class="clearboth"></div>
+      <li class="descriptionbox">
+        <h4 class="sect_head"><b translate="COOKIE_SUBHEAD_SAFARI_MAC"></b></h4>
+        <ol>
+          <li translate="COOKIE_SAFARI_MAC_STEP1"></li>
+          <li translate="COOKIE_SAFARI_MAC_STEP2"></li>
+          <li translate="COOKIE_SAFARI_MAC_STEP3"></li>
+          <li translate="COOKIE_SAFARI_MAC_STEP4"></li>
+        </ol>
+      </li>
+      <li class="descriptionbox">
+        <h4 class="sect_head"><b translate="COOKIE_SUBHEAD_CHROME"></b></h4>
+        <ol>
+          <li translate="COOKIE_CHROME_STEP1"></li>
+
+          <li translate="COOKIE_CHROME_STEP2"></li>
+
+          <li translate="COOKIE_CHROME_STEP3"></li>
+
+          <li translate="COOKIE_CHROME_STEP4"></li>
+
+          <li translate="COOKIE_CHROME_STEP5"></li>
+        </ol>
+      </li>
+      <div class="clearboth"></div>
+      <li class="descriptionbox">
+        <h4 class="sect_head"><b translate="COOKIE_SUBHEAD_CHROME_MAC"></b></h4>
+        <ol>
+          <li translate="COOKIE_CHROME_MAC_STEP1"></li>
+
+          <li translate="COOKIE_CHROME_MAC_STEP2"></li>
+
+          <li  translate="COOKIE_CHROME_MAC_STEP3"></li>
+
+          <li translate="COOKIE_CHROME_MAC_STEP4"></li>
+
+          <li translate="COOKIE_CHROME_MAC_STEP5"></li>
+        </ol>
+      </li>
+    </ul>
+  </div> 
+
+
+
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function ($) {
+    "use strict";
+    $('#menuDesktop').hide();
+    $('#helpSear').hide();
+    $('#logDrop').hide();
+    $('#adminBtn').hide();
+    $('#logSin').hide();
+  });
+</script>
+</div>
+

@@ -1,0 +1,486 @@
+/*
+--------------------------------------------------------------
+HELPER CLASSES
+--------------------------------------------------------------
+*/
+.textleft { text-align: left !important; }
+.textright { text-align: right !important; }
+.textcenter { text-align: center !important; }
+.alignleft { float: left; margin:0px 10px 10px 0px; }
+.alignright { float: right;	margin:0px 0px 10px 10px; }
+.aligncenter { display: block; margin:0px auto 10px auto !important; }
+.list-unstyled{ padding-left:0; list-style:none; }
+.list-inline{ padding-left:0; list-style:none; margin: 0px 0px 0px -5px; }
+.list-inline>li{ display:inline-block; padding-left:5px; padding-right:5px; }
+
+body {
+	font-family: 'yaveo-regular';
+	font-size: 14px;
+	line-height: 22px;
+	margin: 0 auto;
+	color: #5c5c5c;
+	background: url(../img/pattern-yaveo-dk.jpg) top left repeat #ccc;
+}
+
+a { color: #34ace0; text-decoration: none; }
+b,strong { font-family: 'yaveobold'; }
+h1,.h1 {
+	font-size: 34px;
+	line-height: 34px;
+}
+
+.yellow-text {
+	color: #fdd301;
+}
+
+.blue-text {
+	color: #34ace0;
+}
+
+.shadow {
+	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
+}
+
+
+/*
+--------------------------------------------------------
+BUTTONS
+--------------------------------------------------------
+*/
+.btn {
+	display: inline-block;
+	position: relative;
+	padding: 4px 12px;
+	cursor: pointer;
+	font-family: 'yaveomedium';
+	text-align: center;
+	text-decoration: none;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	color: #333333;
+	border: none;
+	border-radius: 2px;
+	background: #b3b3b3;
+	background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0));
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0));
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.45); 
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+
+.btn:hover,
+.btn:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn:active,
+.btn.active {
+    outline: 0;
+    background-image: none;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+.btn-orange {
+    color: #fff;
+    text-shadow: 0px 0px 3px #000;
+    background-color: #f67303;
+}
+
+
+/*
+--------------------------------------------------------------
+HEADER STYLES
+--------------------------------------------------------------
+*/
+#navigation {
+	background: #34ace0;
+	line-height: 60px;
+	padding: 0px 20px;
+	color: #fff;
+}
+
+#navigation a {
+	color: #fff;
+	text-decoration: none;
+}
+
+.logo-box img {
+	display: inline-block;
+}
+
+nav > ul > li {
+	padding-left: 8px !important;
+	padding-right: 8px !important;
+	text-transform: uppercase;
+}
+
+#searchForm {
+	line-height: 1;
+	text-transform: none;
+}
+
+.search-box {
+	position: relative;
+	display: inline-block;
+	width: 450px;
+	font-size: 12px;
+}
+
+.search-box > label {
+	position: absolute;
+	left: 8px;
+	line-height: 26px;
+}
+
+.search-box > input {
+	display: block;
+	background: #2988b1;
+	width: 100%;
+	height: 26px;
+	line-height: 26px;
+	padding: 0px 0px 0px 8px;
+	border: none;
+	border-radius: 5px;
+}
+
+.account-box > ul > li {
+	padding-left: 8px !important;
+	padding-right: 8px !important;
+}
+
+.account-box .fa {
+	font-size: 1.8em;
+	vertical-align: middle;
+}
+
+
+/*
+--------------------------------------------------------------
+HEADER STYLES
+--------------------------------------------------------------
+*/
+#header {
+	text-align: center;
+	padding: 80px 0px;
+	background: #0367a6;
+	background: -moz-linear-gradient(left,  #0367a6 0%, #0378b8 40%, #0378b8 60%, #0367a6 100%);
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#0367a6), color-stop(40%,#0378b8), color-stop(60%,#0378b8), color-stop(100%,#0367a6));
+	background: -webkit-linear-gradient(left,  #0367a6 0%,#0378b8 40%,#0378b8 60%,#0367a6 100%);
+	background: -o-linear-gradient(left,  #0367a6 0%,#0378b8 40%,#0378b8 60%,#0367a6 100%);
+	background: -ms-linear-gradient(left,  #0367a6 0%,#0378b8 40%,#0378b8 60%,#0367a6 100%);
+	background: linear-gradient(to right,  #0367a6 0%,#0378b8 40%,#0378b8 60%,#0367a6 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0367a6', endColorstr='#0367a6',GradientType=1 );
+	color:#fff;
+}
+
+#header h1 {
+	font-size: 38px;
+	line-height: 38px;
+	font-family: 'yaveolight';
+	margin: -20px 0px 15px;
+}
+
+#header h1 sup {
+	font-size: 12px;
+	vertical-align: text-top;
+	line-height: 40px;
+}
+
+#header .subhead {
+	font-size: 22px;
+  	font-family: 'yaveolight';
+}
+
+/*
+--------------------------------------------------------------
+CONTENT STYLES
+--------------------------------------------------------------
+*/
+#content {
+	background: url(../img/pattern-yaveo.jpg) top left repeat #fff;
+}
+
+.grey-bg {
+	background: url(../img/pattern-yaveo-md.jpg) top left repeat #e7e7e7;
+}
+
+.f-row {
+	padding: 50px 0px;
+}
+
+.f-row > .row {
+	max-width: 1024px;
+	margin: 0px auto;
+}
+
+.f-text-box .text {
+	text-transform: uppercase;
+}
+
+.f-text-box h2 {
+	font-size: 26px;
+  	margin: 0px 0px 20px;
+}
+
+.f-text-box .download-btn {
+	display: inline-block;
+	margin-top: 20px;
+}
+
+.f-text-box .download-btn.ios {
+	background: url(../img/badge-ios-es.png) top left no-repeat;
+	width: 151px;
+	height: 45px;
+}
+
+.f-text-box .download-btn.android {
+	background: url(../img/badge-google-es.png) top left no-repeat;
+	width: 127px;
+	height: 43px;
+}
+
+.browser-list {
+	list-style: none;
+	padding: 0px;
+	margin: 0px 0px 10px 0px;
+}
+
+.browser {
+	padding: 0px 0px 0px 25px;
+}
+
+.browser.ie {
+	background: url(../img/ie_logo.png) center left no-repeat;
+}
+
+.browser.chrome {
+	background: url(../img/chrome_logo.png) center left no-repeat;
+}
+
+.browser.firefox {
+	background: url(../img/firefox_logo.png) center left no-repeat;
+}
+
+.browser.safari {
+	background: url(../img/safari_logo.png) center left no-repeat;
+}
+
+
+/*
+--------------------------------------------------------------
+FOOTER STYLES
+--------------------------------------------------------------
+*/
+#footer {
+	padding: 30px;
+	background-color: #fff;
+	font-size: 12px;
+	background: url(../img/pattern-yaveo.jpg) top left repeat #fff;
+}
+
+#footer a {
+	color: #717171;
+}
+
+#footer .blue-text {
+	color: #68bfe9;
+	font-weight: bold;
+}
+
+#footer .back-to-top {
+	background: #35b0e5;
+	display: inline-block;
+	padding: 5px 8px;
+	color: #fff;
+	margin-bottom: 20px;
+}
+
+#footer .list-inline {
+	display: inline-block;
+  	margin-left: 10px;
+}
+
+
+/*
+--------------------------------------------------------------
+RESPONSIVE STYLES
+--------------------------------------------------------------
+*/
+@media (max-width: 650px) {
+	#navigation {
+		display: none;
+	}
+
+	#header {
+		padding: 30px 20px !important;
+	}
+
+	#header h1 {
+		margin: -10px 0px 15px !important;
+	}
+
+	#header .subhead {
+		line-height: 18px !important;
+	}
+
+	#footer .list-inline {
+		display: block;
+	  	margin-left: 0px;
+	}
+}
+
+@media (max-width: 767px) {
+	.shadow {
+		margin: 0px -15px;
+		overflow: hidden;
+	}
+
+	.search-box {
+	  width: 270px;
+	}
+
+	.search-box label {
+		width: 255px;
+		height: 26px;
+		overflow: hidden;
+	}
+
+	#header {
+		padding: 60px 30px;
+	}
+
+	#header h1 {
+		font-size: 22px;
+		line-height: 24px;
+		margin: -10px 0px 0px;
+	}
+
+	#header h1 sup {
+		font-size: 10px;
+		line-height: 26px;
+	}
+
+	#header .subhead {
+		font-size: 16px;
+	}
+
+	.f-row {
+		padding: 50px 20px;
+	}
+
+	.f-row img {
+		margin: 0 auto;
+	}
+
+	.f-text-box {
+		font-size: 12px;
+		text-align: center;
+		max-width: 340px !important;
+		margin: 0 auto;
+	}
+
+	.f-text-box .headline {
+		margin-top: 10px;
+		line-height: 30px;
+	}
+
+	.f-text-box .text {
+		text-align: left;
+	}
+
+	.f-text-box .download-btn {
+		max-width: 135px;
+		display: block;
+		margin: 20px auto 0px auto;
+	}
+
+	#footer {
+		padding: 30px 10px;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+	.search-box {
+	  width: 270px;
+	}
+
+	.search-box label {
+		width: 255px;
+		height: 26px;
+		overflow: hidden;
+	}
+
+	#header {
+		padding: 60px 0px;
+	}
+
+	#header h1 {
+		font-size: 28px;
+		line-height: 28px;
+		margin: -10px 0px 10px;
+	}
+
+	#header h1 sup {
+		font-size: 12px;
+		line-height: 40px;
+	}
+
+	#header .subhead {
+		font-size: 18px;
+	}
+
+	.f-row > .row {
+	  	max-width: 680px;
+	}
+}
+
+@media (min-width: 1024px) and (max-width: 1159px) {
+	.search-box {
+	  width: 270px;
+	}
+
+	.search-box label {
+		width: 255px;
+		height: 26px;
+		overflow: hidden;
+	}
+
+	.f-row > .row {
+	  	max-width: 860px;
+	}
+}
+
+@media (min-width: 1160px) and (max-width: 1459px) {
+	.search-box {
+	  width: 315px;
+	}
+
+	.search-box label {
+		width: 300px;
+		height: 26px;
+		overflow: hidden;
+	}
+  	
+}
+
+@media (min-width: 1460px) and (max-width: 1599px) {
+  	.search-box {
+	  width: 358px;
+	}
+
+	.search-box label {
+		width: 358px;
+		height: 26px;
+		overflow: hidden;
+	}
+}
+
+@media (min-width: 1600px) {
+  
+}

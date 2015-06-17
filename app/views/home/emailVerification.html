@@ -1,0 +1,29 @@
+<div ng-controller="emailVerificationCtrl">
+  <form novalidate  name="mastheadForm" role="form" class="signup-form" novalidate ng-show="copyRight">
+    <div  class="col-md-6 col-sm-6 col-xs-12 carousel-stat-footer-l">
+      <div class="form-group note parent fullWidth">
+        <span ng-if="emailCheckSpinner" us-spinner="{radius:5, width:4, length: 8}" class="yelloworangeloader"></span>
+        <input name="userMastheadEmail" ng-model="userMastheadEmail" id="user-email" type="text" class="form-control fullWidth" placeholder="{{'HINT_TXT_EMAIL_ADDRESS_SIGN_UP'|translate}}" ng-pattern="/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/" ng-keydown="removeValidationMessage()" ng-class="{true: 'error'}[(submitted || mastheadForm.userMastheadEmail.$dirty) && mastheadForm.userMastheadEmail.$invalid && !mastheadForm.userMastheadEmail.$focused]" ng-focus required>
+        <!-- <span ng-if="mastheadForm.userMastheadEmail.$valid && mastheadForm.userMastheadEmail.$dirty" class="icon-custom-valid col-md-1 textFieldSuccess"></span> -->
+        <span ng-if="(submitted || mastheadForm.userMastheadEmail.$dirty) && mastheadForm.userMastheadEmail.$error.required && !mastheadForm.userMastheadEmail.$focused" translate="ERROR3"></span>
+        <span ng-if="mastheadForm.userMastheadEmail.$dirty && mastheadForm.userMastheadEmail.$error.pattern && !mastheadForm.userMastheadEmail.$focused" translate="ERROR6"></span>
+        <span ng-if="mastheadForm.userMastheadEmail.$dirty && mastheadForm.userMastheadEmail.$error.email && !mastheadForm.userMastheadEmail.$focused">{{'ERROR7' | translate}}<a href="#" ng-click="loginModal(1)" translate="BTN_LOGIN_TXT_FORMAT2"></a>{{'TXT_OR' |  translate}}<a href="#" ng-click="loginModal(2)" translate="TXT_RECOVER_PASSWORD"></a></span>
+      </div>
+    </div>
+    <div  class="col-md-6 col-sm-6 col-xs-12 carousel-stat-footer-r" >
+      <button class="btnOrange btn-custom-orange fullWidth" ng-click="checkEmailExist(true)" translate="BTN_START_YOUR_FREE_MONTH" ng-disabled="emailCheckSpinner"></button>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12 textCenterize" style="padding-left: 0px;">
+    <p  class="sizzleVideoTxt">
+    <span translate="SIZZLEVIDEO_TXT">
+    </span>
+    <span ng-bind-html="sizzleVideoSignUpLink[CurrentLang]" class="sizzleVideoTxtLink">
+
+    </span>
+    </p>
+    </div>
+    <div class="loginBtnMob fullWidth hidden-sm hidden-md hidden-lg">
+      <a ng-click="loginModal(1)" translate="TXT_LOGIN_TO_ACCOUNT"></a>
+    </div>
+  </form>
+</div>

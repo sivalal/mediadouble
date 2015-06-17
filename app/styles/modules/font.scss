@@ -1,0 +1,373 @@
+
+@import 'index';
+
+
+
+@font-face {
+    font-family: 'helveticaneuebold';
+    src: font-url('helvetica/helvetica-neue-black-webfont.eot');
+    src: font-url('helvetica/helvetica-neue-black-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('helvetica/helvetica-neue-black-webfont.woff') format('woff'),
+         font-url('helvetica/helvetica-neue-black-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'helveticaneuemedium';
+    src: font-url('helvetica/helvetica-neue-bold-webfont.eot');
+    src: font-url('helvetica/helvetica-neue-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('helvetica/helvetica-neue-bold-webfont.woff') format('woff'),
+         font-url('helvetica/helvetica-neue-bold-webfont.ttf') format('truetype');   font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'helveticaneuelight';
+    src: font-url('helvetica/helvetica-neue-light-webfont.eot');
+    src: font-url('helvetica/helvetica-neue-light-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('helvetica/helvetica-neue-light-webfont.woff') format('woff'),
+         font-url('helvetica/helvetica-neue-light-webfont.ttf') format('truetype');    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'helvetica_neueregular';
+    src: font-url('helvetica/helveticaneue-webfont-webfont.eot');
+    src: font-url('helvetica/helveticaneue-webfont-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('helvetica/helveticaneue-webfont-webfont.woff') format('woff'),
+         font-url('helvetica/helveticaneue-webfont-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+h1{
+  font-family: 'DINWebPro-Medium';
+  font-size: 60px;
+  color: $color-white;
+}
+h2{
+  font-family: 'DINWebPro-Medium';
+  font-size: 40px;
+  color: #3c5e6c;
+  font-smooth:absolute-size;
+}
+h3{
+  font-family: 'DINWebPro-Light';
+  font-size: 32px;
+  color: $color-white;
+}
+h4{
+  font-family: 'DINWebPro-Light';
+  font-size: 24px;
+  color: $color-grey;
+}
+h5{
+  font-family: 'DINWebPro-Medium';
+  font-size: 18px;
+  color: $color-white;
+}
+h6{
+  font-family: 'DINWebPro-Medium';
+  font-size: 14px;
+  color: $color-grey;
+}
+p{
+  font-family: 'DINWebPro-Light';
+  font-size: 15px;
+  color: $color-grey;
+}
+
+/*DIN*/
+@font-face {
+    font-family: 'DINWebPro';
+    src: font-url('din/DINWebPro.eot');
+    src: font-url('din/DINWebPro.eot?#iefix') format('embedded-opentype'),
+         font-url('din/DINWebPro.woff') format('woff'),
+         font-url('din/DINWebPro.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'DINWebPro-Medium';
+    src: font-url('din/DINWebPro-Medium.eot');
+    src: font-url('din/DINWebPro-Medium.eot?#iefix') format('embedded-opentype'),
+         font-url('din/DINWebPro-Medium.woff') format('woff'),
+         font-url('din/DINWebPro-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'DINWebPro-Light';
+    src: font-url('din/DINWebPro-Light.eot');
+    src: font-url('din/DINWebPro-Light.eot?#iefix') format('embedded-opentype'),
+         font-url('din/DINWebPro-Light.woff') format('woff'),
+         font-url('din/DINWebPro-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*INDEX*/
+@mixin btn-custom-large{
+  font-style: normal;
+  font-size: 15px;
+  font-family: 'DINWebPro-Medium';
+}
+@mixin btn-custom {
+  font-style: normal;
+  font-family: 'DINWebPro-Medium';
+}
+@mixin icon-custom {
+  font-style: normal;
+  font-weight: normal;
+}
+
+/*BUTTONS*/
+button, .btn{
+  font-style: normal;
+  font-family: 'DINWebPro-Medium' !important;
+}
+a:active, a:focus{
+  font-weight: normal;
+}
+label{
+  font-weight: normal;
+}
+
+/*LOGIN*/
+.heading {
+  font-family: 'DINWebPro-Medium';
+  font-size: 20px;
+  text-transform: uppercase;
+}
+.form-control{
+  font-family: 'DINWebPro-Medium';
+  font-size: 15px;
+}
+#loginCredens .form-control{
+  font-family: 'DINWebPro-Light';
+  font-size: 15px;
+}
+.loginCheckbox, .login-modal-body a{
+  font-family: 'DINWebPro-Medium';
+  font-size: 14px;
+}
+
+/*SEARCH*/
+.search-textbox{
+  font-size:38px;
+  font-family:'DINWebPro-Light';
+}
+.search-contents{
+  .contentHolderSearch{
+    font-family:'DINWebPro-Medium';
+  }
+}
+.search-result-head-title{
+  font-family: 'DINWebPro-Medium';
+  font-size: 15px;
+}
+.search-result-cell-title{
+  p{
+    font-family: 'DINWebPro-Light';
+    font-size: 18px;
+    span.ui-match{
+      font-family: 'DINWebPro-Medium';
+    }
+  }
+}
+
+/*HEADER*/
+.navbar-custom {
+  font-family: 'DINWebPro-Medium';
+}
+.navbar-toggle{
+  font-family: 'DINWebPro-Medium';
+  text-transform: uppercase;
+}
+.navbar-inverse .navbar-nav>li>a {
+  font-weight: normal;
+  font-family: 'DINWebPro';
+  font-size: 16px;
+}
+.navbar-inverse .navbar-nav>li.help-icon> a, 
+.navbar-inverse .navbar-nav>li.search-icon> a{
+  line-height: 36px;
+}
+.signup{
+  font-family: 'DINWebPro-Medium';
+  font-size: 15px;
+  margin-top: 5px;
+}
+.login{
+  font-family: 'DINWebPro-Medium' !important;
+  font-size: 16px;
+}
+.user_ac_opt{
+  label{
+    font-family: 'DINWebPro';
+    font-weight: normal;
+  }
+}
+#languageSelect {
+  font-size: 16px;
+  line-height: 58px;
+  a {
+    text-decoration: none;
+    font-family: 'DINWebPro-Medium';
+    font-weight: normal;
+  }
+}
+.carousel-caption{
+  h2{
+    font-family: 'DINWebPro-Light';
+    font-size: 42px;
+  }
+}
+.carousel-stat-footer-l{
+  font-size : 30px;
+  font-family: 'DINWebPro-Medium';
+}
+.carousel-stat-footer-r{
+  .btnOrange{
+    font-size: 18px;
+    font-family: 'DINWebPro-Medium';
+    font-weight: normal;
+  }
+}
+h5.railsHeader{
+  font-size: 23px;
+  font-family: DINWebPro;
+  text-transform: uppercase;
+}
+.networkImg{
+  h5{
+    font-family: helveticaneuemedium;
+    font-size: 15px;
+  }
+  h6{
+    font-family: 'helveticaneuelight';
+    color: #5c5c5c;
+    padding: 2px 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+}
+.customthumbnail_imageheader{
+  font-family: helveticaneuemedium;
+  font-size: 15px;
+}
+@media(max-width: 768px){
+  .search-textbox{
+    font-size: 34px;
+  }
+}
+@media(max-width: 690px){
+  .search-textbox {
+    height: 60px;
+  }
+}
+@media(max-width: 603px){
+.search-textbox{
+    font-size: 30px;
+  }
+  .carousel-caption{
+    h2{
+      font-size: 20px;
+    }
+  }
+}
+@media(max-width: 480px){
+  .carousel-caption{
+    h2{
+      font-size: 20px;
+    }
+  }
+  .search-textbox {
+    font-size: 24px;
+  }
+  #languageSelect {
+    a{
+      font-size: 14px;
+    }
+  }
+}
+@media (max-width: 1024px){
+  .carousel-caption{
+    h2{
+      font-size: 32px;
+    }
+  }
+}
+@media (max-width: 992px){
+  .carousel-caption{
+    h2{
+      font-size: 28px;
+    }
+  }
+}
+@media screen and (max-width: 878px){
+  .login_es, .signup_es{
+    font-size: 11px;
+    line-height: 26px;
+  }
+}
+@media screen and (max-width: 800px){
+  .login_es, .signup_es{
+  }
+  .topBtn_es{
+    button{
+      font-size: 10px;
+    } 
+  }
+  .carousel-caption{
+    h2{
+        font-size: 23px;
+    }
+  }
+}
+
+/*DROPDOWN*/
+.dropdown-menu_right {
+  max-width:500px;
+  font-family: 'DINWebPro';
+}
+.submenu_arrow{
+  font-size: 18px;
+  a{
+    font-family: 'Glyphicons Halflings';
+  }
+  a:hover{
+    text-decoration: none;
+  }
+}
+.dropdown-menu>li>a, .dropdown-menu_right>li>a{
+  font-family: 'DINWebPro-Light';
+}
+.droprightheader{
+  padding-left: 25px;
+  font-size: 15px;
+  float: left;
+  font-family: 'DINWebPro-Medium';
+}
+.dropdownfonts{
+  font-size:.9em;
+  line-height:2.5;
+}
+
+/*FOOTER*/
+.footer .list-inline{
+  font-size: 15px;
+  font-family: 'DINWebPro-Medium';
+}
+.footer .list-inline .copyright, #mobFooter .footerCopy{
+  text-transform: uppercase;
+  font-size: 14px;
+  font-family: 'DINWebPro-Medium';
+}
+@media screen and (min-width: 768px) and (max-width: 842px){
+  #languageSelect, .navbar-inverse .navbar-nav > li > a{
+    font-size: 14px;
+  }
+}

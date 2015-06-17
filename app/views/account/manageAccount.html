@@ -1,0 +1,43 @@
+<div class="manageAccount">
+    <div class="fullWidth signupFinalCheckout">
+        <div class="col-md-12 col-sm-12 col-xs-12 informationSuccess center" ng-if="informationSuccessContainer">
+            <span class="successIcon"></span>
+            <span>{{informationSuccessMessage | translate}}<span ng-if="packageAddSuccessTxt" ng-bind="addonsNamesList"></span>
+            <span class="closeInfoAlert" ng-click="closeSuccessMessageAlert()"></span>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 informationError center" ng-if="informationErrorContainer">
+            {{informationErrorMessage | translate}}<span ng-if="packageAddErrorTxt" ng-bind="unAddedAddonsNamesList">
+            </span>
+            <span class="closeInfoAlert" ng-click="closeErrorMessageAlert()"></span>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12  center alertMsg" style="display:none;"></div>
+
+        <!-- <div class="manageAccountHeaderMob" style="">
+            <button class="backBtnAcMob"></button>
+            <h3 translate="TXT_HEADER_ACCOUNT_MANAGEMENT" class="center-block"></h3>
+            <button class="btnEdit">Edit</button>
+        </div> -->
+
+        <h2 translate="TXT_HEADER_ACCOUNT_MANAGEMENT" class="center-block"></h2>
+        <div class="manageAccountForms">
+            <!-- account information -->
+            <div class="finalCheckoutForm col-md-6 col-sm-8 col-xs-12 center-block">
+                <div class="accountInformation">
+                    <div class="billingAddress fullWidth formHolder">
+                        <div ng-include="'/views/account/personalInformation.html'" ></div>
+                        <div ng-include="'/views/account/billingInformation.html'" ></div>
+                    </div>
+                </div>
+            </div>
+            <!-- subscription details -->
+            <div class="finalCheckoutForm col-md-6 col-sm-8 col-xs-12 center-block">
+                <div ng-include="'/views/account/subscriptionDetails.html'" ng-controller="subscriptionDetailsCtrl"></div>
+            </div>
+            <!-- profile settings -->
+            <div class="finalCheckoutForm col-md-6 col-sm-8 col-xs-12 center-block">
+                <div ng-include="'/views/account/profileSettings.html'" ></div>
+            </div>
+        </div>
+    </div>
+
+</div>

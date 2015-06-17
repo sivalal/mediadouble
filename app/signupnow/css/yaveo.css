@@ -1,0 +1,217 @@
+/*
+--------------------------------------------------------------
+HELPER CLASSES
+--------------------------------------------------------------
+*/
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { *zoom: 1; }
+.textleft { text-align: left !important; }
+.textright { text-align: right !important; }
+.textcenter { text-align: center !important; }
+.alignleft { float: left; margin:0px 10px 10px 0px; }
+.alignright { float: right;	margin:0px 0px 10px 10px; }
+.aligncenter { display: block; margin:0px auto 10px auto !important; }
+.bluetext { color: #37abe4; }
+
+/*
+--------------------------------------------------------------
+PAGE STYLES
+--------------------------------------------------------------
+*/
+body {
+	max-width: 1600px;
+	font-family: 'yaveolight';
+	font-size: 16px;
+	line-height: 24px;
+	margin: 0 auto;
+	color: #717171;
+}
+
+a {
+	color: #717171;
+	text-decoration: none;
+}
+
+.container {
+	max-width: 860px;
+}
+
+#content .container {
+	max-width: 920px;
+}
+
+#greyBox {
+	background: url(../img/pattern-yaveo.jpg) top left repeat #e1e1e1;
+	padding: 40px 0px;
+}
+
+.btn-orange {
+	background-color: #f47322;
+	color: #fff;
+	padding: 10px 12px;
+	font-size: 20px;
+	line-height: 36px;
+}
+
+.btn-ghost {
+	font-size: 20px;
+	line-height: 33px;
+	height: 40px;
+	padding: 0px 20px;
+	border: solid 2px #818181;
+	color: #818181;
+	position: relative;
+	z-index: 3px;
+	margin-top: -60px;
+}
+
+.btn-ghost.focus, .btn-ghost:focus, .btn-ghost:hover {
+	color: #fff;
+}
+
+.cta-text {
+	font-size: 28px;
+	line-height: 28px;
+	text-align: right;
+}
+
+.orange-dot {
+	padding: 0px;
+	margin: 40px 0px 0px 15px;
+	list-style: none;
+	position: relative;
+}
+
+.orange-dot li {
+	margin: 0px 0px 10px 15px;
+	line-height: 24px;
+}
+
+.orange-dot li:before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    background-color: #f47322;
+    position: absolute;
+    left: 0px;
+    margin: 10px 10px 0px 0px;
+    border-radius: 50%;
+}
+
+.section-title {
+	font-size: 26px;
+	line-height: 30px;
+	text-align: center;
+	padding: 30px 0px 10px;
+}
+
+.device-text {
+	text-align: center;
+	font-size: 18px;
+}
+
+footer {
+	padding: 60px 0px 0px;
+	font-size: 12px;
+}
+
+footer .list-inline li {
+	padding-left: 10px;
+	padding-right: 10px;
+	line-height: 1;
+}
+
+footer .list-inline li.bluetext {
+	border-right: solid 1px #ccc;
+}
+
+#videoBox { position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; background-color: #000;}
+
+#videoBox iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;}
+
+#videoBox #videoTrigger { 
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	width: 100%; 
+	height: 100%; 
+	z-index: 2; 
+	display: table;
+}
+
+#videoBox #videoTrigger #playBox {
+	width: 100%;
+	height: 100%;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	background-color: rgba(0,0,0,0.6);
+}
+
+#videoBox #videoTrigger img {
+	display: inline-block;
+	padding: 75px;
+	cursor: pointer;
+}
+
+
+
+/*
+--------------------------------------------------------------
+RESPONSIVE STYLES
+--------------------------------------------------------------
+*/
+@media (max-width: 992px) {
+	.cta-text {
+		text-align: center;
+		margin-bottom: 20px;
+		font-size: 20px;
+		line-height: 20px;
+		padding: 0px 0px;
+	}
+
+	#content {
+		text-align: center;
+		padding: 0px 20px;
+	}
+
+	.container {
+		width: 100%;
+	}
+	
+
+}
+
+@media (max-width: 767px) {
+	#content img {
+		display: inline-block;
+	}
+
+	.device-text.spacer {
+		margin-bottom: 30px;
+	}
+}
+
+@media (max-width: 568px) {
+	#videoBox #videoTrigger img {
+		padding: 50px 100px;
+	}
+
+	.btn-ghost {
+		font-size: 18px;
+		margin-top: -60px;
+	}
+
+	.section-title {
+		font-size: 22px;
+		line-height: 26px;
+	}
+	.orange-dot {
+		display: none;
+	}
+
+	footer .list-inline li.bluetext {
+		border-right: none;
+	}
+}

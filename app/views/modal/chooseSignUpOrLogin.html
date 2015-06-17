@@ -1,0 +1,52 @@
+
+<style type="text/css">
+/*    .modal-dialog
+{
+    height: 40%;
+    width: 40%;
+     margin: auto auto ;
+}
+
+.modal-content{
+    background-color: rgba(24, 27, 31, 0.9);
+}
+@media (max-width: 768px){
+    .modal-dialog{
+        width: 65%;
+    }
+}
+@media (max-width: 480px){
+    .modal-dialog{
+        width: 90%;
+    }
+}
+*/
+</style>
+<div class="modal-content" >
+    <div class="modal-header"></div>
+    <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <span class="icon-custom-cancel" ng-click="cancelWithUrlParams()"></span>
+                    </div>
+                </div>
+    <div class="modal-body ng-scope">
+        <div class="popupMsg center-block" >
+            <div class="popup-body ng-scope">
+                <h6>
+                    <span translate="MSG_PREM_AUTH"></span>
+                </h6>
+            </div> 
+            <div class="popup-footer ng-scope">
+                <div class="buttons center">
+                    <button class="btn btnOrange btnOk" ng-click="chooseLogin()" translate="BTN_ADMIN_LOGIN_WATCHLIST"></button>
+
+                    <button class="btn btnGrey" ng-click="chooseSignUp()" translate="TXT_TOP_TOOLBAR_LIVE_SIGNUP_EXISTING_ACCOUNT"></button>
+         
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div> 
+    <div class="modal-footer ng-scope">
+    </div>
+</div>

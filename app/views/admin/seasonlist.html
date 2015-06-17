@@ -1,0 +1,62 @@
+<script>
+  jQuery(document).ready(function ($) {
+    "use strict";
+    $('#movieScroll').perfectScrollbar();
+  });
+</script>
+
+<div id="movieScroll" class="contentHolderSearch">   
+  <div>
+      <div class="col-md-12 col-sm-12 col-xs-12 billingHeaderNav">
+        <a ng-click="backToMenu('views/admin/watchlist.html')" class="icon-custom-back" translate="HOVER_TXT_ADMIN_BACK_WATCHLIST"></a>
+        <h4 class="billingFont text-center" translate="">{{seasonDetails.title_medium[CurrentLang]}}</h4>
+      </div> 
+  </div>
+  <span ng-show="ajaxSeasonSpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>
+  <div class="st-nav-acc-container st-nav-episode-list col-md-12 col-sm-12 col-xs-12"> 
+    <span ng-show="ajaxBillingHistorySpinner" us-spinner="{radius:25, width:8, length: 16}" class="yelloworangeloader"></span>  
+    <div class="col-md-8 col-sm-8 col-xs-8 col-md-margin-top-3 col-md-margin-bottom-3 col-md-offset-2" ng-if="seasonList">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <button ng-disabled="ajaxSeasonSpinner" ng-click="adminseasonPlayAll()" class="btn btnOrange fullWidth" translate="BTN_ADMIN_PLAY_ALL_WATCHLIST"></button>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <button class="btn btnRed fullWidth" ng-click="removeSeasonList(seasonDetails.seasonIdsList, seasonDetails.episodeIdsList, seasonIndex)" translate="BTN_ADMIN_CLEAR_CONTINUE_WATCHING"></button>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12 col-md-margin-bottom-3" ng-repeat="(key, seasons) in seasonList" ng-if="seasons.length > 0">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <h5>{{'TXT_SEASON_LIVE' | translate}} {{key}}</h5>
+      </div>
+      <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+        <hr class="border-top-width-1" />
+      </div>
+      <div class="SeasonPlayList fullWidth parent" ng-repeat="(epikey, episode) in seasons">
+        <a ng-href="/tvShow?titleId={{episode.id}}" class="episodeThumbnail" ng-click="close()">
+          <img ng-src="{{updateimagePath(episode.imagePath)}}" ng-class="{'billing-background-overlay': episode.isExpired}"/>
+        </a>
+        <div class="episodeListTitle">
+          <div class="admin-watchlist-secondary-title" ng-if="episode.expiration_days_left < 100">
+            <b>
+              {{'TXT_ADMIN_EXPIRATION_DATE_WATCHLIST' | translate}} {{episode.expiration_days_left}} {{'TXT_ADMIN_DAYS_LEFT_WATCHLIST' | translate}}
+            </b>
+          </div>
+          <div class="admin-watchlist-primary-title">
+            <a ng-href="/tvShow?titleId={{episode.id}}" ng-click="close()">
+            {{episode.title_medium[CurrentLang]}}
+            </a>  
+          </div>
+          <div class="admin-watchlist-primary-title" ng-if="episode.episodeId">
+            {{'TXT_EPISODE_LIVE' | translate}} - {{episode.episodeId}}
+          </div>
+        </div>
+        <a class="alignRight col-md-margin-top-3 trash-icon" ng-if="episode.isExistInWatchlistItem" ng-click="removeWatchList(epikey, episode.id, seasons)">
+        </a>
+        <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+          <hr class="border-top-width-1" />
+        </div>
+      </div>
+    </div>
+  </div>     
+</div>
+    
+    

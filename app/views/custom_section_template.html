@@ -1,0 +1,131 @@
+<style type="text/javascript">
+    @media(max-width:960px){
+     .promoImage{
+        width:100%;
+    }
+    .promoImage img{
+        width:100%;
+        max-width: 100%;
+        max-height: auto;
+    }   
+    }
+    
+</style>    
+
+
+<div class="row">
+    <!-- visitor Device Info -->
+    
+    <div ng-repeat="customsection in AppcustomSections">
+<!--        Image right-->
+        <div class="visitorDeviceInfo row col-md-12 " ng-if="customsection.template==='text-left-image-right'">
+            <div class="hidden-xs alignRight promoImage">              
+                <img ng-src="{{customsection.custom_image.desktop_images_url[CurrentLang]}}"  style="">
+                    <label class="deviceText"></label>              
+            </div>
+            <div >
+                <h4 style="margin-top: 0px;" ng-bind="customsection.largeTxt[CurrentLang]"></h4>
+                <p ng-bind="customsection.smallText[CurrentLang]"></p>
+                <div>
+                    <a style="padding-right: 45px;padding-left: 45px;" ng-show="customsection.is_button_enabled" class="btn btnOrange" ng-repeat="button in customsection.button" ng-href="{{trustUrl(button[CurrentLang]['button_link'])}}" ng-style="{'background-color':button.color}">{{button[CurrentLang]['text']}}</a>
+                    <a ng-show="customsection.is_link_enabled" ng-style="{'color':alink.color}" ng-repeat="alink in customsection.link" ng-href="{{trustUrl(alink[CurrentLang]['link'])}}">{{alink[CurrentLang]['text']}}</a>
+                </div>
+            </div>
+            <div class="hidden-md hidden-sm hidden-lg promoImage">              
+                    <img ng-src="{{customsection.custom_image.mobile_images_url[CurrentLang]}}">
+                    <label class="deviceText"></label>              
+            </div>           
+        </div>
+<!--       image left-->
+        <div class="visitorDeviceInfo row col-md-12 " ng-if="customsection.template==='text-right-image-left'">
+            <div class="hidden-xs alignLeft promoImage">              
+                <img ng-src="{{customsection.custom_image.desktop_images_url[CurrentLang]}}" style="">
+                    <label class="deviceText"></label>              
+            </div>
+            <div >
+                <h4 style="margin-top: 0px;" ng-bind="customsection.largeTxt[CurrentLang]"></h4>
+                <p ng-bind="customsection.smallText[CurrentLang]"></p>
+                <div>
+                    <a style="padding-right: 45px;padding-left: 45px;" ng-show="customsection.is_button_enabled" class="btn btnOrange" ng-repeat="button in customsection.button" ng-href="{{trustUrl(button[CurrentLang]['button_link'])}}" ng-style="{'background-color':button.color}">{{button[CurrentLang]['text']}}</a>
+                    <a ng-show="customsection.is_link_enabled" ng-style="{'color':alink.color}" ng-repeat="alink in customsection.link" ng-href="{{trustUrl(alink[CurrentLang]['link'])}}">{{alink[CurrentLang]['text']}}</a>
+                </div>
+            </div>
+            <div class="hidden-md hidden-sm hidden-lg promoImage">              
+                    <img ng-src="{{customsection.custom_image.mobile_images_url[CurrentLang]}}">
+                    <label class="deviceText"></label>              
+            </div>
+        </div>
+
+        <div class="blockTemplate col-md-4 col-sm-4 col-xs-4" ng-if="customsection.template==='block-template'">
+            <div class="alignLeft promoImage">              
+                <!-- <img ng-src="{{customsection.custom_image.desktop_images_url[CurrentLang]}}"> -->
+                <img ng-src="{{customsection.custom_image.desktop_images_url[CurrentLang]}}">
+                <label class="deviceText" ng-bind="customsection.largeTxt[CurrentLang]"></label>   
+              <span class="BTbtnHolder" ng-repeat="button in customsection.button"
+                 ng-hide="button.isSocialShareButton==true && (enableTwitterSharing==false && enableFacebookSharing==false)"
+                 >
+                    <a style="padding-right: 45px;padding-left: 45px;" 
+                      ng-show="customsection.is_button_enabled" 
+                      class="btn btnOrange"  
+                      ng-href="{{trustUrl(button[CurrentLang]['button_link'])}}" 
+                      ng-style="{'background-color':button.color}"
+                      >{{button[CurrentLang]['text']}}
+                    </a>
+                    <span id="shareButtons" class="BTshareIcons" ng-if="button.isSocialShareButton==true">
+                        <div class="fullWidth">
+                            <div facebook class="facebookShare fbWelcome" data-url='{{socialShareUrl}}' ng-show="enableFacebookSharing" data-shares='shares'>{{ shares }}</div>
+
+                           <a ng-show="enableTwitterSharing" class="twitterShare twWelcome" twitter data-via='yaveo' data-text='Yaveo by DirecTV'  data-url='{{socialShareUrl}}' data-size="medium"  ></a>
+
+                        </div>
+                    </span>
+                </span>      
+            </div>
+        </div>
+        
+<!--        blank_image.png-->
+        
+<!--        <div class="visitorDeviceInfo fullWidth row hidden-xs" ng-if="customsection.template==='text-left-image-right'">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <h4 ng-bind="customsection.largeTxt[CurrentLang]"></h4>
+                <p ng-bind="customsection.smallText[CurrentLang]"></p>
+            </div>
+            <div class="col-md-8 col-sm-12 hidden-xs">
+                <div class="col-md-4 col-sm-4 col-xs-12" ng-repeat="image in customsection.image">
+                    <img ng-src="{{image[CurrentLang]['image_asset_key']}}">
+                    <label class="deviceText" ng-bind="image[CurrentLang]['image-caption']"></label>
+                </div>
+            </div>
+        </div>-->
+<!--        <div class="visitorDeviceInfo fullWidth row hidden-sm hidden-md hidden-lg" ng-if="customsection.template==='mobile'">
+            <div class="col-md-4 col-sm-4 col-xs-12 hidden-sm hidden-md hidden-lg" ng-repeat="image in customsection.image">
+                <img ng-src="{{image[CurrentLang]['image_asset_key']}}">
+            </div> 
+            <div class="col-md-4 col-sm-4 col-xs-12" >
+                <h4 ng-bind="customsection.largeTxt[CurrentLang]"></h4>
+                <p ng-bind="customsection.smallText[CurrentLang]"></p>
+            </div>
+        </div>-->
+
+<!--        <div class="visitorChannelInfo fullWidth row" ng-if="customsection.template==='text-right-image-left'">
+            <div class="col-md-6 col-sm-12 col-xs-12 no-padding">
+                <div class="col-md-4 col-sm-4 col-xs-4 visitorChannelLogo" ng-repeat="image in customsection.image">
+                    <img ng-src="{{image[CurrentLang]['image_asset_key']}}">
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <h4 ng-bind="customsection.largeTxt[CurrentLang]"></h4>
+                <p ng-bind="customsection.smallText[CurrentLang]"></p>
+            </div>
+        </div>-->
+        <div class="visitorChannelInfo fullWidth row textWithButtons" ng-if="customsection.template==='text-with-bottom-button'" >
+            <div class="col-md-7 col-sm-12 col-xs-12">
+                <h4 ng-bind="customsection.largeTxt[CurrentLang]"></h4>
+                <p ng-bind="customsection.smallText[CurrentLang]"></p>
+            </div>
+            <div class="col-md-8 col-sm-12 col-xs-12" ng-repeat="button in customsection.button"><a class="btn btnOrange btn-custom-orange" ng-href="{{trustUrl(button[CurrentLang]['button_link'])}}" ng-style="{'background-color':button.color}">{{button[CurrentLang]['text']}}</a></div>
+        </div>
+        
+       
+    </div>
+  </div>

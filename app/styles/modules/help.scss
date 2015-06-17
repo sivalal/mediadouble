@@ -1,0 +1,34 @@
+@import 'index';
+.help-bottom
+{
+	background-color:$color-helpgrey;
+	height: 580px;
+	padding-top: 50px;
+}
+
+.help-bottom-head
+{
+	font-size: large;
+margin: 0px 0px 20px -30px;
+}
+
+
+
+.help-search{
+	width: 600px;
+	height: 50px;
+	border: solid;
+	padding: 10px 30px;
+  	background: white no-repeat 10px 50%;
+}
+
+.dropdown-bottom{
+	text-indent: 0.01px;
+	cursor: pointer;
+	width: 100%;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	color: white;
+	height: 46px;
+	padding-left: 10px;
+}

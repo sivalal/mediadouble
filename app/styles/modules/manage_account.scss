@@ -1,0 +1,1058 @@
+@import 'index';
+
+/*Manage Account styles starts here*/
+.manageAccount{
+  h2{
+    @media(max-width: 800px){
+      display:none;
+    }
+  }
+  .signupFinalCheckout{
+    @media(max-width: 480px){
+      .form-control{
+        background-color: #dbdbdb;
+      }
+    }
+    .finalCheckoutForm{
+      @media(max-width: 480px){
+        .formHolder{
+          padding-top:40px;
+        }
+        .formHolder.subscriptionDetails{
+          padding-left: 0px;
+          padding-right: 0px;
+          .mobPadding{
+            padding-left: 20px;
+            padding-right: 20px;
+          }
+        }
+      }
+      h5{
+        @media(max-width: 480px){
+          display:none;
+        }
+      }
+      hr{
+        float: left;
+        width: 100%;
+        margin-top: 0px;
+        margin-bottom: 15px;
+        border-color: #d6dde0;
+      }
+      label{
+        margin-bottom: 2px;
+        font-size: 12px;
+        color: #747474;
+      }
+      .accountInformation {
+        .personalDetails{
+
+        }
+        /*payment method*/
+        .billingAddress{
+          .selectCountryHead{
+              @include tabHead;
+              @include roundCornerS;
+              input[type=radio]{
+                visibility: hidden;
+              }
+              .icon_flag{
+                width: 24px;
+                height: 15px;
+                @include iconCountry;
+              }
+              .icon_globe{
+                width: 20px;
+                height: 20px;
+                @include iconCountry;
+              }
+              .selectCountry{
+                @include tabDeactive;
+                @include transBackground;
+                .icon_flag{
+                  background:  image-url("icon/us_flag.png") no-repeat center;
+                }
+                .icon_globe{
+                  background:  image-url("icon/globe_deactive.png") no-repeat center;
+                }
+                @media(max-width: 480px){
+                  height:43px;
+                }
+              }
+              .activeCountry{
+                @include tabActive;
+                @include roundCornerS;
+                .icon_flag{
+                  background:  image-url("icon/us_flag_active.png") no-repeat center;
+                }
+                .icon_globe{
+                  background:  image-url("icon/globe_blue_active.png") no-repeat center;
+                }
+                @media(max-width: 480px){
+                  height:43px;
+                }
+              }
+              @media(max-width: 480px){
+                line-height:45px;
+              }
+            }
+            .zip{
+              padding-left: 0;
+            }
+          .selectPaymentHead{
+            @include tabHead;
+            @include roundCornerS;
+            input[type=radio]{
+              visibility: hidden;
+            }
+            .selectPayment{
+              @include tabDeactive;
+              @include transBackground;
+              @media(max-width: 480px){
+                height:43px;
+              }
+            }
+            .activePayment{
+              @include tabActive;
+              @include roundCornerS;
+              @media(max-width: 480px){
+                height:43px;
+              }
+            }
+            @media(max-width: 480px){
+              line-height:45px;
+            }
+          }
+          .icon_creditCard{
+            background:  image-url("icon/creditcard_types.png") no-repeat center;
+            @include iconPayment;
+            @media(max-width: 360px){
+              background-size:90%;
+            }
+          }
+          .icon_payPal{
+            background:  image-url("icon/paypal_logo.png") no-repeat center;
+            @include iconPayment;
+          }
+          .payPalInfo{
+            color: #747474;
+            font-size: 18px;
+            text-align: center;
+            font-family: 'DINWebPro';
+            margin-bottom: 20px;
+          }
+          button{
+            @include nextButton;
+          }
+          .editBtn {
+            color: #747474!important;
+            background: #fff;
+            border: 1px solid #747474;
+            padding: 2px 15px;
+            font-size: 15px;
+            border-radius: 5px;
+            padding-top: 4px;
+          }
+          .paymentCondition{
+            position: relative;
+            label{
+              padding-left: 25px;
+              font-size: 12px;
+              color: #9e9e9e;
+              input[type=checkbox]{
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                margin: 0;
+                width: 18px;
+                height: 18px;
+                opacity: 0;
+              }
+            }
+          }
+          .paymentCheckbox{
+            &:before{
+              @include bottomCheckbox;
+            }
+          }
+          .paymentCheckboxChecked{
+            &:before{
+              @include bottomCheckboxChecked;
+            }
+          }
+        }
+      }
+
+      /*profile settings*/
+      .profileSettings{
+        .checkoutPackageSelect{
+          padding: 0 !important;
+          border: 1px solid #d6dde0;
+          h6{
+            font-size: 16px;
+            color: #747474;
+            font-family: DINWebPro;
+            padding: 0;
+            margin: 0;
+          }
+          a{
+            text-decoration: none;
+          }
+        }
+        .block{
+          border-bottom:1px solid #d6dde0;
+          padding: 15px 12px;
+          position: relative;
+          .connect_device_icon{
+            @include verticalAlign;
+            right:18px;
+          }
+        }
+        .accMangShowHideContainer{
+          padding: 0;
+          .leftCont{
+            float: left;
+            width: 100%;
+            padding-right: 70px;
+            h6{
+              font-size: 14px;
+              margin-bottom: 8px;
+              font-family: DINWebPro-Medium;
+            }
+            p{
+              font-size: 12px;
+            }
+          }
+          .unSubscribeAll{
+            button{
+              border-radius: 5px;
+              padding: 5px 12px;
+              font-size: 12px;
+              padding-top: 8px;
+              margin-top: 15px;
+              margin-bottom: 15px;
+            }
+          }
+        }
+        .manageEmailSubHead{
+          position: relative;
+          &:before{
+            content:'';
+            width: 30px;
+            height: 30px;
+            background: url("/images/icon/select_arrow.png") no-repeat 50% 50%;
+            margin: 0;
+            position: absolute;
+            right: 12px;
+            top: 10px;
+          }
+          &.manageEmailSubHeadActive{
+            &:before{
+              transform: rotate(180deg);
+            }
+          }
+        }
+        .language-onoffswitch{
+          margin: 0;
+          position: absolute;
+          right: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        @media(max-width: 480px){
+          padding:0;
+        }
+      }
+      .editControls{
+        @include verticalAlign;
+        button{
+          @include editControlBtn;
+        }
+        .btnEdit{
+          @include smallBorderBtn;
+        }
+      }
+      .form-group{
+        .editControls{
+          right: 2px;
+          top: 3px;
+          transform:none;
+          .btnEdit {
+            border: 0;
+            margin: 0 !important;
+            border-radius: 0;
+          }
+        }
+        div.form-control{
+          float: left;
+          color: #9e9e9e;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
+      .editControls{
+        .managebtn{
+          font-size: 10px;
+        }
+      }
+      .error{
+        .form-control{
+          border-color: #ff4744;
+        }
+      }
+      .textFieldError {
+        color: #ff4744;
+      }
+      @media (max-width: 480px){
+        .editControls{
+          position: fixed;
+          top: 76px;
+          left: 0;
+          right: 0;
+          z-index: 111;
+          button{
+            width: 50% !important;
+            margin: 0 !important;
+            border: none !important;
+            height: 32px;
+            border-radius:0; 
+          }
+          .btnEdit{
+            background: #747474;
+            color: #FFF !important;
+          }
+        }
+        .form-group{
+          .editControls{
+            position: absolute;
+            top: 0;
+            right: 5px;
+            left: auto;
+            button{
+              width: auto !important;
+            }
+            .btnEdit{
+              color: #747474 !important;
+            }
+          }
+        }
+      }
+      @media (max-width: 767px){
+        .no-padding-left{
+          padding-left: 0px;
+        }
+      }
+
+      /*subscription details*/
+      .subscriptionDetails{
+        .checkoutPackageSelect{
+          background-color: #e3e3e3;
+          border-radius: 5px;
+          overflow:hidden;
+          padding: 0 !important;
+          margin-bottom: 10px;
+          @media(max-width: 480px){
+            background-color: #c5c5c5;
+            color: #595959;
+            border-radius:0;
+            label{
+              color: #595959;
+            }
+          }
+          label, span{
+            font-size: 16px;
+            font-family: 'DINWebPro-Medium';
+            line-height: 40px;
+            float: left;
+            margin: 0;
+          }
+          label{
+            padding-left: 15px !important;
+          }
+/*          .blueCheckbox{
+            &:before{
+              background: url("/images/icon/subscription_checkbox__checked_active.png") no-repeat center !important;
+              @include verticalAlign;
+              left: 12px !important;
+              right: auto !important;
+            }
+          }*/
+          .AddNewlistIcon{
+            &:before{
+              background: url('/images/icon/arrow03.png') no-repeat center !important;
+              @include verticalAlign;
+              left: 12px !important;
+              right: auto !important;
+            }
+          }
+          .checkoutPackageCheckbox{
+            &:before{
+              @include verticalAlign;
+              left: 12px;
+            }
+          }
+          .checkoutPackageCheckboxChecked{
+            &:before{
+              @include verticalAlign;
+              left: 12px;
+            }
+          }
+          input[type=checkbox]{
+            @include verticalAlign;
+            left: 12px;
+            width: 18px;
+            height: 18px;
+          }
+        }
+        .multipleAddons{
+          padding-left: 28px;
+          border-top: 1px solid #d8d8d8 !important;
+        }
+        .navAddedDivColor{
+            background-color: #34ace0;
+            color: #ffffff;
+        }
+        .navAddedSpanColor{
+            color:#ffffff;
+        }
+        .addPremiumChannelHolder{
+          border: 1px solid #e1e1e1;
+          @include roundCornerS;
+          &:last-child{
+            border-bottom: 0px;
+          }
+        }
+        .addPremiumChannel{
+          color: #747474;
+          border-bottom: 1px solid #e1e1e1;
+          background-color: transparent;
+          margin-bottom: 0;
+          cursor: pointer;
+          border-radius: 0;
+          @include transBackground;
+          &:hover{
+            background-color: #EDEDED;
+          }
+          label{
+            cursor: pointer;
+          }
+          button.btnOrange{
+            font-size: 25px;
+            width: 20px;
+            height: 20px;
+            line-height: 22px;
+            @include verticalAlign;
+            left: 12px;
+            right: auto;
+          }
+          .packagePrice{
+            font-size: 16px;
+            font-family: 'DINWebPro-Medium';
+          }
+          @media(max-width: 480px){
+            border-bottom: 1px solid #e3e3e3;
+            background-color: #e3e3e3;
+            margin-bottom: 5px;
+            button.btnOrange{
+              font-size: 34px;
+              width: 30px;
+              height: 30px;
+              right: 0;
+              left: 7px;
+            }
+          }
+        }
+        .couponCode{
+          margin-top: 40px;
+          button.addonPurchaseBtn{
+            background-color: #f47322;
+            color: #FFF;
+            font-size: 14px;
+          }
+          span.IncrctPaswrd{
+            color: red;
+            left: 0;
+            position: absolute;
+            text-align: left;
+            margin: 0;
+            top: auto;
+            bottom: -20px;
+            font-size: 15px;
+            background: 0 0;
+            line-height: 12px;
+          }
+          button.addonCancelBtn{
+            top: auto;
+            bottom: -20px;
+            font-size: 10px;
+            background: none;
+            line-height: 12px;
+          }
+        }
+        /*.disabledAddons{
+          background-color:#dbdbdb !important;
+        }
+        .disabledAddons:hover{
+            background-color:#747474 !important;
+        }*/
+
+      }
+      .saveCancelBtnClicked{
+        background-color: #dbdbdb;
+        border-radius: 4px;
+        color: #747474;
+        font-size: 12px;
+      }
+      .saveCancelBtn{
+        color: #747474;
+        font-size: 12px;
+      }
+      .basicPackageTrialSpan{
+          font-size: 9px!important;
+          background-color: rgb(121, 121, 121);
+          line-height: 16px !important;
+          padding: 0px 6px;
+          padding-top: 2px;
+          margin-left: 10px !important;
+          color: rgb(255, 255, 255);
+          margin-top: 10px !important;
+          border-radius: 4px;
+      }
+      .addonPackageDurationSpan{
+          background-color: #cf5353;
+          line-height: 18px !important;
+          padding: 0 6px;
+          margin-left: 10px !important;
+          color: #fff;
+          margin-top: 10px !important;
+          border-radius: 4px;
+      }
+      .boltonDescription{
+          background-color: #FBFBFB;
+          clear: both;
+          padding: 15px 20px;
+          border: 1px solid #E3E3E3;
+          border-radius: 0px 0px 5px 5px;
+          font-size: 14px;
+      }
+      .subscriptionOverlay{
+        background-color: #ffffff;
+        opacity: 0.9;
+        z-index: 10;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        top: 0;
+        .OverlayCont{
+          width: 100%;
+          margin: 0 auto;
+          padding-left: 15px;
+          padding-right: 15px;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 18px;
+          text-align: center;
+          .channelName{
+            font-family: 'DINWebPro-Medium';
+            text-align: center;
+          }
+          button{
+            font-size: 14px;
+            min-width: 100px;
+            color: #747474;
+            border: 1px solid #747474;
+            background: transparent;
+            border-radius: 5px;
+            margin: 5px 5px;
+            margin-top: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/*Manage Account styles ends here*/
+.blockWhite{
+  background: #fafafa;
+  padding: 30px;
+  width: 100%;
+  float: left;
+  margin-bottom: 30px;
+}
+/*Emotions*/
+@mixin emoLargeSize{
+  width: 111px;
+  height: 111px;
+}
+@mixin emoSmallSize{
+  width: 51px;
+  height: 51px;
+}
+.emoLargeSad{
+  background: url('/images/icon/em_large_sad.png') no-repeat center !important;
+  @include emoLargeSize;
+}
+.emoLargeCry{
+  background: url('/images/icon/em_large_cry.png') no-repeat center !important;
+  @include emoLargeSize;
+}
+.emoSmallHappy{
+  background: url('/images/icon/em_small_happy.png') no-repeat center !important;
+  @include emoSmallSize;
+}
+.emoSmallDiscontent{
+  background: url('/images/icon/em_small_discontent.png') no-repeat center !important;
+  @include emoSmallSize;
+}
+.emoSmallSad{
+  background: url('/images/icon/em_small_sad.png') no-repeat center !important;
+  @include emoSmallSize;
+}
+
+.cancelAccount{
+  width: 720px;
+  margin: auto;
+  display: block;
+  clear: both;
+  margin-top: 60px;
+  color: #747474;
+  font-size: 18px;
+  @media (max-width: 768px){
+    width:100%;
+  }
+  .emo{
+    margin: 20px auto;
+    display: block;
+    clear: both;
+  }
+  .emoLargeSad{
+    @media(max-width: 480px){
+      display: none !important;
+    }
+  }
+  h2 {
+    color: #747474;
+    font-size: 40px;
+    font-family: 'DINWebPro-Light';
+    text-align: center;
+    @media (max-width: 768px){
+      font-size: 35px;
+      padding: 0px 10px;
+    }
+    @media(max-width: 480px){
+      font-size: 20px;
+      width: 232px;
+      margin: auto;
+      clear: both;
+      margin-bottom: 20px;
+      padding-top: 20px;
+    }
+  }
+  p{
+    color: #747474;
+    font-size: 18px;
+    text-align: center;
+    @media (max-width: 768px){
+      padding: 0px 20px;
+    }
+    @media(max-width: 480px){
+      font-size: 15px;
+    }
+  }
+  button{
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+  }
+  .checkoutPackageCheckbox{
+    position: relative;
+    &:before{
+      content:'';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 18px;
+      height: 18px;
+      background:  image-url("icon/checkbox_new.png") no-repeat center;
+    }
+  }
+/*  .blueCheckbox{
+    position: relative;
+    &:before{
+      content:'';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 18px;
+      height: 18px;
+      background: url("/images/icon/subscription_checkbox__checked_active.png") no-repeat center;
+    }
+  }*/
+  .checkoutPackageCheckboxChecked{
+    position: relative;
+    &:before{
+      content:'';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 18px;
+      height: 18px;
+      background:  image-url("icon/checkbox_checked_new.png") no-repeat center;
+    }
+  }
+  .checkoutPackageCheckboxDisable{
+    opacity: .5;
+  }
+  .pickReasons{
+    label{
+      padding-left: 25px;
+      position: relative;
+      input[type=checkbox]{
+        position: absolute;
+        left: 0;
+        margin: 0;
+        width: 18px;
+        height: 18px;
+      }
+    }
+    textarea{
+      float: left;
+      width: 100%;
+      margin: 15px 0px 0px;
+    }
+    @media(max-width: 480px){
+      label{
+        font-size: 15px;
+      }
+    }
+  }
+  .impressions{
+    h4{
+      font-family: 'DINWebPro-Medium';
+      font-size: 18px;
+      color: #757779;
+      text-align: center;
+      margin: 20px 0px;
+      margin-bottom: 40px;
+      @media(max-width: 480px){
+        font-size: 15px;
+      }
+    }
+    .emotionFeedback{
+      position: relative;
+      margin-bottom: 15px;
+      cursor: pointer;
+      input{
+        position: absolute;
+      }
+      label{
+        padding-left: 100px;
+        cursor: pointer;
+        span{
+          padding: 20px;
+          width: 100%;
+          float: left;
+          background-color: #91cf9e;
+          color: #FFF;
+          height: 85px;
+          line-height: 46px;
+          border-radius: 0px 5px 5px 0px;
+          transition: box-shadow .5s;
+          @media(max-width: 480px){
+            height: 55px;
+            line-height: 14px;
+          }
+        }
+        span.feedbackTextVert{
+          background: none !important;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+          height: auto;
+          box-shadow: none !important;
+        }
+      }
+      &:before{
+        content:'';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 88px;
+        height: 85px;
+        background-color: #91cf9e;
+        border-radius: 5px 0px 0px 5px;
+        transition: box-shadow .5s;
+      }
+      @media(max-width: 480px){
+        label{
+          padding-left: 80px;
+          font-size: 15px;
+          span{
+            height: 55px;
+            line-height: 14px;
+          }
+        }
+        &:before{
+          height: 55px;
+          width: 70px;
+        }
+      }
+    }
+    .happy{
+      label{
+        span{
+          background-color: $emo-happy-color;
+        }
+      }
+      &:before{
+        background: $emo-happy-color image-url("icon/em_small_happy.png") no-repeat center;
+        @media(max-width: 480px){
+          background-size: 60%;
+        }
+      }
+    }
+    .ok{
+      label{
+        span{
+          background-color: $emo-ok-color;
+        }
+      }
+      &:before{
+        background: $emo-ok-color image-url("icon/em_small_discontent.png") no-repeat center;
+        @media(max-width: 480px){
+          background-size: 60%;
+        }
+      }
+    }
+    .sad{
+      label{
+        span{
+          background-color: $emo-sad-color;
+        }
+      }
+      &:before{
+        background: $emo-sad-color image-url("icon/em_small_sad.png") no-repeat center;
+        @media(max-width: 480px){
+          background-size: 60%;
+        }
+      }
+    }
+    /*active*/
+    .happy.activeEmotion{
+      label{
+        span{
+          box-shadow: 0px 4px 0px #6CBA7C;
+        }
+      }
+      &:before{
+        box-shadow: 0px 4px 0px #6CBA7C;
+      }
+    }
+    .ok.activeEmotion{
+      label{
+        span{
+          box-shadow: 0px 4px 0px #71AABA;
+        }
+      }
+      &:before{
+        box-shadow: 0px 4px 0px #71AABA;
+      }
+    }
+    .sad.activeEmotion{
+      label{
+        span{
+          box-shadow: 0px 4px 0px #BE7A76;
+        }
+      }
+      &:before{
+        box-shadow: 0px 4px 0px #BE7A76;
+      }
+    }
+  }
+}
+/*Cancel Account styles starts here*/
+.confirmCancelPage{
+  width: 830px;
+  @media (max-width: 830px){
+    width:100%;
+  }
+  .confirmPassword{
+    width: 400px;
+    display: block;
+    clear: both;
+    margin: 20px auto;
+    margin-top: 50px;
+    @media (max-width: 480px){
+      width:100%;
+    }
+    button.confirmBtn{
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      bottom: 0;
+      width: 100px;
+      @media (max-width: 480px){
+        position: static;
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+    .goBackBtn{
+      background: transparent;
+      border: 1px solid #747474;
+      padding: 7px 20px;
+      font-size: 14px;
+      text-align: center;
+      margin: auto;
+      display: block;
+      border-radius: 5px;
+      opacity: .9;
+    }
+  }
+}
+
+/*common*/
+.hideInput{
+  input[type=checkbox], input[type=radio]{
+    opacity: 0;
+  }
+}
+
+
+/*account management mobile menu page*/
+
+.accountMobWeb{
+  margin-top: 60px;
+}
+.accountMobWeb{
+  margin-bottom: 20px;
+  p{
+    padding: 20px;
+    color: #747474;
+    border-bottom: 1px solid #d6dde0;
+    margin-bottom:0;
+  }
+  button{
+    width:90%;
+    margin:auto;
+    display:block;
+  }
+}
+.accountMenuMob{
+  .menuItem{
+    position: relative;
+    color: #747474;
+    padding: 10px;
+    font-size: 18px;
+    padding-left: 50px;
+    width: 100%;
+    border-bottom: 1px solid #d6dde0;
+    cursor: pointer;
+    &:hover{
+      background: rgba(51, 51, 51, 0.05);
+    }
+    &:focus{
+      background: rgba(51, 51, 51, 0.13);
+    }
+    &:before{
+      content: '';
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+.accountInfoIcon:before{
+  background:transparent image-url('icon/account_info_icon.png') center no-repeat;
+}
+.billingInfoIcon:before{
+  background:transparent image-url('icon/billing_info_icon.png') center no-repeat;
+}
+.subscriptionIcon:before{
+  background:transparent image-url('icon/subscription_icon.png') center no-repeat;
+}
+.profileSettingsIcon:before{
+  background:transparent image-url('icon/profile_settings_icon.png') center no-repeat;
+}
+
+.manageAccountForms{
+  width: 928px;
+  display: block;
+  clear: both;
+  margin: auto;
+  @media(max-width: 928px){
+    width:100%;
+    .finalCheckoutForm{
+      float:none;
+    }
+  }
+}
+.manageAccountHeaderMob{
+  width: 100%;
+  float: left;
+  height: 60px;
+  border: 0;
+  margin-bottom: 0;
+  background-color: #34ace0;
+  position:fixed;
+  top:0;
+  z-index:1111111111;
+  display: none;
+  h3{
+    font-size: 20px;
+    text-align: center;
+  }
+  .backBtnAcMob{
+    @include verticalAlign;
+    right: auto;
+    left: 0;
+    width: 34px;
+    height: 34px;
+    background:  image-url("icon/rails_arrow_l.png") no-repeat center;
+    &:hover{
+      opacity:.7;
+    }
+  }
+  .btnEdit{
+    position: absolute;
+    right: 0;
+    top: 4px;
+    line-height: 48px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.91);
+    border-left: 1px solid #9ad6f2;
+  }
+  @media(max-width: 800px){
+    display:block;
+  }
+}
+
+@media(max-width:480px){
+  .hideMob{
+    display: none;
+  }
+}
+
+.connect_device_icon{
+  width: 17px;
+  height: 21px;
+  background:  image-url("icon/connect_device_icon.png") no-repeat center;
+  @include verticalAlign;
+  right: 10px;
+}
+
+.packageDisclaimer{
+  @media(max-width: 480px){
+    font-size: 14px;
+    padding: 0px 20px;
+  }
+}

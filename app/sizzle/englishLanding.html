@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>yaveo by DIRECTV</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="css/yaveo.css" rel="stylesheet">
+	<link href="fonts/yaveo/yaveofont.css" rel='stylesheet'>
+	
+<!--<script type="text/javascript" src="js/830ca62f.vendor.js"></script>-->
+<!--<script type="text/javascript" src="js/analytics-service.js"></script>-->
+	<script type="text/javascript" src="js/Ooyala_Omniture.js"></script>
+		
+	<script type="text/javascript">
+function resetEvars() {
+    s.pageName = '';
+    s.server = '';
+    s.pageType = '';
+    s.events = '';
+    s.eVar17 = '';
+    s.eVar8 = '';
+    s.prop9 = '';
+    s.eVar18 = '';
+    s.eVar4 = '';
+    s.eVar1 = '';
+    s.prop1 = '';
+    s.eVar2 = '';
+    s.prop5 = s.eVar5 = '';
+    s.eVar10 = '';
+    s.eVar14 = '';
+}
+	var s = Reporting.getReportingObject('dtvdirectvhottprod'); // 'dtvdtvdirectvhottest' for testing, 'dtvdirectvhottprod' for production
+	s.channel = 'https://www.yaveo.com'; // https://www.yaveo.com for production
+resetEvars();
+var pageName = 'SizzleEnglish';
+s.pageName = pageName;
+s.server = '';
+s.pageType = '';
+s.events = 'event1,event2';
+var accountNumber = ''; //Sessions.getCookie('userid');
+//account_number
+if (typeof accountNumber !== 'undefined') s.eVar17 = accountNumber;
+s.eVar1 = ''; //<subscriber_type> Subscriber/Non Subscribe //on page load
+s.prop1 = navigator.userAgent; //<device_type>
+s.prop9 = (typeof propNine !== 'undefined') ? propNine : '';
+s.eVar2 = ''; //package of the user  //on page load
+//s.prop2='' //not known
+s.eVar3 = ''; //<search_term_typed>  //on search
+s.prop3 = ''; //# of results from search  //on search
+s.eVar4 = ''; //Piped origin of playback  //on video playback
+s.prop4 = ''; //view type
+s.prop5 = s.eVar5 = 'en_US'; //selected language(en_US/es_ES)  //on page load
+s.eVar7 = ''; //genre if applicable  on page with genre info  //on page load
+//s.prop7        //# of Videos in Watchlist //on page load of watchlist
+//s.eVar8        //<movie_title | Showname_Seasonid_Episodeid> //on video playback
+//s.prop8        //promocodes // on signup completion or new subscribtion
+//s.eVar9        //Name of social sharing network  //on sharing video
+s.eVar10 = navigator.userAgent; //<device_type>    //on page load
+//s.eVar12       //<connection_type>  //not sure for web  //on page load
+//s.eVar13       //<programmer_name>(if applicable) Only when user selects a network. Capital letter Network Name
+//on page load
+s.eVar14 = ''; //<subscription_type> // on signup completion
+//s.eVar15       //Number of videos in watchlist page  //on page load
+//s.eVar16       //<promo_codes>  // on signup completion
+var s_code = s.t();
+if (s_code) console.log(s_code);
+console.log(pageName);
+
+	</script>
+	
+</head>
+
+<!--video one will have to be set in the src of the iframe in index.php.
+second video url will have to be set in the yaveo.js file.-->
+
+
+<body>
+	<div id="videoBox">
+		<div id="videoTrigger">
+			<div id="playBox">
+				<img src="img/play-graphic_en.png" class="img-responsive"/>
+				<br/>
+				<a href="//yaveo.com/signup" class="btn btn-ghost">Sign up today!</a>
+			</div>
+		</div>
+		<iframe id="video" src="//player.vimeo.com/video/120850026?api=1&player_id=video" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+	</div>
+	<div id="greyBox">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="cta-text">Discover a new world of entertainment in Spanish at your fingertips</div>
+				</div>
+				<div class="col-md-4">
+					<a href="//yaveo.com/signup" class="btn btn-orange btn-block" style="font-size: 18px;">Start Your First Week Free</a>
+					<p class="freetrial">Only $7.99 per month after the free trial*</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<ul class="orange-dot">
+						<li>New Spanish language streaming service dedicated to U.S. Hispanics</li>
+						<li>Thousands of hours of the best programming from Latin America, Spain, and U.S.</li>
+						<li>Live soccer from top European leagues including La Liga, Serie A, and Ligue 1</li>
+						<li>No satellite or contract required</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="content">
+		<div class="container">
+			<div class="section-title">
+				Yaveo works on many Internet-connected devices. 
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<img src="img/device-desktop.jpg" class="img-responsive"/>
+					<div class="device-text">DESKTOP</div>
+				</div>
+				<div class="col-sm-4">
+					<img src="img/device-mobile.jpg" class="img-responsive"/>
+					<div class="device-text spacer">IOS AND ANDROID</div>
+				</div>
+				<div class="col-sm-4">
+					<img src="img/device-xbox.jpg" class="img-responsive"/>
+					<div class="device-text">XBOX</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<div class="container textcenter">
+			<ul class="list-inline">
+				<li class="bluetext">&copy; 2015 DIRECTV Digital LLC</li>
+				<li class=""><a href="//yaveo.com/pp">Privacy Policy</a></li>
+				<li class=""><a href="//yaveo.com/tou">Terms of Use</a></li>
+				<li class=""><a href="//help.yaveo.com">Help</a></li>
+			</ul>
+		</div>
+		
+		<div id="greyBox">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="disclaimer-text">
+						
+					<b>*Live channels are included for a limited time with the Yaveo $7.99 basic service. <u>*FIRST WEEK FREE OFFER:</u> A current valid accepted payment method as indicated during sign-up (&quot;Payment Method&quot;) is required to use this offer. DIRECTV will begin billing your Payment Method for monthly membership fees at the end of the one week free trial period. IF YOU CANCEL PRIOR TO THE END OF YOUR FREE TRIAL, THERE WILL BE NO CHARGES TO YOUR PAYMENT METHOD. We will continue to bill your Payment Method on a monthly basis for your membership fee until you cancel. Free-trial offers may also be subject to additional terms and conditions provided to you during sign-up. <u>CANCELLATION:</u></b> Your membership will continue in effect on a month-to-month basis unless and until you properly cancel your membership in accordance with the &ldquo;Terms of Use&rdquo;. You must cancel your applicable membership before it renews each month in order to avoid the next month's billing. TO CANCEL YOUR MEMBERSHIP, VISIT THE &quot;ACCOUNT MEMBERSHIP&quot; PAGE, CLICK &quot;CANCEL ACCOUNT,&quot; AND FOLLOW THE CANCELLATION INSTRUCTIONS. PLEASE NOTE THAT WE DO NOT PROVIDE REFUNDS FOR ANY MEMBERSHIPS CANCELLED MID-PERIOD OR FOR UNWATCHED MOVIES OR SHOWS. <b>Yaveo Membership is subject to Yaveo Terms of Use; copy provided at yaveo.com/tou. &copy;2015 DIRECTV DIGITAL LLC. Image of Mi Coraz&oacute;n Es Tuyo reproduced with permission from Televisa, S.A. de C.V. All rights reserved. Yaveo and the Yaveo Squares Design are trademarks of DIRECTV DIGITAL LLC.</b>
+					
+					</div>
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	</footer>
+
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/yaveo_en.js"></script>
+
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5J7G8D"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5J7G8D');</script>
+<!-- End Google Tag Manager -->
+
+	<!--[if lt IE 9]>
+		<script type="text/javascript"  src="js/respond.js"></script>
+	<![endif]-->
+</body>
+</html>

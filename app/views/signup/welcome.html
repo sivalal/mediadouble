@@ -1,0 +1,90 @@
+<style type="text/css">
+.welcomeSignup{
+	text-align: center;
+}
+.welcomeSignup h2{
+	font-size: 40px; 
+  color: #6d6f71; 
+  font-family: 'DINWebPro-Light';
+}
+.welcomeSignup h5{
+	font-size: 40px; 
+  color: #3fade0; 
+  margin-bottom: 60px;
+}
+.blockTemplate{
+  display: inline-block;
+  margin-bottom: 30px;
+}
+.blockTemplate label{
+  color: #818385;
+  font-size: 18px;
+  padding: 15px 0px;
+  width: 220px;
+  min-height: 80px;
+}
+.BTbtnHolder{
+  position: relative;
+  width: 210px;
+  margin: auto;
+  display: block;
+}
+.BTbtnHolder a{
+  padding: 10px;
+  font-size: 20px;
+  width: 100%;
+}
+.BTbtnHolder .BTshareIcons{
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity .5s;
+  display: block;
+}
+.BTbtnHolder .BTshareIcons div.gig-button-container{
+  padding: 0;
+}
+.BTbtnHolder:hover .BTshareIcons{
+  opacity: 1;
+}
+}
+</style>
+
+<!--{
+    "id": "TXT_HI",
+    "en_US": "Hi",
+    "es_ES": "hay"
+  },
+  {
+    "id": "TXT_WELCOME",
+    "en_US": "Here are a few tips to get you started.",
+    "es_ES": "Aquí hay algunos consejos para ayudarle a empezar ."
+  },
+  {
+    "id": "TXT_WELCOME_HEAD",
+    "en_US": "Welcome to",
+    "es_ES": "Bienvenido a"
+  }-->
+
+<!-- Visitor Bottom Contents -->
+<div class="welcomeSignup fullWidth" style="margin-top: 60px; text-align: center;">
+
+  <h2 style="">{{'TXT_HI'|translate}} {{firstName}}! {{'TXT_WELCOME_HEAD'|translate}} <span><img ng-src="{{yaveoImage}}"></span></h2>
+	<h5 style="" translate="TXT_WELCOME"></h5>
+	<div style="margin-left:0;">
+    <div class="col-md-10 center-block" style="float:none;">
+      <div ng-include="'/views/custom_section_template.html'" ></div>
+    </div>
+  </div>
+
+
+
+  <div class="clear"></div>
+  <a ng-show="copyRight && !isLoggedIn" href="#customPageTop" class="scrollToTop"></a>
+  <div class="clear"></div>
+</div>

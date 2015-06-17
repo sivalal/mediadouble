@@ -1,0 +1,127 @@
+<style type="text/javascript">
+    @media (max-width: 480px){
+        .signupMessage{
+            height: 400px;
+            width: 100px;
+        }
+    }
+    @media (min-width: 768px){
+        .signupMessage{
+            height: 800px;
+            width: 200px;
+        }
+    }
+</style>
+
+<div class="container">
+  <!-- SECONDARY SMALL CONTAINER-->
+  <div class="row">
+    <div class="navbar-fixed-top " ng-style="navmenuStyle">
+      <div class="secondarySmallContainer">
+        <a ng-click="backurl()" class="icon-custom-back" translate="NAV_ADMIN_BACK_WATCHLIST"></a>
+      </div> 
+    </div>
+  </div>
+  <!-- SECONDARY SMALL CONTAINER END -->
+  <!-- PLAYER SECTION -->
+  <div class="row">
+    <div class="tvShowBgBanner col-md-12">
+      <div class="col-md-offset-2 col-md-8 ">
+        <div class="containingBlock">
+          <span ng-show="ajaxMovieloader" us-spinner="{radius:10, width:4, length: 8}"></span>
+          <div id='playerwrapper' class="tvPlayerWrapper"  style='width:0;height:0'>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- PLAYER SECTION END -->
+  <!-- SINGLE ASSET DETAILS -->
+  <div class="row singleAssetDetails">
+    <div class="col-md-offset-1 col-md-10">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">     
+          <h2 class="tvShowMetaLabel" ng-bind="assetData[CurrentLang]['title_medium']"></h2>
+          <div class="row col-md-6 col-sm-6 col-xs-9 no-padding singleAssetButtons">
+            <div class="alignLeft SABtnHolder" ng-show="isLoggedIn">
+              <a ng-show="isLoggedIn" class="btn tvWatchNowBtn" ng-href="{{currentUrl}}&isTrailer=false">
+                <span translate="BTN_WATCH_NOW_LIVE"></span>
+                <span class="glyphicon glyphicon-play"></span>
+              </a>    
+              <button ng-show="showWatchlistAddBtn"  class="btn tvWatchlistBtn" ng-click="addWatchList(assetData.titleId, 'SAP')">
+                <span translate="BTN_ADD_TO_WATCHLIST_LIVE_REMINDERS"></span>
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+              <button ng-show="showWatchlistRemoveBtn "  class="btn tvWatchlistBtn" ng-click="DeleteRelatedEpisodeToWatchList(assetData.titleId)">
+                <span translate="BTN_REMOVE_FROM_PLAYLIST"></span>
+                <span class="glyphicon glyphicon-minus"></span>
+              </button>
+            </div>
+            <div class="alignLeft SABtnHolder">
+              <a ng-show="!isLoggedIn" class="btn tvWatchNowBtn" ng-disabled="noPreview" ng-href="{{currentUrl}}&isTrailer=true">
+                <span translate="BTN_WATCH_TRAILER"></span>
+                <span class="glyphicon glyphicon-play"></span>
+              </a>
+              <button ng-show="!isLoggedIn"  ng-click="signup()" class="btn tvWatchlistBtn" translate="TXT_TOP_TOOLBAR_LIVE_SIGNUP_EXISTING_ACCOUNT">
+              </button>
+            </div>
+          </div>
+
+      <div class="AssetDetailShare alignRight">
+        <h6 class="tvShowMetaLabel" translate="TXT_SHARE_REMINDERS"
+            ng-show="enableTwitterSharing || enableFacebookSharing"
+          >
+          
+        </h6>
+       <a ng-show="enableTwitterSharing" class="twitterShare" twitter data-count='horizontal' data-url='{{socialShareUrl}}' data-text='{{programTitleMedium}}' data-size="medium"  ></a>
+       <div facebook class="facebookShare" ng-show="enableFacebookSharing" data-title='{{programTitleMedium}}' data-url='{{socialShareUrl}}' data-shares='shares'>{{ shares }}</div>
+     </div>
+
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-12 assetCol1">
+              <div class="tvShowText col-md-margin-bottom-2" ng-bind="assetData[CurrentLang]['summary_medium']"></div>
+              <h6 ng-show="assetData.programer_studioname[CurrentLang]">
+              <span class="alignLeft tvShowMetaLabel" ng-bind="assetData.programer_studioname[CurrentLang]"></span>
+              </h6>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 assetCol2">
+            <h6 ng-show="assetData.airedon">
+              <span class="tvShowMetaLabel alignLeft" translate="TXT_RELEASED_ON"></span>
+              <span class="alignLeft tvShowText" ng-bind="assetData.airedon"></span>
+            </h6>
+              <h6 class="tvShowMetaLabel" ng-show="assetData.genres">
+                  <span class="tvShowMetaLabel alignLeft" translate="TXT_GENRE"></span>
+                  <span class="alignLeft tvShowText" ng-bind="assetData.genres"></span>
+              </h6>
+              <h6 ng-show="assetData.ratings" class="tvShowMetaLabel" >
+                  <span class="tvShowMetaLabel alignLeft" translate="TXT_RATING"></span>
+                  <span class="alignLeft tvShowText" ng-bind="assetData.ratings"></span>
+              </h6>
+              <h6 ng-show="assetData.display_run_time" class="tvShowMetaLabel" >
+                  <span class="tvShowMetaLabel alignLeft" translate="TXT_RUNTIME"></span>
+                  <span class="alignLeft tvShowText" ng-bind="assetData.display_run_time"></span>
+                  <span class="alignLeft tvShowText" translate="TXT_MINS_LIVE"></span>               
+              </h6>              
+            <h6 ng-show="assetData[CurrentLang]['actors_display']">
+              <span class="tvShowMetaLabel alignLeft" translate="TXT_STARRING"></span>
+              <span class="alignLeft tvShowText" ng-bind="assetData[CurrentLang]['actors_display']"></span>
+            </h6>
+<!--            <h6 ng-show="assetData[CurrentLang]['directors_display']">
+              <span class="tvShowMetaLabel alignLeft">DIRECTOR</span>
+              <span class="alignLeft tvShowText" ng-bind="assetData[CurrentLang]['directors_display']"></span>
+            </h6>-->
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- SINGLE ASSET DETAILS END -->
+</div>
+
+<!-- RAILS/ngif SECTION -->
+<div ng-include="'/views/railtemplate_page.html'" ></div>
+<!-- RAILS/ngif SECTION END-->

@@ -1,0 +1,13 @@
+
+<div class="searchContents fullWidth" style=" ">
+	<div class="fullWidth parent">
+		<h2 style=" "><span translate="TXT_ALL_SEARCH_RESULTS_HEADING"></span><span>'</span><span ng-bind="searchTerm"></span><span>'</span></h2>
+		<button ng-class="{'linkInvalid':ajaxSearchSpinner_FullPeople}" ng-disabled="ajaxSearchSpinner_FullPeople" ng-show="showMainSearchList" ng-click="goToBackPage()" class="searchBtnBack"></button>
+	</div>
+	<div class="fullWidth">
+		<div ng-include="'/views/search/peopleSearchListing.html'" ng-show="showMainSearchList"></div>
+		<div ng-include="'/views/search/searchListing.html'" ng-hide="showMainSearchList"></div>
+		<div ng-include="'/views/search/peopleNameListing.html'"></div>
+                <div ng-include="'/views/search/promotionalTemplate.html'"></div>
+	</div>
+</div>

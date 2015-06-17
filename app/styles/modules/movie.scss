@@ -1,0 +1,96 @@
+@import 'index';
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 3 Apr, 2014, 6:44:38 PM
+*/
+
+ .containingBlock{
+        margin: 9em 0 1em 0;
+        width: 100%;
+        float: left;
+    }
+    #playerwrapper .innerWrapper{
+        position: relative;
+        padding-bottom: 56.25%;
+        height: auto;
+        overflow: hidden;
+        z-index: 0;
+        width: 100%;
+    }
+    #playerwrapper .innerWrapper video,
+    #playerwrapper .innerWrapper iframe,
+    #playerwrapper .innerWrapper object,
+    #playerwrapper .innerWrapper embed{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        
+    }
+    .trailercontainingBlock{
+      width: 100%;
+        float: left;
+      margin: 20px 0 1em;
+    }
+    #trailerPlayerwrapper .innerWrapper{
+        position: relative;
+        padding-bottom: 41.25%;
+        height: 0; 
+        overflow: hidden;
+        z-index: 0;
+    }
+    #trailerPlayerwrapper .innerWrapper video,
+    #trailerPlayerwrapper .innerWrapper iframe,
+    #trailerPlayerwrapper .innerWrapper object,
+    #trailerPlayerwrapper .innerWrapper embed{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        
+    }
+    .mobLeftBtn{
+        padding-left: 0px;
+    }
+    .mobRightBtn{
+        padding-right: 0px;
+    }
+    @media screen and (max-width:768px){
+    .mobLeftBtn{
+        float: left;
+        padding-left: 0px;
+    }
+    .mobRightBtn{
+        float: right;
+        padding-right: 0px;
+    }
+ } 
+ @media (max-width: 480px){
+      .subShowCaseBanner{
+         margin-top: 134px;
+     }
+     .containingBlock{
+        margin-top:14.5em;
+    }
+}
+@media (max-width: 360px){
+      .subShowCaseBanner{
+         margin-top: 65px;
+     }
+}
+.filter input[type='checkbox'] { 
+     opacity: 0; 
+    width: 20px; 
+} 
+.uimageCheckboxChecked {
+    background:transparent image-url('icon/checked.png') no-repeat; 
+} 
+.imageCheckbox {
+    background: transparent image-url('icon/unchecked.png') no-repeat; 
+}

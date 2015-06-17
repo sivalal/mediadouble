@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <!-- Replace the host url with the domain name where hott web is hosted
+        example, ih URL is http://directv.demo.accedo.tv
+        then hostUrl=directv.demo.accedo.tv
+         -->
+        <script type="text/javascript" src="rightnow/scripts/integration.js?useGeneric=true">
+        </script>
+        <script type="text/javascript">
+
+        </script>
+    </head>
+    <body id="content_page_layout" class="">
+       <div id="dtv_tup">
+           <script type="text/javascript">
+           DIRECTV.SiteIntegration.Client.initialize();
+           </script>
+           <script type="text/javascript">
+           DIRECTV.SiteIntegration.Client.addHeader();
+           </script>
+           <!-- HTML content goes here -->
+           <div class="clear"></div>
+       </div>
+       
+       <div>
+       <script type="text/javascript">
+       DIRECTV.SiteIntegration.Client.addFooter();
+       </script>
+       </div>
+    </body>
+</html>

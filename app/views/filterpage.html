@@ -1,0 +1,218 @@
+
+  <!-- movie filter bar -->
+  <div class="row genre_sort_detail">
+    <div class="navbar-fixed-top " ng-style="navmenuStyle">
+      <div class="secondaryTopMenuContainer">
+        <div class="showTvContainer">
+
+        <h4 class="showTvText visible-xs" style="text-align:center;" >{{SourceNAME|translate}}</h4></div>
+    <ul>      
+    <!--Genre-->
+    <li  class="dropdown" id="genreLi" show-hide-gener ng-show="showGenre" ng-if="genre[CurrentLang]['count'] > 1">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" class="nav">
+     {{GenreType|translate}}   
+        <span class="caret"></span>
+      </a>
+      <!--Large genre menu-->
+      <ul  style="width:{{genreWidth}}px" class="dropdown-menu dropdown-menu_left genre" id="drop-gener">
+        <li class="row">
+            <ul class="list-unstyled col-md-4 col-sm-4 col-xs-4 genre_list_xs" ng-repeat="col in genre[CurrentLang] track by $index">
+              <li ng-repeat="item in col" style="margin-left:20px;">
+                <a ng-href="/filter?pageid={{pagename}}&pagetype=genre&source={{Source}}&group={{item.short_label}}" ng-click="setGenre(item)" onclick="scrolltotop()" class="droplink" onclick="scrolltotop()" >{{item.label[CurrentLang]}}</a>
+              </li>
+            </ul>
+        </li>
+        <div class="season_select_list_top"></div>
+      </ul>
+    
+    </li>
+    <!--Genre ends here-->
+
+          <!--Bar Header For Des/Tab-->
+          <li class="licenter visible-sm visible-md visible-lg" >
+          <span class="showTvText" >{{SourceNAME|translate}}</span>
+          </li><!--Bar Header For Des/Tab-->
+
+      
+<!-- Region filter -->
+ <li class="dropdown" id="filterLi" ng-show="showRegionfilter">
+          <a data-toggle="dropdown" class="dropdown-toggle" translate="TXT_FILTER_SUBSCRIBER"> 
+            <span class="caret">
+            </span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-top dropdown-menu_right filter">
+            <li class="filter_head">
+              <span class="col-md-8 droprightheader"  translate="TXT_QUALITY_SUBSCRIBER"></span>
+               <div class="col-md-4 droprightheader alignright">
+                  <div ng-class="{uimageCheckboxChecked:item.isFilterSelected,imageCheckbox:!item.isFilterSelected}" ng-repeat="item in QualityFilters">
+                     <label>
+                      <input type="checkbox" ng-model="item.isFilterSelected" ng-click="QualityFilterUpdated(item.key,$event)" />
+                      <span>{{item.title[CurrentLang]}}</span>
+                    </label>
+                  </div>
+              </div>
+              </br>
+             </li>
+             <li>
+              <!-- Content container to add padding -->
+              <div id="movie-filter-list" class="movieDropdownListHolder hor_line">
+                  <h6 translate="TXT_REGIONS_SUBSCRIBER"></h6>
+                <div class="dropdownfonts" >
+                  <ul class="list-unstyled col-md-4 col-sm-4 col-xs-4" ng-repeat="column in RegionFilters">
+                    <li ng-repeat="item in column" style="margin-left:10px;">
+                        <div ng-class="{uimageCheckboxChecked:item.isFilterSelected,imageCheckbox:!item.isFilterSelected}" >
+                            <label  style="position: relative;top: 0px; line-height:14px;">
+                                <input class="alignLeft" style="margin-top:0;" type="checkbox" ng-model="item.isFilterSelected" ng-click="RegionFilterUpdated(item.key,$event)"/>
+                                <span class="alignLeft">{{item.title[CurrentLang]}}</span>
+                            </label>
+                        </div>
+                    </li> 
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <div class="season_select_list_top"></div>
+          </ul>
+        </li>
+<!-- Region filter ends -->
+
+
+
+
+            <div class="season_select_list_top"></div>
+          </ul>
+          </li>
+        </ul>
+      </div>
+      </div>
+      </div><!-- movie filter bar -->
+
+
+<div ng-if="slides.length!=0" id="showcaseID" class="showCaseBannerHome main_slider main_slider_genre">
+    <carousel interval="myInterval">
+      <slide ng-repeat="slide in slides" active="slide.active">
+        <a ng-href="{{callToAction(slide)}}">
+           <div ng-if="slide.query=='banner'" ng-init="bannermstHeadImg = isUndefinedOrNull(slide.mastheadImage)" >
+                    <img class="bannerImg" ng-if="!bannermstHeadImg" ng-src="{{addbaseAndImg(slide.ShowcaseNewbase,appgridAssets[slide.mastheadImage[CurrentLang]])}}" style="margin:auto;">
+            <div class="carousel-caption center-banner-text">
+                <h1 class="bannerTextCaption" ng-if="slide.title[CurrentLang]!='null' && slide.title[CurrentLang]!='NULL'" >{{slide.title[CurrentLang]}}</h1>
+            </div>
+          </div>
+                 <div ng-if="slide.query!='banner'"
+               ng-init="mstHeadImg = isUndefinedOrNull(slide.mastheadImage)">
+            <img ng-if="!mstHeadImg" ng-src="{{addbaseAndImg(slide.ShowcaseNewbase,slide.mastheadImage)}}" style="margin:auto;">
+            <div class="carousel-caption">
+              <a ng-href="{{getSingleAssetBaseUrl(slide.TitleTypeId)}}?titleId={{slide.titleId}}">
+                <h2 class="bannerTextCaption">{{slide.title[CurrentLang]}}</h2>
+              </a>
+                <div class="buttons" >
+                    <a href="{{getSingleAssetBaseUrl(slide.TitleTypeId)}}?titleId={{slide.titleId}}" class="btn tvWatchNowBtn">
+                      <span translate="BTN_WATCH_NOW_LIVE"></span>
+                      <span class="glyphicon glyphicon-play"></span>
+                    </a>
+                    <div ng-if="showWatchlistButton">
+                      <a href="" class="tvWatchlistBtn plus-icon" ng-hide="checkTitleIDExistInGlobalWatchlistIds(slide.titleId)" style="padding: 0px;" ng-click="addWatchList(slide.titleId, 'SLP')">
+                        <span class="glyphicon glyphicon-plus"></span>
+                      </a>
+                      <a href="" class="tvWatchlistBtn plus-icon" ng-show="checkTitleIDExistInGlobalWatchlistIds(slide.titleId)" style="padding: 0px;" ng-click="openDeleteWatchlistDialog(null,slide.titleId, null)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                      </a>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </a>
+      </slide>
+    </carousel>
+
+    
+<div class="carousel-stat-footer navbar-fixed-top " ng-show="!isLoggedIn">
+ <div class="row">
+              <div  class="col-md-7 col-md-offset-1 col-sm-8 col-xs-6 carousel-stat-footer-l">
+             <label translate="BANNER_SHOWCASE_SIGNUP_SUBSCRIPTION_HOME"></label>
+              </div>
+                <div  class="col-md-3 col-sm-4 col-xs-6 carousel-stat-footer-r" >
+  
+                        <button class="btnOrange btn-custom-orange" ng-click="signupModal(1)"
+                        translate="BTN_START_YOUR_FREE_MONTH"></button>
+               
+              </div>
+              </div>
+</div>
+</div>
+      <div class="fullWidth noMastHead" style="height:4px" ng-if="slides.length==0"></div>
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12 genreDetailHeader" >
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-xs-12 header_l">
+        <h2>{{TitleDisplay[CurrentLang]|uppercase}} </h2>
+    </div>
+<!--    <div class="col-md-3 pull-right col-sm-4 header_r">
+        <ul class="nav CatSelectList pull-right" ng-show="showDiscoverfilter">
+            <li class="dropdown">
+                <button data-toggle="dropdown" class="dropdown dropdown-toggle btn-custom-yellow">{{SelectedGroupFilter[CurrentLang]}}<b class="caret"></b></button>
+                <ul class="dropdown-menu dropdown-menu_right dropdownnetwork unstyled">
+                    <li>
+                        <ul class="list-unstyled">
+                            <li ng-repeat="item in Sort_drop_down" >
+                                <a ng-href="/filterpage?pageid={{Source}}_{{item.key}}" ng-click="changeSortOrder($index)" class="droplink" onclick="scrolltotop()" style="margin-left:10%;">{{item.title[CurrentLang]}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <div class="season_select_list_top"></div>
+                </ul>
+            </li>
+        </ul>
+        </div> -->
+  </div>
+</div>
+
+<div class="container ">
+    <div class="row fivecolumns" style="padding-bottom:2%;">
+        <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2 " ng-repeat="content in ContentList" ng-if="pageDetails.query=='last_added'">
+            <div class="networkImgContainer">
+                <a ng-href="/{{content.source}}?titleId={{content.id}}" onclick="scrolltotop()" >
+                    <img class="img-responsive" ng-src="{{content.imagePath}}" fallback-src="{{fallbackImageURL}}" />
+                    <span class="networkImg">
+                        <h5>{{content.title[CurrentLang].show_name}}</h5>
+                        <h6 ng-if="content.showtype=='Series'"><span translate="TXT_SERIES_TV_SHOWS"></span></h6>
+                        <h6 ng-if="content.showtype!='Movie' && content.showtype!='Series'"><span>{{content.title[CurrentLang].season_episode_name}}</span></h6>
+                        
+                    </span>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2 " ng-repeat="content in ContentList" 
+             ng-if="pageDetails.query!='last_added'" 
+             ng-init="content.showFallback=true"
+             ng-hide="content.hideElement">
+            <div class="networkImgContainer" >
+                <a ng-href="/{{content.source}}?titleId={{content.id}}" onclick="scrolltotop()" >
+                    <img class="img-responsive gridPlaceholder" ng-if="content.showFallback" ng-src="{{fallbackImageURL}}" />
+                    <img class="img-responsive" ng-src="{{content.imagePath}}" imageonload="content.showFallback=false"
+                             fallback-src="{{fallbackImageURL}}" />
+                    
+                    
+                    
+                    <span class="networkImg">
+                        <h5>{{content.title_showname}}</h5>
+                        <h6 ng-if="content.show_type=='series'"><span translate="TXT_SERIES_TV_SHOWS"></span></h6>
+                        <h6 ng-if="content.show_type!='movie' && content.show_type!='series'"><span>{{content.title_season_episode}}</span></h6>                     
+                    </span>
+                    
+<!--                    <span class="networkImg">
+                        <h5>{{content.title[CurrentLang]}}</h5>
+                    </span>
+                    <span class="networkImg" ng-if="content.title[CurrentLang]==''&&content.title.es_ES==''">
+                        <h5>{{content.title.en_US}}</h5>
+                    </span>
+                    <span class="networkImg" ng-if="content.title[CurrentLang]==''&& content.title.en_US==''"><h5>{{content.title.es_ES}}</h5></span>-->
+                    
+                </a>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+      
+<div ng-include="'/views/railtemplate_page.html'" ></div>

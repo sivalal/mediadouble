@@ -1,0 +1,110 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.moowork.gradle:gradle-grunt-plugin:0.5'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.9'
+}
+
+apply plugin: 'grunt'
+task init () << {
+    //Hack for Android Buid Versioning
+    def taskName = gradle.startParameter.taskNames[0]
+    if(taskName && taskName.contains('grunt_development')){
+        project.ext{
+            tagToBuildFrom = 'qa-int*'
+          
+        }
+    }
+    else if(taskName && taskName.contains('grunt_production')){
+        project.ext{
+            tagToBuildFrom = 'qa-ext*'
+        }
+        
+    }
+
+
+  //gradle assembleInternal -PtagToBuildFrom='qa-int*'
+    def gitTag = {
+        def tagMatchOptions
+        try {
+          tagMatchOptions = "--match ${tagToBuildFrom}"
+        } catch (MissingPropertyException) {
+          tagMatchOptions = ""
+        }
+        println "Tag options is ${tagMatchOptions}"
+        "git describe HEAD ${tagMatchOptions}".execute().text.trim()
+    }() 
+     
+    // Version name: ignore leading non-digits and everything after the first underscore
+    // Version code: take digits after the first underscore
+    // e.g. tag xxx1.2.3.foo-bar_15_baz will yield versionName 1.2.3.foo-bar and versionCode 15
+    def versionMatcher = gitTag =~ /^[^0-9]*([^_]*)(_([0-9]*))?/
+     
+    // TODO: die if building a public release with no tag instead of having defaults
+    def versionNameFromTag = versionMatcher[0][1]    
+
+	ByteArrayOutputStream vStream = new ByteArrayOutputStream()       
+   	
+   	exec {        
+        commandLine "/bin/sh", "-c", "git log --oneline | wc -l"
+        ignoreExitValue true
+        standardOutput = vStream
+    }  
+    def versionCodeFromTag = vStream.toString().trim()
+     
+
+    def buildNumber =  "Build v${versionNameFromTag}-(${versionCodeFromTag})"
+    //Changelogs
+    
+    if(tagToBuildFrom.equals('qa-int*')){
+    	String contents = new File( 'config/environments/development.json' ).getText( 'UTF-8' ) 
+    	contents = contents.replaceAll( "app_build_number\".*", "app_build_number\":\"${buildNumber}\"" )
+    	new File( 'config/environments/development.json' ).write( contents, 'UTF-8' )
+	}
+	else if(tagToBuildFrom.equals('qa-ext*')){
+		String contents = new File( 'config/environments/production.json' ).getText( 'UTF-8' ) 
+		contents = contents.replaceAll( "app_build_number\".*", "app_build_number\":\"${buildNumber}\"" )
+		new File( 'config/environments/production.json' ).write( contents, 'UTF-8' )	
+	}
+    
+
+    def matchPattern 
+    try{
+        def type = tagToBuildFrom.replace('*','')
+        matchPattern = "refs/tags/${type}"
+    } catch (MissingPropertyException) {
+         matchPattern = "refs/tags/"
+    }
+    println matchPattern
+    
+    def tag = "git for-each-ref --sort=-taggerdate --format '%(tag)' ${matchPattern} --count=2".execute().text.trim()    
+    tag = tag.replace("'","")
+    def array = tag.split('\n')    
+    
+    
+    if(array.size() > 1){   
+    ByteArrayOutputStream stdOut = new ByteArrayOutputStream()       
+ 
+    exec {        
+        commandLine "/bin/sh", "-c", "git log ${array[1]}..${array[0]} --no-merges --pretty=format:'* %s' | grep -v '!!ignore'"
+        ignoreExitValue true
+        standardOutput = stdOut
+    }           
+    def changelogs =  stdOut.toString().trim()
+  //  println changelogs
+   // new File( 'CHANGELOG.md' ).write( changelogs, 'UTF-8' )
+       // def changelogs = /git log ${array[1]}..${array[0]} --no-merges --pretty=format:"%s"/.execute().text.trim()        
+ 
+    }
+
+}
+
+//grunt_development.dependsOn 'init'
+//grunt_production.dependsOn 'init'
+

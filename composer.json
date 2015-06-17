@@ -1,0 +1,16 @@
+{
+    "name": "hott-web",
+    "description": "DirecTV HOTT Web Application",
+    "keywords": [
+        "framework",
+        "zf2",
+        "directv",
+        "hott"
+    ],
+    "homepage": "http://framework.zend.com/",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.2.*",
+        "neilime/zf2-mobile-detect": "dev-master"
+    }
+}
